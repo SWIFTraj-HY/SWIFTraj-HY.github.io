@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset Name - Publications</title>
+  
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/common.js"></script>
+</head>
+<body>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h1 class="title is-2 has-text-centered">Featured Publications</h1>
+      
+      <!-- Publication 1 -->
+      <div class="publication-item">
+        <div class="columns is-vcentered">
+            <!-- Image Left -->
+            <div class="column is-4">
+                <figure class="image is-16by9 shadow-md" style="border-radius: 8px; overflow: hidden;">
+                    <img src="static/images/carousel1.jpg" alt="Paper Teaser">
+                </figure>
+            </div>
+            <!-- Info Right -->
+            <div class="column is-8">
+                <h2 class="title is-4">
+                    <a href="#" target="_blank" class="has-text-dark hover-primary">
+                        Paper Title: A Great Method for Something
+                    </a>
+                </h2>
+                <p class="subtitle is-6 has-text-grey">
+                    Author One, Author Two, Author Three
+                </p>
+                <div class="content is-small">
+                    <p>
+                        This is a brief abstract of the paper. It describes the main contributions, the methodology used, and the results achieved. The dataset proposed in this paper is the one presented on this website.
+                    </p>
+                </div>
+                
+                <div class="buttons">
+                    <a href="#" class="button is-small is-rounded is-dark">
+                        <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                        <span>Paper</span>
+                    </a>
+                    <a href="#" class="button is-small is-rounded is-dark">
+                        <span class="icon"><i class="fab fa-github"></i></span>
+                        <span>Code</span>
+                    </a>
+                    <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-1')">
+                        <span class="icon"><i class="fas fa-quote-right"></i></span>
+                        <span>BibTeX</span>
+                    </button>
+                </div>
+
+                <div id="bibtex-1" class="bibtex-section">
+                    <pre><code>@article{Author2024,
+  title={Paper Title: A Great Method for Something},
+  author={One, Author and Two, Author and Three, Author},
+  journal={Conference Name},
+  year={2024}
+}</code></pre>
+                </div>
+            </div>
+        </div>
+      </div>
+
+      <!-- Publication 2 -->
+      <div class="publication-item">
+        <div class="columns is-vcentered">
+            <!-- Image Left -->
+            <div class="column is-4">
+                <figure class="image is-16by9 shadow-md" style="border-radius: 8px; overflow: hidden;">
+                    <img src="static/images/carousel2.jpg" alt="Paper Teaser">
+                </figure>
+            </div>
+            <!-- Info Right -->
+            <div class="column is-8">
+                <h2 class="title is-4">
+                    <a href="#" target="_blank" class="has-text-dark hover-primary">
+                        Another Paper Title
+                    </a>
+                </h2>
+                <p class="subtitle is-6 has-text-grey">
+                    Author A, Author B
+                </p>
+                <div class="content is-small">
+                    <p>
+                        Another abstract description. This paper focuses on the analysis of the data collected in Site 2.
+                    </p>
+                </div>
+                
+                <div class="buttons">
+                    <a href="#" class="button is-small is-rounded is-dark">
+                        <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                        <span>Paper</span>
+                    </a>
+                    <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-2')">
+                        <span class="icon"><i class="fas fa-quote-right"></i></span>
+                        <span>BibTeX</span>
+                    </button>
+                </div>
+
+                <div id="bibtex-2" class="bibtex-section">
+                    <pre><code>@article{AuthorAB2024,
+  title={Another Paper Title},
+  author={A, Author and B, Author},
+  journal={Journal Name},
+  year={2024}
+}</code></pre>
+                </div>
+            </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    function toggleBibtex(id) {
+        const element = document.getElementById(id);
+        if (element) {
+            element.classList.toggle('is-active');
+        }
+    }
+  </script>
+
+</body>
+</html>

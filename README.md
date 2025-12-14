@@ -1,80 +1,23 @@
-# Academic Project Page Template
-
-> **Update (September 2025)**: This template has been modernized with better design, SEO, and mobile support. For the original version, see the [original-version branch](https://github.com/eliahuhorwitz/Academic-project-page-template/tree/original-version).
-
-A clean, responsive template for academic project pages.
-
-
-Example project pages built using this template are:
-- https://horwitz.ai/probex
-- https://vision.huji.ac.il/probegen
-- https://horwitz.ai/mother
-- https://horwitz.ai/spectral_detuning
-- https://vision.huji.ac.il/ladeda
-- https://vision.huji.ac.il/dsire
-- https://horwitz.ai/podd
-- https://dreamix-video-editing.github.io
-- https://horwitz.ai/conffusion
-- https://horwitz.ai/3d_ads/
-- https://vision.huji.ac.il/ssrl_ad
-- https://vision.huji.ac.il/deepsim
-
-
-
-## Start using the template
-To start using the template click on `Use this Template`.
-
-The template uses html for controlling the content and css for controlling the style. 
-To edit the websites contents edit the `index.html` file. It contains different HTML "building blocks", use whichever ones you need and comment out the rest.  
-
-**IMPORTANT!** Make sure to replace the `favicon.ico` under `static/images/` with one of your own, otherwise your favicon is going to be a dreambooth image of me.
-
-## What's New
-
-- Modern, clean design with better mobile support
-- Improved SEO with proper meta tags and structured data
-- Performance improvements (lazy loading, optimized assets)
-- More Works dropdown
-- Copy button for BibTeX citations
-- Better accessibility
-
-## Components
-
-- Teaser video
-- Image carousel
-- YouTube video embedding
-- Video carousel
-- PDF poster viewer
-- BibTeX citation
-
-## Customization
-
-The HTML file has TODO comments showing what to replace:
-
-- Paper title, authors, institution, conference
-- Links (arXiv, GitHub, etc.)
-- Abstract and descriptions  
-- Videos, images, and PDFs
-- Related works in the dropdown
-- Meta tags for SEO and social sharing
-
-### Meta Tags
-The template includes meta tags for better search engine visibility and social media sharing. These appear in the `<head>` section and help with:
-- Google Scholar indexing
-- Social media previews (Twitter, Facebook, LinkedIn)
-- Search engine optimization
-
-Create a 1200x630px social preview image at `static/images/social_preview.png`.
-
-## Tips
-
-- Compress images with [TinyPNG](https://tinypng.com)
-- Use YouTube for large videos (>10MB)  
-- Replace the favicon in `static/images/`
-- Works with GitHub Pages
-
-## Acknowledgments
-Parts of this project page were adopted from the [Nerfies](https://nerfies.github.io/) page.
-
-## Website License
-<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />This work is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+现在网站包含6个独立的页面，并通过 common.js 统一管理导航栏和页脚，方便您后续维护。
+主要修改内容：
+统一架构 (static/js/common.js)：
+创建了统一的导航栏（Header）和页脚（Footer）。您只需要修改这个文件里的 injectFooter 函数，所有页面的联系方式和版权信息都会同步更新。
+添加了 loadMarkdown 函数，用于动态加载 Markdown 内容。
+页面实现 (6个 HTML 文件)：
+首页 (index.html)：保留了顶部视频，重构了布局。包括数据总结（3列）、实验详情（Markdown）、数据处理（Markdown）、潜在用途（3列）。
+数据描述 (data-description.html)：包含站点路网图占位符、站点描述（Markdown）和数据字段表格。
+工具 (tools.html)：通过 Markdown (tools.md) 展示代码和使用步骤。
+精选论文 (publications.html)：实现了左图右文的布局，包含论文链接和可点击展开的 BibTeX 引用格式。
+下载 (download.html)：通过 Markdown (download.md) 展示下载链接和申请步骤。
+贡献者 (contributors.html)：实现了团队成员的照片卡片网格布局。
+内容管理 (static/md/ 文件夹)：
+将需要经常编辑的长文本内容移动到了 Markdown 文件中，方便您直接修改文字，而无需触碰 HTML 代码。
+创建了以下文件（已包含中文注释）：
+home_experiment.md (首页实验介绍)
+home_processing.md (首页数据处理)
+data_site_desc.md (数据描述页-站点介绍)
+tools.md (工具页内容)
+download.md (下载页内容)
+样式优化：
+在 static/css/index.css 中添加了针对论文列表、贡献者卡片等新组件的样式。
+您可以直接在浏览器中打开 index.html 查看效果。如果需要修改页面文字内容，请优先查看 static/md/ 下的对应文件。如果需要修改页脚联系方式，请修改 static/js/common.js。

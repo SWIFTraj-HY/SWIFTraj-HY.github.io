@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset Name - Data Description</title>
+  
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="static/js/common.js"></script>
+</head>
+<body>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h1 class="title is-2 has-text-centered">Data Description</h1>
+      
+      <!-- Site 1 -->
+      <div class="box">
+        <h2 class="title is-4">Site 1</h2>
+        
+        <div class="columns">
+            <div class="column is-6">
+                <figure class="image is-4by3">
+                    <img src="static/images/carousel1.jpg" alt="Site 1 Road Network">
+                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Site 1 Road Network Layout</figcaption>
+                </figure>
+            </div>
+            <div class="column is-6">
+                <div id="site-desc-content" class="content markdown-body">
+                    <p>Loading site description...</p>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+
+        <h3 class="title is-5">Data Fields</h3>
+        <div class="table-container">
+            <table class="table is-striped is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th>Field Name</th>
+                        <th>Type</th>
+                        <th>Description</th>
+                        <th>Example</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>timestamp</code></td>
+                        <td>String</td>
+                        <td>Date and time of the record</td>
+                        <td>2023-01-01 12:00:00</td>
+                    </tr>
+                    <tr>
+                        <td><code>vehicle_id</code></td>
+                        <td>Integer</td>
+                        <td>Unique identifier for the vehicle</td>
+                        <td>1024</td>
+                    </tr>
+                    <tr>
+                        <td><code>speed</code></td>
+                        <td>Float</td>
+                        <td>Vehicle speed in km/h</td>
+                        <td>45.5</td>
+                    </tr>
+                    <tr>
+                        <td><code>position_x</code></td>
+                        <td>Float</td>
+                        <td>X coordinate in local frame</td>
+                        <td>12.5</td>
+                    </tr>
+                    <tr>
+                        <td><code>position_y</code></td>
+                        <td>Float</td>
+                        <td>Y coordinate in local frame</td>
+                        <td>-5.2</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+      </div>
+      
+      <!-- You can add more sites here by duplicating the .box structure -->
+      
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadMarkdown('site-desc-content', 'static/md/data_site_desc.md');
+    });
+  </script>
+
+</body>
+</html>

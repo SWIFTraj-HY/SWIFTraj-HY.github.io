@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dataset Name - Download</title>
+  
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script defer src="static/js/common.js"></script>
+</head>
+<body>
+
+  <section class="section">
+    <div class="container is-max-desktop">
+      <h1 class="title is-2 has-text-centered">Download Dataset</h1>
+      
+      <div class="box">
+        <div id="download-content" class="content markdown-body">
+            <p class="has-text-centered">Loading download instructions...</p>
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadMarkdown('download-content', 'static/md/download.md');
+    });
+  </script>
+
+</body>
+</html>
