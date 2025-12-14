@@ -139,12 +139,29 @@
     </div>
   </section>
 
+  <!-- Visitor Statistics -->
+  <section class="section" style="padding: 1.5rem 0;">
+    <div class="container is-max-desktop has-text-centered">
+      <div class="is-size-7 has-text-grey">
+        <span id="busuanzi_container_site_pv" style="display:none">
+          <i class="fas fa-eye"></i> Total Visits: <span id="busuanzi_value_site_pv"></span>
+        </span>
+        <span class="mx-3" style="margin: 0 10px;">|</span>
+        <span id="busuanzi_container_site_uv" style="display:none">
+          <i class="fas fa-user"></i> Visitors: <span id="busuanzi_value_site_uv"></span>
+        </span>
+      </div>
+    </div>
+  </section>
+  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         loadMarkdown('experiment-content', 'static/md/home_experiment.md');
         loadMarkdown('processing-content', 'static/md/home_processing.md');
     });
   </script>
+
 
 </body>
 </html>
