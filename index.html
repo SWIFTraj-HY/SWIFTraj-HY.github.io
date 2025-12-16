@@ -18,22 +18,42 @@
 </head>
 <body>
 
-  <!-- Video Hero -->
-  <section class="hero hero-banner">
-    <div class="hero-background">
-      <video class="hero-background-video" autoplay muted loop playsinline preload="metadata">
-        <source src="static/videos/banner_video.mp4" type="video/mp4">
+  <!-- Hero: 轨迹图 + 俯拍视频 -->
+  <section class="hero hero-banner hero-immersive">
+    <div class="hero-bg hero-bg-video">
+      <video class="hero-bg-video-el" autoplay muted loop playsinline preload="metadata">
+        <source src="static\videos\video.mp4" type="video/mp4">
       </video>
-      <div class="hero-background-overlay"></div>
+      <div class="hero-bg-overlay"></div>
     </div>
     <div class="hero-body">
-      <div class="container is-max-desktop">
-        <div class="columns is-centered">
-          <div class="column has-text-centered">
-            <h1 class="title is-1 publication-title" style="color: white;">Dataset Title Here</h1>
-            <h2 class="subtitle is-3" style="color: #eee;">A Large-Scale Dataset for XXXXX</h2>
+      <div class="container is-widescreen hero-shell">
+        <div class="hero-copy">
+          <p class="eyebrow">High-Resolution Trajectory · Aerial View</p>
+          <h1 class="title is-1 publication-title">High-Resolution Vehicle Trajectory Dataset</h1>
+          <h2 class="subtitle is-3">for Intelligent Traffic Control</h2>
+          <p class="lead">Spatio-temporal trajectories under incident-induced traffic disturbances, fusing roadside sensing and aerial observation for real-world traffic management and AV research.</p>
+          <div class="hero-pills">
+            <span class="pill"><i class="fas fa-route"></i> Trajectory Heatmap</span>
+            <span class="pill"><i class="fas fa-video"></i> Aerial Video</span>
+            <span class="pill"><i class="fas fa-broadcast-tower"></i> V2X Collaboration</span>
           </div>
         </div>
+
+        <div class="hero-stage">
+          <div class="stage-card">
+            <div class="stage-media stage-media-image">
+              <img src="static/images/traj_final.png" alt="Trajectory heatmap">
+            </div>
+            <div class="stage-footer">
+              <div class="foot-left">
+                <span class="dot"></span>
+                <span>Trajectory visualization</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>

@@ -1,3 +1,10 @@
+1216 changelog: Homepage hero redesign
+Replaced the old full-screen video hero with a new immersive layout.
+Uses a looping aerial video as the hero background to convey real-world highway scenes.
+Added a glassmorphism card on the right to showcase the trajectory heatmap image.
+Positioned title and card in the lower half of the hero so that the upper half of the video remains clean and unobstructed.
+Tuned responsive layout (grid columns, paddings, min-height) for better viewing on different screen sizes.
+
 现在网站包含6个独立的页面，并通过 common.js 统一管理导航栏和页脚，方便您后续维护。
 主要修改内容：
 统一架构 (static/js/common.js)：
