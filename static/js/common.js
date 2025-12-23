@@ -79,16 +79,25 @@ function injectFooter() {
 // Helper to load Markdown content
 // 用于加载 Markdown 内容的辅助函数
 async function loadMarkdown(elementId, filePath) {
-    const element = document.getElementById(elementId);
-    if (!element) return;
+  const element = document.getElementById(elementId);
+  if (!element) return;
 
-    try {
-        const response = await fetch(filePath);
-        if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
-        const text = await response.text();
-        element.innerHTML = marked.parse(text);
-    } catch (e) {
-        console.error("Error loading markdown:", e);
-        element.innerHTML = "<p>Error loading content.</p>";
+  try {
+    // Cache-bust to avoid stale content
+    const url = filePath + (filePath.includes('?') ? '&' : '?') + 'v=' + Date.now();
+    console.log('[loadMarkdown] Fetching:', url);
+    const response = await fetch(url, { cache: 'no-store' });
+    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+    const text = await response.text();
+    console.log('[loadMarkdown] Response preview:', (text || '').slice(0, 120));
+    // Basic guard: if empty, show a friendly note
+    if (!text || !text.trim()) {
+      element.innerHTML = "<p>No content found in the markdown file.</p>";
+      return;
     }
+    element.innerHTML = marked.parse(text);
+  } catch (e) {
+    console.error("Error loading markdown:", e);
+    element.innerHTML = "<p>Error loading content. If you are opening the file directly from disk, please run a local server (e.g., python -m http.server) due to browser restrictions.</p>";
+  }
 }
