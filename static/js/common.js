@@ -11,7 +11,10 @@ function injectHeader() {
     <nav class="navbar" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <a class="navbar-item" href="index.html">
-          <strong>Dataset Name</strong>
+          <span class="icon" style="margin-right: 5px;">
+              <img src="static/images/favicon.ico" alt="SWIFTraj Logo">
+          </span>
+          <strong>SWIFTraj</strong>
         </a>
         
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -56,13 +59,13 @@ function injectFooter() {
     <footer class="footer">
       <div class="container">
         <div class="content has-text-centered">
-          <p class="title is-4">LET US KNOW WHAT YOU THINK!</p>
+          <p class="title is-4">Contact</p>
           <p>
-            We would love to hear your feedback on the XXX dataset.<br>
+            We would love to hear your feedback on the SWIFTraj dataset.<br>
             Feel free to send us your questions and comments.
           </p>
           <p>
-            <strong>Email:</strong> Yu Han, Associate Professor, Southeast University
+            <strong>Email:</strong> <a href="mailto:yuhan@seu.edu.cn" target="_blank">Yu Han</a>, Associate Professor, Southeast University
           </p>
           <p>
             &copy; ${new Date().getFullYear()} All rights reserved.
