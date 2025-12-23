@@ -24,14 +24,14 @@
       
       <!-- Site 1 -->
       <div class="box">
-        <h2 class="title is-4">Site 1</h2>
+        <h2 class="title is-4">Site 1: Hurong Freeway</h2>
         
         <div class="columns">
-            <div class="column is-6">
-                <figure class="image is-4by3">
-                    <img src="static/images/carousel1.jpg" alt="Site 1 Road Network">
-                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Site 1 Road Network Layout</figcaption>
-                </figure>
+            <div class="column is-6 has-text-centered">
+              <figure class="image">
+                <img src="static/images/topology.png" alt="Site 1 Road Network" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
+                <figcaption class="has-text-centered mt-2 is-italic">Figure: Topological map of Hurong Freeway</figcaption>
+              </figure>
             </div>
             <div class="column is-6">
                 <div id="site-desc-content" class="content markdown-body">
@@ -43,49 +43,239 @@
         <hr>
 
         <h3 class="title is-5">Data Fields</h3>
-        <div class="table-container">
-            <table class="table is-striped is-hoverable is-fullwidth">
-                <thead>
-                    <tr>
-                        <th>Field Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                        <th>Example</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><code>timestamp</code></td>
-                        <td>String</td>
-                        <td>Date and time of the record</td>
-                        <td>2023-01-01 12:00:00</td>
-                    </tr>
-                    <tr>
-                        <td><code>vehicle_id</code></td>
-                        <td>Integer</td>
-                        <td>Unique identifier for the vehicle</td>
-                        <td>1024</td>
-                    </tr>
-                    <tr>
-                        <td><code>speed</code></td>
-                        <td>Float</td>
-                        <td>Vehicle speed in km/h</td>
-                        <td>45.5</td>
-                    </tr>
-                    <tr>
-                        <td><code>position_x</code></td>
-                        <td>Float</td>
-                        <td>X coordinate in local frame</td>
-                        <td>12.5</td>
-                    </tr>
-                    <tr>
-                        <td><code>position_y</code></td>
-                        <td>Float</td>
-                        <td>Y coordinate in local frame</td>
-                        <td>-5.2</td>
-                    </tr>
-                </tbody>
-            </table>
+
+<h3 class="title is-5">Meta Information (Temporal & Spatial Reference)</h3>
+<div class="table-container">
+  <table class="table is-striped is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Field Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><code>locationId</code></td>
+        <td>String</td>
+        <td>Identifier or name of the data collection site</td>
+        <td>A1</td>
+      </tr>
+      <tr>
+        <td><code>frameRate</code></td>
+        <td>Float</td>
+        <td>Sampling frequency (frames per second)</td>
+        <td>10</td>
+      </tr>
+      <tr>
+        <td><code>timeStep</code></td>
+        <td>Float</td>
+        <td>Time interval between consecutive frames (1 / frameRate)</td>
+        <td>0.1</td>
+      </tr>
+      <tr>
+        <td><code>startTimestamp</code></td>
+        <td>Float</td>
+        <td>Absolute Unix timestamp at the start of data collection</td>
+        <td>1625012345.0</td>
+      </tr>
+      <tr>
+        <td><code>coordinateSystem</code></td>
+        <td>String</td>
+        <td>Spatial coordinate reference system</td>
+        <td>WGS84</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<h3 class="title is-5">Trajectory Data Fields</h3>
+<div class="table-container">
+  <table class="table is-striped is-hoverable is-fullwidth">
+    <thead>
+      <tr>
+        <th>Field Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Example</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- Time & identity -->
+      <tr>
+        <td><code>frame</code></td>
+        <td>Integer</td>
+        <td>Index of the current video frame</td>
+        <td>1200</td>
+      </tr>
+      <tr>
+        <td><code>unixTime</code></td>
+        <td>Float</td>
+        <td>Absolute timestamp corresponding to the frame (Unix time)</td>
+        <td>1625012345.0</td>
+      </tr>
+      <tr>
+        <td><code>id</code></td>
+        <td>Integer</td>
+        <td>Unique identifier of the vehicle track</td>
+        <td>35</td>
+      </tr>
+      <tr>
+        <td><code>class</code></td>
+        <td>String</td>
+        <td>The vehicle class of the tracked vehicle (Car or Truck)</td>
+        <td>Car</td>
+      </tr>
+
+      <!-- Position -->
+      <tr>
+        <td><code>x</code></td>
+        <td>Float</td>
+        <td>X position of the upper-left corner of the bounding box (image coordinates)</td>
+        <td>523.4</td>
+      </tr>
+      <tr>
+        <td><code>y</code></td>
+        <td>Float</td>
+        <td>Y position of the upper-left corner of the bounding box (image coordinates)</td>
+        <td>214.7</td>
+      </tr>
+      <tr>
+        <td><code>width</code></td>
+        <td>Float</td>
+        <td>Width of the vehicle bounding box (m)</td>
+        <td>2.1</td>
+      </tr>
+      <tr>
+        <td><code>height</code></td>
+        <td>Float</td>
+        <td>Height of the vehicle bounding box (m)</td>
+        <td>4.6</td>
+      </tr>
+
+      <!-- Frenet coordinates -->
+      <tr>
+        <td><code>frenetX</code></td>
+        <td>Float</td>
+        <td>Longitudinal position in the Frenet coordinate system (m)</td>
+        <td>125.8</td>
+      </tr>
+      <tr>
+        <td><code>frenetY</code></td>
+        <td>Float</td>
+        <td>Lateral position in the Frenet coordinate system (m)</td>
+        <td>-1.2</td>
+      </tr>
+
+      <!-- Motion -->
+      <tr>
+        <td><code>xVelocity</code></td>
+        <td>Float</td>
+        <td>Longitudinal velocity (m/s)</td>
+        <td>18.3</td>
+      </tr>
+      <tr>
+        <td><code>yVelocity</code></td>
+        <td>Float</td>
+        <td>Lateral velocity (m/s)</td>
+        <td>-0.4</td>
+      </tr>
+      <tr>
+        <td><code>xAcceleration</code></td>
+        <td>Float</td>
+        <td>Longitudinal acceleration (m/s²)</td>
+        <td>0.8</td>
+      </tr>
+      <tr>
+        <td><code>yAcceleration</code></td>
+        <td>Float</td>
+        <td>Lateral acceleration (m/s²)</td>
+        <td>0.1</td>
+      </tr>
+
+      <!-- Interaction -->
+      <tr>
+        <td><code>dhw</code></td>
+        <td>Float</td>
+        <td>Distance headway to the preceding vehicle (m)</td>
+        <td>25.6</td>
+      </tr>
+      <tr>
+        <td><code>thw</code></td>
+        <td>Float</td>
+        <td>Time headway to the preceding vehicle (s)</td>
+        <td>1.4</td>
+      </tr>
+      <tr>
+        <td><code>ttc</code></td>
+        <td>Float</td>
+        <td>Time-to-collision with the preceding vehicle (s)</td>
+        <td>6.2</td>
+      </tr>
+
+      <!-- Lane & neighborhood -->
+      <tr>
+        <td><code>laneId</code></td>
+        <td>Integer</td>
+        <td>Lane identifier derived from lane markings</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td><code>precedingId</code></td>
+        <td>Integer</td>
+        <td>ID of the preceding vehicle in the same lane</td>
+        <td>21</td>
+      </tr>
+      <tr>
+        <td><code>followingId</code></td>
+        <td>Integer</td>
+        <td>ID of the following vehicle in the same lane</td>
+        <td>48</td>
+      </tr>
+      <tr>
+        <td><code>leftPrecedingId</code></td>
+        <td>Integer</td>
+        <td>ID of the preceding vehicle on the adjacent left lane</td>
+        <td>12</td>
+      </tr>
+      <tr>
+        <td><code>leftAlongsideId</code></td>
+        <td>Integer</td>
+        <td>ID of the adjacent vehicle on the left lane</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td><code>leftFollowingId</code></td>
+        <td>Integer</td>
+        <td>ID of the following vehicle on the adjacent left lane</td>
+        <td>33</td>
+      </tr>
+      <tr>
+        <td><code>rightPrecedingId</code></td>
+        <td>Integer</td>
+        <td>ID of the preceding vehicle on the adjacent right lane</td>
+        <td>0</td>
+      </tr>
+      <tr>
+        <td><code>rightAlongsideId</code></td>
+        <td>Integer</td>
+        <td>ID of the adjacent vehicle on the right lane</td>
+        <td>19</td>
+      </tr>
+      <tr>
+        <td><code>rightFollowingId</code></td>
+        <td>Integer</td>
+        <td>ID of the following vehicle on the adjacent right lane</td>
+        <td>0</td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>
+
+
         </div>
       </div>
       
@@ -96,7 +286,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        loadMarkdown('site-desc-content', 'static/md/data_site_desc.md');
+      // Use absolute path to avoid relative URL issues under subpaths
+      loadMarkdown('site-desc-content', '/static/md/data_site_desc.md');
     });
   </script>
 
