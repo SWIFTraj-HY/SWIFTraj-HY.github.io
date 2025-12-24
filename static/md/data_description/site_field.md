@@ -1,4 +1,3 @@
-## Data Fields
 ### Field Naming Conventions
 
 To ensure consistency, portability, and ease of use across databases and analytics tools, all field names follow common database column naming practices:
