@@ -12,12 +12,13 @@ To ensure consistency, portability, and ease of use across databases and analyti
 | Field | Type (Example) | Description (EN / 中文) | Notes (EN / 中文) |
 |---|---|---|---|
 | `data_file_name` | string (e.g., `A1_F1`) | Name of the data file / 数据文件名称 | Human-readable identifier / 用于展示与引用的名称 |
-| `location_id` | string (e.g., `A1`) | Identifier or name of the data collection site / 数据采集站点的标识或名称 | Site-level identifier / 站点级标识 |
+| `location_name` | string (e.g., `HurongFreeway`) | Name of the data collection site / 数据采集站点的名称 | Site-level identifier / 站点级标识 |
 | `time_step` | float (e.g., `0.1`) | Time interval between consecutive frames  / 相邻帧的时间间隔（秒） |  |
 | `start_timestamp_ms` | int64 (e.g., `1625012345000`) | Unix timestamp at the start of data collection (milliseconds) / 数据采集开始时刻的 Unix 时间戳（毫秒） | Timestamp of `frame_index[0]` / 对应轨迹数据中 `frame_index=0` 的时刻 |
 | `duration_s` | float (e.g., `300.0`) | Total duration of the trajectory recording (seconds) / 轨迹数据时长（秒） | Can be computed from frame count and `time_step` / 可由帧数与 `time_step` 推导 |
 | `timestamp_timezone` | string (e.g., `Asia/Shanghai`) | Time zone for interpreting Unix timestamps (if applicable) / Unix 时间戳解释所用时区（如适用） | Unix timestamps are typically UTC; still document explicitly / Unix 时间戳通常按 UTC 解释，建议明确写出 |
 | `spatial_unit` | string (e.g., `m`) | Unit for metric spatial coordinates / 空间坐标单位 | Allowed: `m`, `ft` (default: `m`) / 可选：`m`、`ft`（默认 `m`） |
+| `dataset_version` | string | Version of the dataset release / 数据集发布版本号 | Use semantic versioning (e.g., `1.0.0`) and increment for each public release / 建议采用语义化版本（如 `1.0.0`），每次公开发布递增 |
 
 ## Trajectory Information
 
