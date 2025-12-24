@@ -15,279 +15,262 @@
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="static/js/common.js"></script>
+
+  <style>
+    /* Sticky sidebar navigation */
+    .sticky-menu {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 2rem;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+    
+    /* Smooth scrolling offset to account for potential fixed headers or padding */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    :target {
+      scroll-margin-top: 2rem;
+    }
+
+    /* Active state for side menu */
+    .menu-list a.is-active {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    /* Sidebar toggle button style */
+    .sidebar-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .sidebar-toggle:hover {
+      transform: translateY(-2px);
+      background: var(--primary-hover);
+    }
+    
+    /* Initially hide the toggle button on desktop if sidebar is visible */
+    /* But we want it to be the control for visibility, so maybe we put it in the sidebar header or as a floating action */
+    
+    /* Custom style for the sidebar column transition */
+    .column {
+      transition: all 0.3s ease;
+    }
+    
+    /* Style for close button in sidebar */
+    .sidebar-close {
+        float: right;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        padding: 0.2rem;
+    }
+    .sidebar-close:hover {
+        color: var(--text-primary);
+    }
+    
+    /* Floating toggle when sidebar is hidden */
+    #sidebar-floating-toggle {
+        display: none;
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        z-index: 99;
+    }
+    #sidebar-floating-toggle.visible {
+        display: flex;
+    }
+  </style>
 </head>
 <body>
 
   <section class="section">
-    <div class="container is-max-desktop">
-      <h1 class="title is-2 has-text-centered">Data Description</h1>
+    <div class="container is-max-widescreen">
+      <h1 class="title is-2 has-text-centered mb-6">Data Description</h1>
       
-      <!-- Site 1 -->
-      <div class="box">
-        <h2 class="title is-4">Site 1: Hurong Freeway</h2>
+      <div class="columns">
         
-        <div class="columns">
-            <div class="column is-6 has-text-centered">
-              <figure class="image">
-                <img src="static/images/topology.png" alt="Site 1 Road Network" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
-                <figcaption class="has-text-centered mt-2 is-italic">Figure: Topological map of Hurong Freeway</figcaption>
-              </figure>
-            </div>
-            <div class="column is-6">
-                <div id="site-desc-content" class="content markdown-body">
-                    <p>Loading site description...</p>
+        <!-- Main Content Column -->
+        <div id="main-content" class="column is-10">
+          
+          <!-- Site 1 -->
+          <div class="box" id="site1">
+            <h2 class="title is-4">Site 1: Hurong Freeway</h2>
+            
+            <div class="columns">
+                <div class="column is-6 has-text-centered">
+                  <figure class="image">
+                    <img src="static/images/topology.png" alt="Site 1 Road Network" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
+                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Topological map of Hurong Freeway</figcaption>
+                  </figure>
+                </div>
+                <div class="column is-6">
+                    <div id="site1-desc-content" class="content markdown-body">
+                        <p>Loading site description...</p>
+                    </div>
                 </div>
             </div>
+            <hr>
+          </div>
+          
+          <!-- Site 2 -->
+          <div class="box" id="site2">
+            <h2 class="title is-4">Site 2: Intersection</h2>
+            
+            <div class="columns">
+                <div class="column is-6 has-text-centered">
+                  <figure class="image">
+                    <img src="static/images/topology.png" alt="Site 2 Road Network" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
+                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Topological map of Nanjing Expressway</figcaption>
+                  </figure>
+                </div>
+                <div class="column is-6">
+                    <div id="site2-desc-content" class="content markdown-body">
+                        <p>Loading site description...</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+          </div>
+
+          <!-- Site 2 -->
+          <div class="box" id="site3">
+            <h2 class="title is-4">Site 3: Yingtian Expressway</h2>
+            
+            <div class="columns">
+                <div class="column is-6 has-text-centered">
+                  <figure class="image">
+                    <img src="static/images/topology.png" alt="Site 2 Road Network" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
+                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Topological map of Nanjing Expressway</figcaption>
+                  </figure>
+                </div>
+                <div class="column is-6">
+                    <div id="site3-desc-content" class="content markdown-body">
+                        <p>Loading site description...</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+          </div>
+  
+          <!-- Data Fields -->
+          <div class="box" id="data-fields">
+            <h2 class="title is-4">Data Fields</h2>
+            <div id="site-field-content" class="content markdown-body">
+              <p>Loading data fields...</p>
+            </div>
+          </div>
+          
         </div>
 
-        <hr>
-
-        <h3 class="title is-5">Data Fields</h3>
-
-<h3 class="title is-5">Meta Information (Temporal & Spatial Reference)</h3>
-<div class="table-container">
-  <table class="table is-striped is-hoverable is-fullwidth">
-    <thead>
-      <tr>
-        <th>Field Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Example</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td><code>locationId</code></td>
-        <td>String</td>
-        <td>Identifier or name of the data collection site</td>
-        <td>A1</td>
-      </tr>
-      <tr>
-        <td><code>frameRate</code></td>
-        <td>Float</td>
-        <td>Sampling frequency (frames per second)</td>
-        <td>10</td>
-      </tr>
-      <tr>
-        <td><code>timeStep</code></td>
-        <td>Float</td>
-        <td>Time interval between consecutive frames (1 / frameRate)</td>
-        <td>0.1</td>
-      </tr>
-      <tr>
-        <td><code>startTimestamp</code></td>
-        <td>Float</td>
-        <td>Absolute Unix timestamp at the start of data collection</td>
-        <td>1625012345.0</td>
-      </tr>
-      <tr>
-        <td><code>coordinateSystem</code></td>
-        <td>String</td>
-        <td>Spatial coordinate reference system</td>
-        <td>WGS84</td>
-      </tr>
-    </tbody>
-  </table>
-</div>
-
-<h3 class="title is-5">Trajectory Data Fields</h3>
-<div class="table-container">
-  <table class="table is-striped is-hoverable is-fullwidth">
-    <thead>
-      <tr>
-        <th>Field Name</th>
-        <th>Type</th>
-        <th>Description</th>
-        <th>Example</th>
-      </tr>
-    </thead>
-    <tbody>
-
-      <!-- Time & identity -->
-      <tr>
-        <td><code>frame</code></td>
-        <td>Integer</td>
-        <td>Index of the current video frame</td>
-        <td>1200</td>
-      </tr>
-      <tr>
-        <td><code>unixTime</code></td>
-        <td>Float</td>
-        <td>Absolute timestamp corresponding to the frame (Unix time)</td>
-        <td>1625012345.0</td>
-      </tr>
-      <tr>
-        <td><code>id</code></td>
-        <td>Integer</td>
-        <td>Unique identifier of the vehicle track</td>
-        <td>35</td>
-      </tr>
-      <tr>
-        <td><code>class</code></td>
-        <td>String</td>
-        <td>The vehicle class of the tracked vehicle (Car or Truck)</td>
-        <td>Car</td>
-      </tr>
-
-      <!-- Position -->
-      <tr>
-        <td><code>x</code></td>
-        <td>Float</td>
-        <td>X position of the upper-left corner of the bounding box (image coordinates)</td>
-        <td>523.4</td>
-      </tr>
-      <tr>
-        <td><code>y</code></td>
-        <td>Float</td>
-        <td>Y position of the upper-left corner of the bounding box (image coordinates)</td>
-        <td>214.7</td>
-      </tr>
-      <tr>
-        <td><code>width</code></td>
-        <td>Float</td>
-        <td>Width of the vehicle bounding box (m)</td>
-        <td>2.1</td>
-      </tr>
-      <tr>
-        <td><code>height</code></td>
-        <td>Float</td>
-        <td>Height of the vehicle bounding box (m)</td>
-        <td>4.6</td>
-      </tr>
-
-      <!-- Frenet coordinates -->
-      <tr>
-        <td><code>frenetX</code></td>
-        <td>Float</td>
-        <td>Longitudinal position in the Frenet coordinate system (m)</td>
-        <td>125.8</td>
-      </tr>
-      <tr>
-        <td><code>frenetY</code></td>
-        <td>Float</td>
-        <td>Lateral position in the Frenet coordinate system (m)</td>
-        <td>-1.2</td>
-      </tr>
-
-      <!-- Motion -->
-      <tr>
-        <td><code>xVelocity</code></td>
-        <td>Float</td>
-        <td>Longitudinal velocity (m/s)</td>
-        <td>18.3</td>
-      </tr>
-      <tr>
-        <td><code>yVelocity</code></td>
-        <td>Float</td>
-        <td>Lateral velocity (m/s)</td>
-        <td>-0.4</td>
-      </tr>
-      <tr>
-        <td><code>xAcceleration</code></td>
-        <td>Float</td>
-        <td>Longitudinal acceleration (m/s²)</td>
-        <td>0.8</td>
-      </tr>
-      <tr>
-        <td><code>yAcceleration</code></td>
-        <td>Float</td>
-        <td>Lateral acceleration (m/s²)</td>
-        <td>0.1</td>
-      </tr>
-
-      <!-- Interaction -->
-      <tr>
-        <td><code>dhw</code></td>
-        <td>Float</td>
-        <td>Distance headway to the preceding vehicle (m)</td>
-        <td>25.6</td>
-      </tr>
-      <tr>
-        <td><code>thw</code></td>
-        <td>Float</td>
-        <td>Time headway to the preceding vehicle (s)</td>
-        <td>1.4</td>
-      </tr>
-      <tr>
-        <td><code>ttc</code></td>
-        <td>Float</td>
-        <td>Time-to-collision with the preceding vehicle (s)</td>
-        <td>6.2</td>
-      </tr>
-
-      <!-- Lane & neighborhood -->
-      <tr>
-        <td><code>laneId</code></td>
-        <td>Integer</td>
-        <td>Lane identifier derived from lane markings</td>
-        <td>3</td>
-      </tr>
-      <tr>
-        <td><code>precedingId</code></td>
-        <td>Integer</td>
-        <td>ID of the preceding vehicle in the same lane</td>
-        <td>21</td>
-      </tr>
-      <tr>
-        <td><code>followingId</code></td>
-        <td>Integer</td>
-        <td>ID of the following vehicle in the same lane</td>
-        <td>48</td>
-      </tr>
-      <tr>
-        <td><code>leftPrecedingId</code></td>
-        <td>Integer</td>
-        <td>ID of the preceding vehicle on the adjacent left lane</td>
-        <td>12</td>
-      </tr>
-      <tr>
-        <td><code>leftAlongsideId</code></td>
-        <td>Integer</td>
-        <td>ID of the adjacent vehicle on the left lane</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td><code>leftFollowingId</code></td>
-        <td>Integer</td>
-        <td>ID of the following vehicle on the adjacent left lane</td>
-        <td>33</td>
-      </tr>
-      <tr>
-        <td><code>rightPrecedingId</code></td>
-        <td>Integer</td>
-        <td>ID of the preceding vehicle on the adjacent right lane</td>
-        <td>0</td>
-      </tr>
-      <tr>
-        <td><code>rightAlongsideId</code></td>
-        <td>Integer</td>
-        <td>ID of the adjacent vehicle on the right lane</td>
-        <td>19</td>
-      </tr>
-      <tr>
-        <td><code>rightFollowingId</code></td>
-        <td>Integer</td>
-        <td>ID of the following vehicle on the adjacent right lane</td>
-        <td>0</td>
-      </tr>
-
-    </tbody>
-  </table>
-</div>
-
-
+        <!-- Sidebar Navigation Column -->
+        <div id="sidebar-col" class="column is-2 is-hidden-mobile">
+          <aside class="menu sticky-menu pl-2">
+            <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+                <p class="menu-label mb-0">Contents</p>
+                <button id="btn-close-sidebar" class="sidebar-close" title="Hide Sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <ul class="menu-list">
+              <li><a href="#site1">Site 1: Hurong Freeway</a></li>
+              <li><a href="#site2">Site 2: Intersection</a></li>
+              <li><a href="#site3">Site 3: Yingtian Expressway</a></li>
+              <li><a href="#data-fields">Data Fields</a></li>
+            </ul>
+            
+            <p class="menu-label mt-5">
+              Links
+            </p>
+            <ul class="menu-list">
+              <li><a href="index.html">← Back to Home</a></li>
+              <li><a href="download.html">Download Data</a></li>
+            </ul>
+          </aside>
         </div>
+
       </div>
-      
-      <!-- You can add more sites here by duplicating the .box structure -->
       
     </div>
   </section>
 
+  <!-- Floating Toggle Button (Hidden by default) -->
+  <button id="sidebar-floating-toggle" class="sidebar-toggle" title="Show Sidebar">
+    <i class="fas fa-list-ul"></i>
+  </button>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-      // Use absolute path to avoid relative URL issues under subpaths
-      loadMarkdown('site-desc-content', '/static/md/data_site_desc.md');
+      // Load Markdown content
+      loadMarkdown('site1-desc-content', '/static/md/data_description/site1_intro.md');
+      loadMarkdown('site2-desc-content', '/static/md/data_description/site2_intro.md');
+      loadMarkdown('site3-desc-content', '/static/md/data_description/site3_intro.md');
+      loadMarkdown('site-field-content', '/static/md/data_description/site_field.md');
+
+      // --- Sidebar Toggle Logic ---
+      const sidebarCol = document.getElementById('sidebar-col');
+      const mainContent = document.getElementById('main-content');
+      const closeBtn = document.getElementById('btn-close-sidebar');
+      const floatToggleBtn = document.getElementById('sidebar-floating-toggle');
+
+      function hideSidebar() {
+        sidebarCol.classList.add('is-hidden');
+        mainContent.classList.remove('is-10');
+        mainContent.classList.add('is-12');
+        floatToggleBtn.classList.add('visible');
+      }
+
+      function showSidebar() {
+        sidebarCol.classList.remove('is-hidden');
+        mainContent.classList.remove('is-12');
+        mainContent.classList.add('is-10');
+        floatToggleBtn.classList.remove('visible');
+      }
+
+      closeBtn.addEventListener('click', hideSidebar);
+      floatToggleBtn.addEventListener('click', showSidebar);
+
+      // --- Scroll Spy Logic ---
+      const sections = document.querySelectorAll('.box[id]');
+      const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          const sectionHeight = section.clientHeight;
+          if (pageYOffset >= (sectionTop - 150)) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('is-active');
+          if (link.getAttribute('href').includes(current)) {
+            link.classList.add('is-active');
+          }
+        });
+      });
     });
   </script>
 
