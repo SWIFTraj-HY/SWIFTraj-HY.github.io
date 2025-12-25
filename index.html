@@ -15,6 +15,98 @@
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="static/js/common.js"></script>
+
+  <style>
+    /* Sticky sidebar navigation */
+    .sticky-menu {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 2rem;
+      max-height: calc(100vh - 4rem);
+      overflow-y: auto;
+    }
+    
+    /* Smooth scrolling offset to account for potential fixed headers or padding */
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    :target {
+      scroll-margin-top: 2rem;
+    }
+
+    /* Active state for side menu */
+    .menu-list a.is-active {
+      background-color: var(--primary-color);
+      color: #fff;
+    }
+
+    /* Sidebar toggle button style */
+    .sidebar-toggle {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      z-index: 1000;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+
+    .sidebar-toggle:hover {
+      transform: translateY(-2px);
+      background: var(--primary-hover);
+    }
+    
+    /* Custom style for the sidebar column transition */
+    .column {
+      transition: all 0.3s ease;
+    }
+    
+    /* Style for close button in sidebar */
+    .sidebar-close {
+        float: right;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: var(--text-light);
+        padding: 0.2rem;
+    }
+    .sidebar-close:hover {
+        color: var(--text-primary);
+    }
+    
+    /* Floating toggle when sidebar is hidden */
+    #sidebar-floating-toggle {
+        display: none;
+        position: fixed;
+        right: 2rem;
+        bottom: 2rem;
+        z-index: 99;
+    }
+    #sidebar-floating-toggle.visible {
+        display: flex;
+    }
+
+    /* Adjustments for content inside columns */
+    .content-block {
+      margin-bottom: 3rem;
+      padding: 2rem;
+      border-radius: 8px;
+    }
+    .content-block.is-light {
+      background-color: #f5f5f5;
+    }
+  </style>
 </head>
 <body>
 
@@ -58,130 +150,221 @@
     </div>
   </section>
 
-  <!-- Data Summary (3 Columns) -->
   <section class="section">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Data Summary</h2>
+    <div class="container is-max-widescreen">
       <div class="columns">
-        <!-- Col 1 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel1.jpg" alt="Summary 1">
-          </figure>
-          <h3 class="title is-5 mt-4">Summary Point 1</h3>
-          <p class="content">
-            Brief summary description goes here. Covering key aspect A of the dataset.
-          </p>
+        
+        <!-- Main Content Column -->
+        <div id="main-content" class="column is-10">
+          
+          <!-- Data Summary (3 Columns) -->
+          <div id="data-summary" class="content-block">
+            <h2 class="title is-3 has-text-centered">Data Summary</h2>
+            <div class="columns">
+              <!-- Col 1 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel1.jpg" alt="Summary 1">
+                </figure>
+                <h3 class="title is-5 mt-4">Summary Point 1</h3>
+                <p class="content">
+                  Brief summary description goes here. Covering key aspect A of the dataset.
+                </p>
+              </div>
+              <!-- Col 2 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel2.jpg" alt="Summary 2">
+                </figure>
+                <h3 class="title is-5 mt-4">Summary Point 2</h3>
+                <p class="content">
+                  Brief summary description goes here. Covering key aspect B of the dataset.
+                </p>
+              </div>
+              <!-- Col 3 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel3.jpg" alt="Summary 3">
+                </figure>
+                <h3 class="title is-5 mt-4">Summary Point 3</h3>
+                <p class="content">
+                  Brief summary description goes here. Covering key aspect C of the dataset.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Experiment Details (1 Column, Markdown) -->
+          <div id="experiment-details" class="content-block is-light">
+            <!-- Image above content -->
+            <figure class="image mb-5">
+              <img src="static/images/satellite.png" alt="Experiment Setup">
+            </figure>
+            <!-- Markdown Content -->
+            <div id="experiment-content" class="content markdown-body">
+              <p class="has-text-centered">Loading experiment details...</p>
+            </div>
+          </div>
+
+          <!-- Data Processing (Markdown) -->
+          <div id="data-processing" class="content-block">
+            <div id="processing-content" class="content markdown-body">
+              <p class="has-text-centered">Loading processing details...</p>
+            </div>
+          </div>
+
+          <!-- Potential Usage (3 Columns) -->
+          <div id="potential-usage" class="content-block is-light">
+            <h2 class="title is-3 has-text-centered">Potential Usage of the Data</h2>
+            <div class="columns">
+              <!-- Usage 1 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel1.jpg" alt="Usage 1">
+                </figure>
+                <h3 class="title is-5 mt-4">Usage Case 1</h3>
+                <p class="content">
+                  Description of how the data can be used for task A.
+                </p>
+              </div>
+              <!-- Usage 2 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel2.jpg" alt="Usage 2">
+                </figure>
+                <h3 class="title is-5 mt-4">Usage Case 2</h3>
+                <p class="content">
+                  Description of how the data can be used for task B.
+                </p>
+              </div>
+              <!-- Usage 3 -->
+              <div class="column has-text-centered">
+                <figure class="image is-4by3">
+                  <img src="static/images/carousel3.jpg" alt="Usage 3">
+                </figure>
+                <h3 class="title is-5 mt-4">Usage Case 3</h3>
+                <p class="content">
+                  Description of how the data can be used for task C.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Visitor Statistics -->
+          <div class="has-text-centered py-4">
+            <div class="is-size-7 has-text-grey">
+              <span id="busuanzi_container_site_pv" style="display:none">
+                <i class="fas fa-eye"></i> Total Visits: <span id="busuanzi_value_site_pv"></span>
+              </span>
+              <span class="mx-3" style="margin: 0 10px;">|</span>
+              <span id="busuanzi_container_site_uv" style="display:none">
+                <i class="fas fa-user"></i> Visitors: <span id="busuanzi_value_site_uv"></span>
+              </span>
+            </div>
+          </div>
+          <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        
         </div>
-        <!-- Col 2 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel2.jpg" alt="Summary 2">
-          </figure>
-          <h3 class="title is-5 mt-4">Summary Point 2</h3>
-          <p class="content">
-            Brief summary description goes here. Covering key aspect B of the dataset.
-          </p>
+
+        <!-- Sidebar Navigation Column -->
+        <div id="sidebar-col" class="column is-2 is-hidden-mobile">
+          <aside class="menu sticky-menu pl-2">
+            <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+                <p class="menu-label mb-0">Contents</p>
+                <button id="btn-close-sidebar" class="sidebar-close" title="Hide Sidebar">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <ul class="menu-list">
+              <li><a href="#data-summary">Data Summary</a></li>
+              <li><a href="#experiment-details">Experiment Details</a></li>
+              <li><a href="#data-processing">Data Processing</a></li>
+              <li><a href="#potential-usage">Potential Usage</a></li>
+            </ul>
+            
+            <p class="menu-label mt-5">
+              Links
+            </p>
+            <ul class="menu-list">
+              <li><a href="data-description.html">Data Description</a></li>
+              <li><a href="download.html">Download Data</a></li>
+            </ul>
+          </aside>
         </div>
-        <!-- Col 3 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel3.jpg" alt="Summary 3">
-          </figure>
-          <h3 class="title is-5 mt-4">Summary Point 3</h3>
-          <p class="content">
-            Brief summary description goes here. Covering key aspect C of the dataset.
-          </p>
-        </div>
+
       </div>
     </div>
   </section>
 
-  <!-- Experiment Details (1 Column, Markdown) -->
-  <section class="section has-background-light">
-    <div class="container is-max-desktop">
-      <!-- Image above content -->
-      <figure class="image mb-5">
-        <img src="static/images/satellite.png" alt="Experiment Setup">
-      </figure>
-      <!-- Markdown Content -->
-      <div id="experiment-content" class="content markdown-body">
-        <p class="has-text-centered">Loading experiment details...</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Data Processing (Markdown) -->
-  <section class="section">
-    <div class="container is-max-desktop">
-      <div id="processing-content" class="content markdown-body">
-        <p class="has-text-centered">Loading processing details...</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Potential Usage (3 Columns) -->
-  <section class="section has-background-light">
-    <div class="container is-max-desktop">
-      <h2 class="title is-3 has-text-centered">Potential Usage of the Data</h2>
-      <div class="columns">
-        <!-- Usage 1 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel1.jpg" alt="Usage 1">
-          </figure>
-          <h3 class="title is-5 mt-4">Usage Case 1</h3>
-          <p class="content">
-            Description of how the data can be used for task A.
-          </p>
-        </div>
-        <!-- Usage 2 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel2.jpg" alt="Usage 2">
-          </figure>
-          <h3 class="title is-5 mt-4">Usage Case 2</h3>
-          <p class="content">
-            Description of how the data can be used for task B.
-          </p>
-        </div>
-        <!-- Usage 3 -->
-        <div class="column has-text-centered">
-          <figure class="image is-4by3">
-            <img src="static/images/carousel3.jpg" alt="Usage 3">
-          </figure>
-          <h3 class="title is-5 mt-4">Usage Case 3</h3>
-          <p class="content">
-            Description of how the data can be used for task C.
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Visitor Statistics -->
-  <section class="section" style="padding: 1.5rem 0;">
-    <div class="container is-max-desktop has-text-centered">
-      <div class="is-size-7 has-text-grey">
-        <span id="busuanzi_container_site_pv" style="display:none">
-          <i class="fas fa-eye"></i> Total Visits: <span id="busuanzi_value_site_pv"></span>
-        </span>
-        <span class="mx-3" style="margin: 0 10px;">|</span>
-        <span id="busuanzi_container_site_uv" style="display:none">
-          <i class="fas fa-user"></i> Visitors: <span id="busuanzi_value_site_uv"></span>
-        </span>
-      </div>
-    </div>
-  </section>
-  <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+  <!-- Floating Toggle Button (Hidden by default) -->
+  <button id="sidebar-floating-toggle" class="sidebar-toggle" title="Show Sidebar">
+    <i class="fas fa-list-ul"></i>
+  </button>
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         loadMarkdown('experiment-content', 'static/md/home_experiment.md');
         loadMarkdown('processing-content', 'static/md/home_processing.md');
+
+        // --- Sidebar Toggle Logic ---
+        const sidebarCol = document.getElementById('sidebar-col');
+        const mainContent = document.getElementById('main-content');
+        const closeBtn = document.getElementById('btn-close-sidebar');
+        const floatToggleBtn = document.getElementById('sidebar-floating-toggle');
+
+        function hideSidebar() {
+          sidebarCol.classList.add('is-hidden');
+          mainContent.classList.remove('is-10');
+          mainContent.classList.add('is-12');
+          floatToggleBtn.classList.add('visible');
+        }
+
+        function showSidebar() {
+          sidebarCol.classList.remove('is-hidden');
+          mainContent.classList.remove('is-12');
+          mainContent.classList.add('is-10');
+          floatToggleBtn.classList.remove('visible');
+        }
+
+        closeBtn.addEventListener('click', hideSidebar);
+        floatToggleBtn.addEventListener('click', showSidebar);
+
+      // --- Scroll Spy Logic ---
+      const sections = ['data-summary', 'experiment-details', 'data-processing', 'potential-usage'];
+      const navLinks = document.querySelectorAll('.menu-list a[href^="#"]');
+
+      function updateActiveLink() {
+        let current = '';
+        
+        // 这种方式能处理 section 高度不一的情况
+        // 这里的逻辑是：找出所有“顶部在视口观测线之上”的 section 中，最靠下的那个
+        // 观测线设为视口顶端向下 100px (或者 header 高度)
+        sections.forEach(sectionId => {
+          const section = document.getElementById(sectionId);
+          if (section) {
+            const rect = section.getBoundingClientRect();
+            // 如果 section 的顶部到了视口上方，或者在视口上边缘附近 (比如 150px 以内)
+            // 就认为进入了该 section 区域
+            if (rect.top <= 150) {
+              current = sectionId;
+            }
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('is-active');
+          if (link.getAttribute('href') === '#' + current) {
+            link.classList.add('is-active');
+          }
+        });
+      }
+
+      window.addEventListener('scroll', updateActiveLink);
+      // 初始化时也执行一次，防止刷新页面后状态不对
+      updateActiveLink();
     });
   </script>
-
 
 </body>
 </html>

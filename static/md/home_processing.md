@@ -1,7 +1,21 @@
 ## Data Processing
 <!-- 数据处理过程 -->
 
-The raw data undergoes several processing steps:
-1. Cleaning
-2. Normalization
-3. Feature Extraction
+In general, the trajectory processing procedure consists of three main stages: trajectory extraction, trajectory reconstruction and trajectory stitching.
+
+<figure>
+ <img src="static/images/home/trajectory_extraction.png" alt="OpenVTER" width="80%">
+ <figcaption>Overview of the UAV-based vehicle trajectory extraction pipeline<figcaption>
+</figure>
+
+For trajectory extraction, we adopt [OpenVTER](https://ieeexplore.ieee.org/document/10736977/), a generalized open-source vehicle trajectory extraction framework based on rotated bounding boxes (RBBs). The overall processing pipeline is illustrated in Figure. This framework consists of three key steps, including video stabilization, vehicle detection, vehicle tracking. 
+Specifically, a base-frame video stabilization strategy is first employed to mitigate cumulative errors in the homography transformation and to improve computational efficiency. To enhance detection accuracy for small and densely distributed vehicles in high-resolution UAV imagery, each stabilized frame is cropped to the road region of interest and further divided into multiple sub-images. Vehicle detection is then performed on these sub-images using a rotated object detection model, YOLOX-R, which is capable of accurately identifying vehicles with arbitrary orientations through RBBs. The detected RBBs are subsequently mapped back to the original image coordinate system.
+Based on the detection results, a rotated vehicle tracking algorithm, SORT-R, is applied to associate vehicle detections across consecutive frames. SORT-R integrates intersection-over-union (IoU) matching, the Hungarian assignment algorithm, and Kalman filtering to achieve real-time multi-vehicle tracking. Finally, vehicle trajectories are formed as time-ordered sequences of the centers of tracked RBBs.
+
+However, due to the presence of overpass bridges within the data collection area, the mainline roadway is subject to partial occlusions. Specifically, four occluded segments with lengths exceeding 25 meters are located at sites A2, A4, B2, and D1, while an additional four shorter occlusions of approximately 10 meters occur at site A4. These occlusions lead to intermittent losses in vehicle tracking, resulting in fragmented and incomplete trajectories. To ensure the continuity of vehicle trajectories along the roadway, the trajectory segments missing within these occluded regions must be reconstructed.
+
+The reconstruction of vehicle trajectories in bridge-occluded regions is  formulated as a two-step problem: (1) matching vehicles before and after occlusion, and (2) generating trajectories within the occluded area for the matched vehicles.
+To address these problems, we adopted a hybrid macro–micro framework that incorporates macroscopic traffic-wave dynamics into the reconstruction of trajectories in bridge-occluded regions. Specifically, the Generalized Adaptive Smoothing Method (GASM) is applied to reconstruct the macroscopic speed field within the region occluded by the bridge. This reconstructed speed field enables the generation of candidate trajectories, which are subsequently combined with image features to perform vehicle matching across the occlusion. Once vehicle matching is established, vehicle trajectories are generated such that their instantaneous speeds are aligned with the reconstructed macroscopic speed field while simultaneously satisfying microscopic kinematic constraints. This design ensures that the reconstructed trajectories are consistent with both macroscopic traffic flow dynamics and microscopic vehicle motion characteristics.
+
+After trajectory reconstruction, continuous vehicle trajectories are obtained for each individual UAV. To further achieve continuous vehicle trajectories across multiple UAV platforms, trajectory stitching is performed to associate vehicle trajectories observed by adjacent UAVs within their overlapping regions. The objective is to merge fragmented trajectories belonging to the same vehicle across different UAV views into a unified, continuous trajectory. This step addresses the discontinuities introduced by limited camera coverage and ensures spatial–temporal consistency across multiple UAVs. 
+Details of trajectory reconstruction and trajectory stitching are presented in the our paper.
