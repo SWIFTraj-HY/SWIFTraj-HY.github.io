@@ -15,6 +15,151 @@
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script defer src="static/js/common.js"></script>
+
+  <style>
+    /* Custom styles for the download interface */
+    .download-interface {
+      margin-bottom: 2rem;
+    }
+    
+    .panel-header {
+      background-color: #094aed;
+      color: #fff;
+      text-transform: uppercase;
+      padding: 0.5rem 1rem;
+      font-weight: 600;
+      text-align: center;
+      letter-spacing: 1px;
+    }
+
+    .selection-grid {
+      display: grid;
+      gap: 0.5rem;
+      margin-bottom: 1rem;
+    }
+
+    /* Location Grid: 3 columns */
+    .location-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    /* Date/Time Grid: 1 or 2 columns */
+    .date-grid, .time-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+    
+    .time-grid-container {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .selector-btn {
+      background-color: #e0e0e0; /* Light gray default */
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.2s;
+      width: 100%;
+    }
+
+    .selector-btn:hover {
+      opacity: 0.8;
+    }
+
+    /* Active states */
+    .selector-btn.is-location.active {
+      background-color: #a4d05d; /* Greenish */
+      color: #000;
+    }
+
+    .selector-btn.is-date.active, .selector-btn.is-time.active {
+      background-color: #7abaff; /* Blueish */
+      color: #000;
+    }
+    
+    .selector-btn.is-all-drones {
+      background-color: #e0e0e0; /* Light gray default like others */
+      margin-top: 0.5rem;
+      border: none;
+      padding: 0.5rem;
+      cursor: pointer;
+      text-align: center;
+      font-weight: 500;
+      transition: all 0.2s;
+      width: 100%;
+    }
+    
+    .selector-btn.is-all-drones:hover {
+       opacity: 0.8;
+    }
+    
+    .selector-btn.is-all-drones.active {
+      background-color: #7abaff; /* Blueish to match ALL DRONES style in reference or green? User said green like A1. */
+      /* User said: "选中后是和A1这些按钮一样绿色颜色" which is #a4d05d */
+      background-color: #7abaff; /* Wait, reference image shows ALL DRONES is BLUE. 
+         But user text says: "选中后是和A1这些按钮一样绿色颜色". 
+         Actually, let's look at the reference image again. 
+         Reference image: Location 1-10 are green. ALL DRONES is Blue.
+         User request: "选中后是和A1这些按钮一样绿色颜色" -> User explicitly asked for GREEN (like A1). 
+         I will follow user instruction over image. */
+      background-color: #a4d05d; 
+      color: #000;
+      font-weight: 700;
+      border: none;
+    }
+
+    .info-btn {
+      background-color: #e08e8e; /* Red/Pinkish */
+      color: white;
+      width: 100%;
+      border: none;
+      padding: 1rem;
+      font-size: 1.25rem;
+      font-weight: 600;
+      cursor: pointer;
+      text-transform: uppercase;
+      margin-top: 1rem;
+    }
+    
+    .info-btn:hover {
+      background-color: #d43e3e;
+    }
+
+    .map-container {
+      border: 1px solid #ddd;
+    }
+    
+    .map-container img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .result-box {
+        margin-top: 1rem;
+        padding: 1rem;
+        background-color: #f5f5f5;
+        border-left: 5px solid #3273dc;
+        display: none;
+    }
+    
+    /* Layout Helpers */
+    .control-panel-row {
+        display: flex;
+        gap: 1rem;
+    }
+    .control-column-left {
+        flex: 1;
+    }
+    .control-column-right {
+        flex: 1;
+    }
+  </style>
 </head>
 <body>
 
@@ -22,6 +167,73 @@
     <div class="container is-max-desktop">
       <h1 class="title is-2 has-text-centered">Download Dataset</h1>
       
+      <!-- Custom Download Interface -->
+      <div class="box download-interface">
+        <div class="columns">
+            <!-- Map Section -->
+            <div class="column is-two-thirds">
+                <div class="panel-header">MAP</div>
+                <div class="map-container">
+                    <img src="static/images/satellite.png" alt="Dataset Map">
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="column">
+                <div class="control-panel-row">
+                    <div class="control-column-left">
+                        <div class="panel-header">LOCATION</div>
+                    </div>
+                    <div class="control-column-right">
+                        <div class="panel-header">DATE</div>
+                    </div>
+                </div>
+
+                <div class="control-panel-row" style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                     <!-- Locations -->
+                    <div class="control-column-left">
+                        <div class="selection-grid location-grid">
+                            <button class="selector-btn is-location" onclick="selectLoc('A1')">A1</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('A2')">A2</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('A3')">A3</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('A4')">A4</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('B1')">B1</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('B2')">B2</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('C1')">C1</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('C2')">C2</button>
+                            <button class="selector-btn is-location" onclick="selectLoc('D1')">D1</button>
+                        </div>
+                        <button class="selector-btn is-all-drones" onclick="selectAllDrones()">ALL DRONES</button>
+                    </div>
+
+                    <!-- Dates -->
+                    <div class="control-column-right">
+                        <div class="date-grid">
+                            <button class="selector-btn is-date" id="date-1" onclick="selectDate('20220616')">24/10/2018</button>
+                            <button class="selector-btn is-date" id="date-2" onclick="selectDate('20220617')">29/10/2018</button>
+                             <!-- Note: Placeholders above, JS will overwrite text based on prompt request -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Time Section -->
+                <div class="panel-header">TIME</div>
+                <div id="time-container" class="time-grid-container" style="margin-top: 0.5rem;">
+                    <!-- JS will populate -->
+                </div>
+
+                <!-- Info Button -->
+                <button class="info-btn" onclick="showInfo()">DOWNLOAD</button>
+            </div>
+        </div>
+        
+        <!-- Result Display -->
+        <div id="result-display" class="result-box">
+          <p>Download from Zenodo. The corresponding filenames are as follows:</p>
+           <strong>Filename:</strong> <span id="filename-text"></span>
+        </div>
+      </div>
+
       <div class="box">
         <div id="download-content" class="content markdown-body">
             <p class="has-text-centered">Loading download instructions...</p>
@@ -32,9 +244,142 @@
   </section>
 
   <script>
+    // Configuration Data
+    const CONFIG = {
+        dates: [
+            { id: '20220616', label: '2022年6月16日', times: ['07:00', '07:25', '07:50', '08:15', '08:45'] },
+            { id: '20220617', label: '2022年6月17日', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
+        ]
+    };
+
+    // State
+    let state = {
+        location: null,
+        date: null, // '20220616' or '20220617'
+        time: null
+    };
+
+    // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         loadMarkdown('download-content', 'static/md/download.md');
+        initInterface();
     });
+
+    function initInterface() {
+        // Initialize Date Buttons text
+        const dateBtns = document.querySelectorAll('.is-date');
+        if(dateBtns.length >= 2) {
+            dateBtns[0].textContent = CONFIG.dates[0].label;
+            dateBtns[0].setAttribute('onclick', `selectDate('${CONFIG.dates[0].id}')`);
+            
+            dateBtns[1].textContent = CONFIG.dates[1].label;
+            dateBtns[1].setAttribute('onclick', `selectDate('${CONFIG.dates[1].id}')`);
+        }
+        
+        // Select first date by default
+        selectDate(CONFIG.dates[0].id);
+    }
+
+    function selectLoc(locId) {
+        state.location = locId;
+        
+        // Update UI
+        document.querySelectorAll('.is-location').forEach(btn => {
+            if(btn.textContent.trim() === locId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+        
+        // Deactivate All Drones
+        const allDronesBtn = document.querySelector('.is-all-drones');
+        if(allDronesBtn) allDronesBtn.classList.remove('active');
+        
+        clearResult();
+    }
+
+    function selectAllDrones() {
+        state.location = 'ALL';
+        
+        // Update UI: Deactivate all individual locations
+        document.querySelectorAll('.is-location').forEach(btn => btn.classList.remove('active'));
+        
+        // Activate All Drones button
+        const allDronesBtn = document.querySelector('.is-all-drones');
+        if(allDronesBtn) allDronesBtn.classList.add('active');
+        
+        clearResult();
+    }
+
+    function selectDate(dateId) {
+        state.date = dateId;
+        state.time = null; // Reset time when date changes
+        
+        // Update UI Dates
+        document.querySelectorAll('.is-date').forEach((btn, index) => {
+            const configId = CONFIG.dates[index].id;
+            if(configId === dateId) {
+                btn.classList.add('active');
+            } else {
+                btn.classList.remove('active');
+            }
+        });
+
+        // Render Times
+        renderTimes(dateId);
+        clearResult();
+    }
+
+    function renderTimes(dateId) {
+        const container = document.getElementById('time-container');
+        container.innerHTML = '';
+        
+        const dateConfig = CONFIG.dates.find(d => d.id === dateId);
+        if(!dateConfig) return;
+
+        dateConfig.times.forEach(time => {
+            const btn = document.createElement('button');
+            btn.className = 'selector-btn is-time';
+            btn.textContent = time;
+            btn.onclick = () => selectTime(time, btn);
+            container.appendChild(btn);
+        });
+    }
+
+    function selectTime(timeVal, btnElement) {
+        state.time = timeVal;
+
+        // Update UI
+        document.querySelectorAll('.is-time').forEach(b => b.classList.remove('active'));
+        btnElement.classList.add('active');
+        
+        clearResult();
+    }
+
+    function showInfo() {
+        const resultBox = document.getElementById('result-display');
+        const fileText = document.getElementById('filename-text');
+
+        if (!state.location || !state.date || !state.time) {
+            alert('Please select a Location, Date, and Time.');
+            return;
+        }
+
+        // Construct Filename
+        // Format: SWIFTraj_YYYYMMDD_HHMM_Loc.zip (Example format)
+        const dateStr = state.date;
+        const timeStr = state.time.replace(':', '');
+        const locStr = state.location;
+        const filename = `SWIFTraj_${dateStr}_${timeStr}_${locStr}.csv`;
+
+        fileText.textContent = filename;
+        resultBox.style.display = 'block';
+    }
+    
+    function clearResult() {
+        document.getElementById('result-display').style.display = 'none';
+    }
   </script>
 
 </body>
