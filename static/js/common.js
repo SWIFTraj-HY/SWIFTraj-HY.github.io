@@ -14,7 +14,9 @@ function injectHeader() {
           <span class="icon" style="margin-right: 5px;">
               <img src="static/images/favicon.ico" alt="SWIFTraj Logo">
           </span>
-          <strong>SWIFTraj</strong>
+          <img src="static/images/SWIFTraj.jpg" alt="SWIFTraj" style="height: 1.5rem; width: auto; margin-right: 5px;">
+          
+          <!-- <strong>SWIFTraj</strong> -->
         </a>
         
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
