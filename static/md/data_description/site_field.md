@@ -44,9 +44,6 @@ To ensure consistency, portability, and ease of use across databases and analyti
 | `frenet_d_accel` | list[float] | Lateral acceleration / 横向加速度（默认 m/s²） | Consider suffixing units (e.g., `_mps2`) in future versions / 后续版本可考虑在字段名中显式单位（如 `_mps2`） |
 | `lane_id` | list[int] | Lane identifier where the vehicle center lies / 车辆中心点所在车道区域编号 | `-1` indicates unlabelled area / `-1` 表示未标注区域 |
 | `lane_sequence` | list[int] | Ordered unique lanes traversed by the vehicle / 车辆经过的所有车道（按顺序且不重复） | Derived from `lane_id` by removing consecutive duplicates; order follows `frame_index` / 由 `lane_id` 去除相邻重复得到，顺序与 `frame_index` 一致 |
-| `preceding_id` | list[int] | Preceding vehicle id in the same lane / 同车道前车编号 | Use a consistent “no vehicle” code (`-1`) / 无前车时使用缺失编码（`-1`） |
-| `following_id` | list[int] | Following vehicle id in the same lane / 同车道后车编号 | Use a consistent “no vehicle” code ( `-1`) / 无后车时使用缺失编码（`-1`） |
-| `space_headway` | list[float] | Distance headway (m) / 空间车头间距（米） | Computed between front bumpers along Frenet s; center-based Frenet is adjusted for computation / 基于 Frenet s 的前保险杠同位置点距离计算；Frenet 默认中心点，计算时已换算到前保险杠 |
 | `pixel_x` | list[float] | Center x in pixel coordinates (px) / 车辆中心点像素坐标 x（像素） | Per-frame values aligned with `frame_index` / 与 `frame_index` 逐帧对齐 |
 | `pixel_y` | list[float] | Center y in pixel coordinates (px) / 车辆中心点像素坐标 y（像素） | Per-frame values aligned with `frame_index` / 与 `frame_index` 逐帧对齐 |
 | `ground_x` | list[float] | Center x in local/ground (user-defined) coordinates (m) / 车辆中心点本地/地面（用户自定义）坐标系 x（米） | Coordinate system must be defined in meta (origin, axes, unit) / 坐标系需在 meta 明确（原点、轴向、单位） |
