@@ -13,7 +13,7 @@ To ensure consistency, portability, and ease of use across databases and analyti
 |---|---|---|---|
 | `data_file_name` | string (e.g., `A1_F1`) | Name of the data file / 数据文件名称 | Human-readable identifier / 用于展示与引用的名称 |
 | `location_id` | string (e.g., `HurongFreeway`) | Name of the data collection site / 数据采集站点的名称 | Site-level identifier / 站点级标识 |
-| `location_description` | string (e.g., `沪蓉高速-南京-江苏-中国`) | Camera capture location description / 拍摄位置描述 | Use specific-to-country order (e.g., location-city-province-country) / 按“地点-城市-省-国家”顺序 |
+| `location_name` | string (e.g., `沪蓉高速-南京-江苏-中国`) | Camera capture location description / 拍摄位置描述 | Use specific-to-country order (e.g., location-city-province-country) / 按“地点-城市-省-国家”顺序 |
 | `time_step` | float (e.g., `0.1`) | Time interval between consecutive frames  / 相邻帧的时间间隔（秒） |  |
 | `start_timestamp_ms` | int64 (e.g., `1625012345000`) | Unix timestamp at the start of data collection (milliseconds) / 数据采集开始时刻的 Unix 时间戳（毫秒） | Timestamp of `frame_index[0]` / 对应轨迹数据中 `frame_index=0` 的时刻 |
 | `duration_s` | float (e.g., `300.0`) | Total duration of the trajectory recording (seconds) / 轨迹数据时长（秒） | Can be computed from frame count and `time_step` / 可由帧数与 `time_step` 推导 |
