@@ -5,21 +5,44 @@ We provide python scripts to load and visualize the dataset.
 
 ### Prerequisites
 - Python 3.8+
-- numpy
+- pyarrow
 - pandas
 
-### Installation
 
-```bash
-pip install -r requirements.txt
-```
 
-### Usage
+### Demo
 
+#### Example data
+Download example data from Zendo
+
+#### Example code
+
+Parquet Data Reading Example Code
 ```python
-import dataset_loader
-data = dataset_loader.load('path/to/data')
-dataset_loader.visualize(data)
+import json
+import pyarrow.parquet as pq
+parquet_path = ''
+# 1. Read Parquet file
+table = pq.read_table(parquet_path)
+# 2. Extract and parse Metadata
+file_meta = table.schema.metadata
+restored_meta_json = file_meta[b'dataset_meta'].decode('utf-8')
+restored_meta = json.loads(restored_meta_json)
+
+# 3. Extract trajectory
+records = table.to_pylist()
+restored_tracks = {}
+for record in records:
+    # Assume vehicle_id exists and is unique
+    if 'vehicle_id' in record:
+        vid = record['vehicle_id']
+        del record['vehicle_id']
+        restored_tracks[vid] = record
 ```
+## More Tools
+For more trajectory visualization code, please refer to the data tools code we provided, the GitHub repository, and the Jupyter notebook on Google Colab.
+
+[Google Colab](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing)
 
 [Link to GitHub Repository](https://github.com/your-repo)
+
