@@ -10,7 +10,7 @@ We provide python scripts to load and visualize the dataset.
 
 
 
-### Demo
+## Demo
 
 #### Example data
 Download example data from Zendo
@@ -39,10 +39,26 @@ for record in records:
         del record['vehicle_id']
         restored_tracks[vid] = record
 ```
-## More Tools
+## Tools
 For more trajectory visualization code, please refer to the data tools code we provided, the GitHub repository, and the Jupyter notebook on Google Colab.
 
 [Google Colab](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing)
 
 [Link to GitHub Repository](https://github.com/your-repo)
+### Installation
+Clone the repository and navigate to the project directory:
+```bash
+git clone https://github.com/your-repo/data_tools
+cd data_tools
+```
 
+(Optional) Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Usage
+Run the script to read data and generate space-time diagrams from a Parquet file.
+```bash
+python data_tools.py data/example.parquet
+```
