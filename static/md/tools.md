@@ -3,19 +3,21 @@
 
 We provide python scripts to load and visualize the dataset.
 
-### Prerequisites
-- Python 3.8+
-- pyarrow
-- pandas
+
 
 
 
 ## Demo
 
-#### Example data
+### Example data
 Download example data from Zendo
 
-#### Example code
+### Example code
+
+#### Prerequisites
+- Python 3.8+
+- pyarrow
+- pandas
 
 Parquet Data Reading Example Code
 ```python

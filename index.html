@@ -85,6 +85,20 @@
         color: var(--text-primary);
     }
     
+    /* Sidebar content transition */
+    #sidebar-col aside {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* State when sidebar is closed (hidden but keeps space) */
+    #sidebar-col.is-closed aside {
+      opacity: 0;
+      transform: translateY(50px);
+      pointer-events: none;
+    }
+
     /* Floating toggle when sidebar is hidden */
     #sidebar-floating-toggle {
         display: none;
@@ -105,6 +119,22 @@
     }
     .content-block.is-light {
       background-color: #f5f5f5;
+    }
+
+    /* Data Summary Image Alignment */
+    .summary-image-container {
+      height: 160px;
+      width: 100%;
+      margin-bottom: 1rem;
+      /* Remove flex centering to rely on object-fit and block layout */
+    }
+    .summary-image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      /* Ensure no max-width constraints interfere */
+      max-width: 100%;
     }
   </style>
 </head>
@@ -151,11 +181,15 @@
   </section>
 
   <section class="section">
-    <div class="container is-max-widescreen">
+    <!-- Reduced padding from 5% to 1.5rem for more width -->
+    <div class="container is-fluid" style="padding: 0 1.5rem;">
       <div class="columns">
         
-        <!-- Main Content Column -->
-        <div id="main-content" class="column is-10">
+        <!-- Left Spacer: Percentage width for responsiveness -->
+        <div id="left-spacer" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;"></div>
+
+        <!-- Main Content: Takes up all remaining space -->
+        <div id="main-content" class="column" style="flex: 1;">
           <!-- Data Summary (1 Row, 4 Columns) -->
           <div id="data-summary" class="content-block">
             <h2 class="title is-3 has-text-centered">Data Summary</h2>
@@ -163,9 +197,9 @@
             <div class="columns">
               <!-- Col 1 -->
               <div class="column has-text-centered">
-                <figure class="image" style="max-width: 80%; margin: 0 auto;">
+                <div class="summary-image-container">
                   <img src="static/images/summary1.png" alt="Summary 1">
-                </figure>
+                </div>
                 <h3 class="title is-5 mt-4">16 Drones</h3>
                 <p class="content">
                   Simultaneously hovering over multiple freeway sections to provide continuous coverage.
@@ -174,9 +208,9 @@
 
               <!-- Col 2 -->
               <div class="column has-text-centered">
-                <figure class="image" style="max-width: 80%; margin: 0 auto;">
+                <div class="summary-image-container">
                   <img src="static/images/summary2.png" alt="Summary 2">
-                </figure>
+                </div>
                 <h3 class="title is-5 mt-4">4.5 km Coverage</h3>
                 <p class="content">
                   Continuous vehicle trajectories along a 4.5 km freeway corridor.
@@ -185,9 +219,9 @@
 
               <!-- Col 3 -->
               <div class="column has-text-centered">
-                <figure class="image" style="max-width: 80%; margin: 0 auto;">
+                <div class="summary-image-container">
                   <img src="static/images/summary3.png" alt="Summary 3">
-                </figure>
+                </div>
                 <h3 class="title is-5 mt-4">Multiple Bottlenecks</h3>
                 <p class="content">
                   Consecutive bottlenecks along the corridor, including weaving and merge bottlenecks.
@@ -196,9 +230,9 @@
 
               <!-- Col 4 -->
               <div class="column has-text-centered">
-                <figure class="image" style="max-width: 80%; margin: 0 auto;">
+                <div class="summary-image-container">
                   <img src="static/images/summary4.png" alt="Summary 4">
-                </figure>
+                </div>
                 <h3 class="title is-5 mt-4">Hybrid Network</h3>
                 <p class="content">
                   A long freeway corridor together with its connected urban road network.
@@ -280,7 +314,8 @@
         </div>
 
         <!-- Sidebar Navigation Column -->
-        <div id="sidebar-col" class="column is-2 is-hidden-mobile">
+        <!-- Matches Left Spacer width -->
+        <div id="sidebar-col" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;">
           <aside class="menu sticky-menu pl-2">
             <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
                 <p class="menu-label mb-0">Contents</p>
@@ -322,21 +357,25 @@
 
         // --- Sidebar Toggle Logic ---
         const sidebarCol = document.getElementById('sidebar-col');
+        // const leftSpacer = document.getElementById('left-spacer'); // spacer 始终保留，不操作
         const mainContent = document.getElementById('main-content');
         const closeBtn = document.getElementById('btn-close-sidebar');
         const floatToggleBtn = document.getElementById('sidebar-floating-toggle');
 
         function hideSidebar() {
-          sidebarCol.classList.add('is-hidden');
-          mainContent.classList.remove('is-10');
-          mainContent.classList.add('is-12');
+          // 只隐藏内容，保留占位，确保中间内容宽度不跳变
+          // 使用 CSS class 控制动画
+          sidebarCol.classList.add('is-closed');
+          
+          // 显示悬浮按钮
           floatToggleBtn.classList.add('visible');
         }
 
         function showSidebar() {
-          sidebarCol.classList.remove('is-hidden');
-          mainContent.classList.remove('is-12');
-          mainContent.classList.add('is-10');
+          // 恢复显示
+          sidebarCol.classList.remove('is-closed');
+          
+          // 隐藏悬浮按钮
           floatToggleBtn.classList.remove('visible');
         }
 

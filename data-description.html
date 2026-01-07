@@ -99,18 +99,35 @@
     #sidebar-floating-toggle.visible {
         display: flex;
     }
+
+    /* Sidebar content transition */
+    #sidebar-col aside {
+      transition: opacity 0.4s ease, transform 0.4s ease;
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    /* State when sidebar is closed (hidden but keeps space) */
+    #sidebar-col.is-closed aside {
+      opacity: 0;
+      transform: translateY(50px);
+      pointer-events: none;
+    }
   </style>
 </head>
 <body>
 
   <section class="section">
-    <div class="container is-max-widescreen">
+    <div class="container is-fluid" style="padding: 0 1.5rem;">
       <h1 class="title is-2 has-text-centered mb-6">Data Description</h1>
       
       <div class="columns">
         
-        <!-- Main Content Column -->
-        <div id="main-content" class="column is-10">
+        <!-- Left Spacer: Percentage width for responsiveness -->
+        <div id="left-spacer" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;"></div>
+
+        <!-- Main Content: Takes up all remaining space -->
+        <div id="main-content" class="column" style="flex: 1;">
           
           <!-- Site 1 -->
           <div class="box" id="site1">
@@ -183,7 +200,8 @@
         </div>
 
         <!-- Sidebar Navigation Column -->
-        <div id="sidebar-col" class="column is-2 is-hidden-mobile">
+        <!-- Matches Left Spacer width -->
+        <div id="sidebar-col" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;">
           <aside class="menu sticky-menu pl-2">
             <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
                 <p class="menu-label mb-0">Contents</p>
@@ -234,16 +252,19 @@
       const floatToggleBtn = document.getElementById('sidebar-floating-toggle');
 
       function hideSidebar() {
-        sidebarCol.classList.add('is-hidden');
-        mainContent.classList.remove('is-10');
-        mainContent.classList.add('is-12');
+        // 只隐藏内容，保留占位，确保中间内容宽度不跳变
+        // 使用 CSS class 控制动画
+        sidebarCol.classList.add('is-closed');
+        
+        // 显示悬浮按钮
         floatToggleBtn.classList.add('visible');
       }
 
       function showSidebar() {
-        sidebarCol.classList.remove('is-hidden');
-        mainContent.classList.remove('is-12');
-        mainContent.classList.add('is-10');
+        // 恢复显示
+        sidebarCol.classList.remove('is-closed');
+        
+        // 隐藏悬浮按钮
         floatToggleBtn.classList.remove('visible');
       }
 
