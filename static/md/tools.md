@@ -4,9 +4,6 @@
 We provide python scripts to load and visualize the dataset.
 
 
-
-
-
 ## Demo
 
 ### Example data
@@ -46,12 +43,12 @@ For more trajectory visualization code, please refer to the data tools code we p
 
 [Google Colab](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing)
 
-[Link to GitHub Repository](https://github.com/your-repo)
+[Link to GitHub Repository](https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools)
 ### Installation
 Clone the repository and navigate to the project directory:
 ```bash
-git clone https://github.com/your-repo/data_tools
-cd data_tools
+git clone https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools.git
+cd trajectory-data-tools
 ```
 
 (Optional) Install dependencies:
@@ -64,3 +61,4 @@ Run the script to read data and generate space-time diagrams from a Parquet file
 ```bash
 python data_tools.py data/example.parquet
 ```
+
