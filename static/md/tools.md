@@ -7,7 +7,9 @@ We provide python scripts to load and visualize the dataset.
 ## Demo
 
 ### Example data
-Download example data from Zendo
+Download example parquet data from Zendo. [Download Demo data](https://zenodo.org/records/18196220)
+
+For more data downloads, please check [Download](download.html).
 
 ### Example code
 
@@ -20,9 +22,13 @@ Parquet Data Reading Example Code
 ```python
 import json
 import pyarrow.parquet as pq
-parquet_path = ''
+
+# Replace with your local Parquet file path
+parquet_path = 'example.parquet'
+
 # 1. Read Parquet file
 table = pq.read_table(parquet_path)
+
 # 2. Extract and parse Metadata
 file_meta = table.schema.metadata
 restored_meta_json = file_meta[b'dataset_meta'].decode('utf-8')

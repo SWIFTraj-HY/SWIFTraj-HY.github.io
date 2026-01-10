@@ -13,11 +13,12 @@
 
 Visit the Zenodo repository.
 
-**2. Fill in Contact Details (If applicable)**
+**2. Log in**
 
-Scroll down to the **Request access** section.
-* **If you are NOT logged in:** You must enter your **Email address** and **Full name** in the provided fields.
-* **If you are logged in:** Your account details will be used automatically, so you can skip this step.
+We **strongly recommend** logging into your Zenodo account before applying.
+* **Why?** Even if your request is approved, you will eventually need to log in to Zenodo to download the restricted files. Applying while logged in links the permission directly to your account.
+* **If you are logged in:** You can skip the contact details section.
+* **If you are NOT logged in:** You must manually enter your **Email address** and **Full name** in the "Request access" section.
 
 **3. Fill out the Request Message**
 
@@ -36,3 +37,7 @@ Research Overview: [Please describe your research background and how you intend 
 * Check the box: "I agree to that my full name and email address is shared with the owners of the record". 
 
 * Click the Request access button.
+
+**5. Review Process**
+Once submitted, your request will be reviewed by our team. You will receive a notification via email once access is granted.
+* **How to download**: After approval, revisit the original download link, log in with your authorized account, and you will be able to download the files directly.
