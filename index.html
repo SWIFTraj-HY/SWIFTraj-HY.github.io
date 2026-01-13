@@ -184,58 +184,55 @@
     <!-- Reduced padding from 5% to 1.5rem for more width -->
     <div class="container is-fluid" style="padding: 0 1.5rem;">
       <div class="columns">
-        
-        <!-- Left Spacer: Percentage width for responsiveness -->
-        <div id="left-spacer" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;"></div>
 
         <!-- Main Content: Takes up all remaining space -->
-        <div id="main-content" class="column" style="flex: 1;">
+        <div id="main-content" class="column is-10">
           <!-- Data Summary (1 Row, 4 Columns) -->
           <div id="data-summary" class="content-block">
             <h2 class="title is-3 has-text-centered">Data Summary</h2>
 
             <div class="columns">
               <!-- Col 1 -->
-              <div class="column has-text-centered">
-                <div class="summary-image-container">
+              <div class="column">
+                <h3 class="title is-5 has-text-centered mb-3">16 Drones</h3>
+                <figure class="image">
                   <img src="static/images/summary1.png" alt="Summary 1">
-                </div>
-                <h3 class="title is-5 mt-4">16 Drones</h3>
-                <p class="content">
+                </figure>
+                <p class="content is-size-7 has-text-left mt-2">
                   Simultaneously hovering over multiple freeway sections to provide continuous coverage.
                 </p>
               </div>
 
               <!-- Col 2 -->
-              <div class="column has-text-centered">
-                <div class="summary-image-container">
+              <div class="column">
+                <h3 class="title is-5 has-text-centered mb-3">Hybrid Network</h3>
+                <figure class="image">
                   <img src="static/images/summary2.png" alt="Summary 2">
-                </div>
-                <h3 class="title is-5 mt-4">4.5 km Coverage</h3>
-                <p class="content">
-                  Continuous vehicle trajectories along a 4.5 km freeway corridor.
+                </figure>
+                <p class="content is-size-7 has-text-left mt-2">
+                  A long freeway corridor together with its connected urban road network.
                 </p>
               </div>
 
               <!-- Col 3 -->
-              <div class="column has-text-centered">
-                <div class="summary-image-container">
+              <div class="column">
+                <h3 class="title is-5 has-text-centered mb-3">4.5 km Coverage</h3>
+                <figure class="image">
                   <img src="static/images/summary3.png" alt="Summary 3">
-                </div>
-                <h3 class="title is-5 mt-4">Multiple Bottlenecks</h3>
-                <p class="content">
-                  Consecutive bottlenecks along the corridor, including weaving and merge bottlenecks.
+                </figure>
+                <p class="content is-size-7 has-text-left mt-2">
+                  Continuous vehicle trajectories along a 4.5 km freeway corridor.
                 </p>
               </div>
 
               <!-- Col 4 -->
-              <div class="column has-text-centered">
-                <div class="summary-image-container">
+              <div class="column">
+                <h3 class="title is-5 has-text-centered mb-3">Multiple Bottlenecks</h3>
+                <figure class="image">
                   <img src="static/images/summary4.png" alt="Summary 4">
-                </div>
-                <h3 class="title is-5 mt-4">Hybrid Network</h3>
-                <p class="content">
-                  A long freeway corridor together with its connected urban road network.
+                </figure>
+                <p class="content is-size-7 has-text-left mt-2">
+                  Consecutive bottlenecks along the corridor, including weaving and merge bottlenecks.
                 </p>
               </div>
             </div>
@@ -315,7 +312,7 @@
 
         <!-- Sidebar Navigation Column -->
         <!-- Matches Left Spacer width -->
-        <div id="sidebar-col" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;">
+        <div id="sidebar-col" class="column is-2 is-hidden-mobile">
           <aside class="menu sticky-menu pl-2">
             <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
                 <p class="menu-label mb-0">Contents</p>
