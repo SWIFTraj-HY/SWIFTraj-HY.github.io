@@ -1,6 +1,3 @@
-## Experiment Details
-<!-- 实验详细介绍 -->
-
 The experiment was conducted on an urban freeway network in Nanjing, China, using coordinated drone-based traffic data collection during morning peak hours.
 
 **Location**  

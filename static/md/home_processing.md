@@ -1,13 +1,4 @@
-## Data Processing
-<!-- 数据处理过程 -->
-
 In general, the trajectory processing procedure consists of three main stages: trajectory extraction, trajectory reconstruction and trajectory stitching.
-
-<figure>
- <img src="static/images/home/trajectory_extraction.png" alt="OpenVTER" width="80%">
- <figcaption>Overview of the UAV-based vehicle trajectory extraction pipeline<figcaption>
-</figure>
-
 
 ### Trajectory Extraction
 

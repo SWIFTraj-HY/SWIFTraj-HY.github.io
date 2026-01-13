@@ -136,6 +136,49 @@
       /* Ensure no max-width constraints interfere */
       max-width: 100%;
     }
+
+    /* Feature Section Styling (Experiment & Processing) */
+    .feature-row {
+      margin-bottom: 2rem;
+      align-items: center; /* Vertical center alignment */
+    }
+    
+    .feature-image {
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow-md);
+      transition: var(--transition);
+      background-color: white; /* Slight border/bg for image itself */
+    }
+    
+    .feature-image img {
+      border-radius: var(--border-radius);
+      display: block;
+      width: 100%;
+      height: auto;
+    }
+    
+    .feature-image:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+    
+    .feature-caption {
+      margin-top: 0.75rem;
+      color: var(--text-secondary);
+      font-size: 0.9rem;
+      font-style: italic;
+      text-align: center;
+    }
+
+    /* Responsive adjustments */
+    @media screen and (max-width: 768px) {
+      .feature-row {
+        gap: 1.5rem;
+      }
+      .feature-row .columns {
+        flex-direction: column-reverse;
+      }
+    }
   </style>
 </head>
 <body>
@@ -155,11 +198,6 @@
           <h1 class="title is-1 publication-title">Swarm Intelligence Freeway–Urban Trajectories (SWIFTraj) Dataset</h1>
           <!-- <h2 class="subtitle is-3">SWIFTraj</h2> -->
           <p class="lead">Spatio-temporal trajectories under incident-induced traffic disturbances, fusing roadside sensing and aerial observation for real-world traffic management and AV research.</p>
-          <div class="hero-pills">
-            <span class="pill"><i class="fas fa-route"></i> Trajectory Heatmap</span>
-            <span class="pill"><i class="fas fa-video"></i> Aerial Video</span>
-            <span class="pill"><i class="fas fa-broadcast-tower"></i> V2X Collaboration</span>
-          </div>
         </div>
 
         <div class="hero-stage">
@@ -240,20 +278,40 @@
 
           <!-- Experiment Details (1 Column, Markdown) -->
           <div id="experiment-details" class="content-block is-light">
-            <!-- Image above content -->
-            <figure class="image mb-5">
-              <img src="static/images/satellite.png" alt="Experiment Setup">
-            </figure>
-            <!-- Markdown Content -->
-            <div id="experiment-content" class="content markdown-body">
-              <p class="has-text-centered">Loading experiment details...</p>
+            <h2 class="title is-3 has-text-centered">Experiment Details</h2>
+            <div class="columns is-vcentered feature-row">
+              <div class="column is-7">
+                <!-- Markdown Content -->
+                <div id="experiment-content" class="content markdown-body">
+                  <p class="has-text-centered">Loading experiment details...</p>
+                </div>
+              </div>
+              <div class="column is-5">
+                <!-- Image -->
+                <figure class="feature-image">
+                  <img src="static/images/satellite.png" alt="Experiment Setup">
+                </figure>
+                <figcaption class="feature-caption">Experimental setup showing drone deployment locations</figcaption>
+              </div>
             </div>
           </div>
 
           <!-- Data Processing (Markdown) -->
-          <div id="data-processing" class="content-block is-light">
-            <div id="processing-content" class="content markdown-body">
-              <p class="has-text-centered">Loading processing details...</p>
+          <div id="data-processing" class="content-block">
+            <h2 class="title is-3 has-text-centered">Data Processing</h2>
+            <div class="columns is-vcentered feature-row">
+              <div class="column is-7">
+                <!-- Markdown Content -->
+                <div id="processing-content" class="content markdown-body">
+                    <p class="has-text-centered">Loading processing details...</p>
+                </div>
+              </div>
+              <div class="column is-5">
+                <figure class="feature-image">
+                  <img src="static/images/home/trajectory_extraction.png" alt="Data Processing Pipeline">
+                </figure>
+                <figcaption class="feature-caption">Overview of the UAV-based vehicle trajectory extraction pipeline</figcaption>
+              </div>
             </div>
           </div>
 
@@ -347,6 +405,17 @@
     <i class="fas fa-list-ul"></i>
   </button>
 
+  <!-- Image Modal -->
+  <div class="modal" id="image-modal">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <p class="image">
+        <img src="" alt="">
+      </p>
+    </div>
+    <button class="modal-close is-large" aria-label="close"></button>
+  </div>
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         loadMarkdown('experiment-content', 'static/md/home_experiment.md');
@@ -378,6 +447,39 @@
 
         closeBtn.addEventListener('click', hideSidebar);
         floatToggleBtn.addEventListener('click', showSidebar);
+
+        // --- Image Modal Logic ---
+        const modal = document.getElementById('image-modal');
+        const modalImg = modal.querySelector('.modal-content img');
+        const modalBackground = modal.querySelector('.modal-background');
+        const modalClose = modal.querySelector('.modal-close');
+        
+        // Select images in Data Summary section
+        const summaryImages = document.querySelectorAll('#data-summary .image img');
+        
+        summaryImages.forEach(img => {
+          img.style.cursor = 'pointer'; // Make it look clickable
+          img.addEventListener('click', () => {
+            modalImg.src = img.src;
+            modalImg.alt = img.alt;
+            modal.classList.add('is-active');
+          });
+        });
+
+        function closeModal() {
+          modal.classList.remove('is-active');
+          modalImg.src = ''; // Clear source to stop potential loading/memory
+        }
+
+        if (modalClose) modalClose.addEventListener('click', closeModal);
+        if (modalBackground) modalBackground.addEventListener('click', closeModal);
+        
+        // Close on Escape key
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'Escape' && modal.classList.contains('is-active')) {
+            closeModal();
+          }
+        });
 
       // --- Scroll Spy Logic ---
       const sections = ['data-summary', 'experiment-details', 'data-processing', 'potential-usage'];
