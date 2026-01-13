@@ -47,7 +47,7 @@ for record in records:
 ## Tools
 For more trajectory visualization code, please refer to the data tools code we provided, the GitHub repository, and the Jupyter notebook on Google Colab.
 
-[Google Colab](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing)
+[Google Colab **（recommend）**](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing) 
 
 [Link to GitHub Repository](https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools)
 ### Installation
