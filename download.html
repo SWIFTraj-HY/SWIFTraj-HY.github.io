@@ -49,6 +49,13 @@
       flex-direction: column;
       gap: 0.5rem;
     }
+
+    /* Grid layout for dates when needed (e.g. Yingtian 2x2) */
+    .date-grid-2col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.5rem;
+    }
     
     .time-grid-container {
         display: grid;
@@ -159,6 +166,55 @@
     .control-column-right {
         flex: 1;
     }
+    
+    /* New Location Layout Styles */
+    .location-split-container {
+        display: flex;
+        gap: 0.75rem;
+        margin-top: 0.5rem;
+        margin-bottom: 1rem;
+    }
+    
+    .location-box {
+        flex: 1;
+        border: 2px dashed #b5b5b5;
+        padding: 0.5rem;
+        border-radius: 6px;
+    }
+    
+    .location-box-title {
+        text-align: center;
+        font-weight: 700;
+        font-size: 0.8rem;
+        margin-bottom: 0.5rem;
+        color: #4a4a4a;
+        text-transform: uppercase;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 0.25rem;
+    }
+
+    /* Dataset Title Styling */
+    .dataset-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #2c3e50;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #f0f0f0;
+        display: flex;
+        align-items: center;
+        letter-spacing: -0.5px;
+    }
+    
+    .dataset-title::before {
+        content: '';
+        display: inline-block;
+        width: 8px;
+        height: 24px;
+        background: linear-gradient(to bottom, #094aed, #3273dc);
+        margin-right: 12px;
+        border-radius: 4px;
+    }
   </style>
 </head>
 <body>
@@ -167,8 +223,9 @@
     <div class="container is-max-desktop">
       <h1 class="title is-2 has-text-centered">Download Dataset</h1>
       
-      <!-- Custom Download Interface -->
-      <div class="box download-interface">
+      <!-- Hurong Dataset Interface -->
+      <h3 class="dataset-title">Hurong Dataset</h3>
+      <div class="box download-interface" id="interface-hurong">
         <div class="columns">
             <!-- Map Section -->
             <div class="column is-two-thirds">
@@ -180,57 +237,111 @@
 
             <!-- Controls Section -->
             <div class="column">
-                <div class="control-panel-row">
-                    <div class="control-column-left">
-                        <div class="panel-header">LOCATION</div>
-                    </div>
-                    <div class="control-column-right">
-                        <div class="panel-header">DATE</div>
-                    </div>
-                </div>
-
-                <div class="control-panel-row" style="margin-top: 0.5rem; margin-bottom: 1rem;">
-                     <!-- Locations -->
-                    <div class="control-column-left">
+                
+                <!-- Location Section (Full Width) -->
+                <div class="panel-header">LOCATION</div>
+                <div class="location-split-container">
+                    <!-- Expressway (Existing) -->
+                    <div class="location-box">
+                        <div class="location-box-title">Expressway</div>
                         <div class="selection-grid location-grid">
-                            <button class="selector-btn is-location" onclick="selectLoc('A1')">A1</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('A2')">A2</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('A3')">A3</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('A4')">A4</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('B1')">B1</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('B2')">B2</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('C1')">C1</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('C2')">C2</button>
-                            <button class="selector-btn is-location" onclick="selectLoc('D1')">D1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'A1', this)">A1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'A2', this)">A2</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'A3', this)">A3</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'A4', this)">A4</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'B1', this)">B1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'B2', this)">B2</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C1', this)">C1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C2', this)">C2</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1', this)">D1</button>
                         </div>
-                        <button class="selector-btn is-all-drones" onclick="selectAllDrones()">ALL DRONES</button>
+                        <button class="selector-btn is-all-drones hurong-loc" onclick="selectAllDrones('hurong')">ALL DRONES</button>
                     </div>
-
-                    <!-- Dates -->
-                    <div class="control-column-right">
-                        <div class="date-grid">
-                            <button class="selector-btn is-date" id="date-1" onclick="selectDate('20220616')">24/10/2018</button>
-                            <button class="selector-btn is-date" id="date-2" onclick="selectDate('20220617')">29/10/2018</button>
-                             <!-- Note: Placeholders above, JS will overwrite text based on prompt request -->
+                    
+                    <!-- Intersection (New) -->
+                    <div class="location-box">
+                        <div class="location-box-title">Intersection</div>
+                        <div class="selection-grid location-grid">
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'B3', this)">B3</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C3', this)">C3</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C4', this)">C4</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1', this)">D1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D2', this)">D2</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'E1', this)">E1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'E2', this)">E2</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'E3', this)">E3</button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Time Section -->
-                <div class="panel-header">TIME</div>
-                <div id="time-container" class="time-grid-container" style="margin-top: 0.5rem;">
-                    <!-- JS will populate -->
+                <!-- Date and Time Section (Side by Side) -->
+                <div class="control-panel-row">
+                    <!-- Date -->
+                    <div class="control-column-left">
+                        <div class="panel-header">DATE</div>
+                        <div class="date-grid hurong-date-container" style="margin-top: 0.5rem;">
+                             <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="control-column-right">
+                        <div class="panel-header">TIME</div>
+                        <div id="hurong-time-container" class="time-grid-container" style="margin-top: 0.5rem;">
+                            <!-- JS will populate -->
+                        </div>
+                    </div>
                 </div>
 
                 <!-- Info Button -->
-                <button class="info-btn" onclick="showInfo()">DOWNLOAD</button>
+                <button class="info-btn" onclick="showInfo('hurong')">DOWNLOAD</button>
             </div>
         </div>
         
         <!-- Result Display -->
-        <div id="result-display" class="result-box">
+        <div id="hurong-result-display" class="result-box">
           <p>Download from Zenodo. The corresponding filenames are as follows:</p>
-           <strong>Filename:</strong> <span id="filename-text"></span>
+           <strong>Filename:</strong> <span id="hurong-filename-text"></span>
+        </div>
+      </div>
+
+      <!-- Yingtian Dataset Interface -->
+      <h3 class="dataset-title" style="margin-top: 3rem;">Yingtian Dataset</h3>
+      <div class="box download-interface" id="interface-yingtian">
+        <div class="columns">
+            <!-- Map Section (Same placeholder or remove if not needed, keeping for layout consistency) -->
+            <div class="column is-two-thirds">
+                <div class="panel-header">MAP</div>
+                <div class="map-container">
+                    <img src="static/images/yingtian_topology.png" alt="Dataset Map">
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="column">
+                <!-- Date and Time Section (Stacked since no Location) -->
+                
+                <!-- Date -->
+                <div class="panel-header">DATE</div>
+                <div class="date-grid-2col yingtian-date-container" style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <!-- Populated by JS -->
+                </div>
+
+                <!-- Time -->
+                <div class="panel-header">TIME</div>
+                <div id="yingtian-time-container" class="time-grid-container" style="margin-top: 0.5rem;">
+                    <!-- JS will populate -->
+                </div>
+
+                <!-- Info Button -->
+                <button class="info-btn" onclick="showInfo('yingtian')" style="margin-top: 2rem;">DOWNLOAD</button>
+            </div>
+        </div>
+        
+        <!-- Result Display -->
+        <div id="yingtian-result-display" class="result-box">
+          <p>Download from Zenodo. The corresponding filenames are as follows:</p>
+           <strong>Filename:</strong> <span id="yingtian-filename-text"></span>
         </div>
       </div>
 
@@ -244,82 +355,113 @@
   </section>
 
   <script>
-    // Configuration Data
     const CONFIG = {
-        dates: [
-            { id: '20220616', label: '2022年6月16日', times: ['07:00', '07:25', '07:50', '08:15', '08:45'] },
-            { id: '20220617', label: '2022年6月17日', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
-        ]
+        hurong: {
+             dates: [
+                { id: '20220616', label: 'June 16, 2022', times: ['07:00', '07:25', '07:50', '08:15', '08:45'] },
+                { id: '20220617', label: 'June 17, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
+            ]
+        },
+        yingtian: {
+             dates: [
+                { id: '20220707', label: 'July 7, 2022', times: ['07:00', '07:13', '07:29', '07:48'] },
+                { id: '20220708', label: 'July 8, 2022', times: ['07:02', '07:18', '07:32', '07:52'] },
+                { id: '20220709', label: 'July 9, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] },
+                { id: '20220710', label: 'July 10, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
+            ]
+        }
     };
 
-    // State
-    let state = {
-        location: null,
-        date: null, // '20220616' or '20220617'
-        time: null
+    // State for each dataset
+    let states = {
+        hurong: {
+            location: null,
+            date: null,
+            time: null
+        },
+        yingtian: {
+            location: null, // Not used but kept for consistency if needed
+            date: null,
+            time: null
+        }
     };
 
     // Initialize
     document.addEventListener('DOMContentLoaded', () => {
         loadMarkdown('download-content', 'static/md/download.md');
-        initInterface();
+        initInterface('hurong');
+        initInterface('yingtian');
     });
 
-    function initInterface() {
-        // Initialize Date Buttons text
-        const dateBtns = document.querySelectorAll('.is-date');
-        if(dateBtns.length >= 2) {
-            dateBtns[0].textContent = CONFIG.dates[0].label;
-            dateBtns[0].setAttribute('onclick', `selectDate('${CONFIG.dates[0].id}')`);
-            
-            dateBtns[1].textContent = CONFIG.dates[1].label;
-            dateBtns[1].setAttribute('onclick', `selectDate('${CONFIG.dates[1].id}')`);
-        }
+    function initInterface(dataset) {
+        // Render Date Buttons
+        const dateContainer = document.querySelector(`.${dataset}-date-container`);
+        if(!dateContainer) return;
         
+        dateContainer.innerHTML = '';
+        const dates = CONFIG[dataset].dates;
+        
+        dates.forEach(d => {
+            const btn = document.createElement('button');
+            btn.className = `selector-btn is-date ${dataset}-date-btn`;
+            btn.textContent = d.label;
+            btn.onclick = () => selectDate(dataset, d.id);
+            dateContainer.appendChild(btn);
+        });
+
         // Select first date by default
-        selectDate(CONFIG.dates[0].id);
+        if(dates.length > 0) {
+            selectDate(dataset, dates[0].id);
+        }
     }
 
-    function selectLoc(locId) {
-        state.location = locId;
+    function selectLoc(dataset, locId, btnElement) {
+        states[dataset].location = locId;
         
-        // Update UI
-        document.querySelectorAll('.is-location').forEach(btn => {
-            if(btn.textContent.trim() === locId) {
+        // Update UI - Scope to specific dataset container if needed, but classes are specific enough?
+        // Actually classes are generic 'is-location'. We should scope by dataset container.
+        const container = document.getElementById(`interface-${dataset}`);
+        container.querySelectorAll('.is-location').forEach(btn => {
+            if(btn === btnElement) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
             }
         });
         
-        // Deactivate All Drones
-        const allDronesBtn = document.querySelector('.is-all-drones');
-        if(allDronesBtn) allDronesBtn.classList.remove('active');
+        // Deactivate All Drones in this dataset
+        const allDronesBtn = container.querySelector('.is-all-drones');
+        if(allDronesBtn && allDronesBtn !== btnElement) allDronesBtn.classList.remove('active');
         
-        clearResult();
+        clearResult(dataset);
     }
 
-    function selectAllDrones() {
-        state.location = 'ALL';
+    function selectAllDrones(dataset) {
+        states[dataset].location = 'ALL';
+        
+        const container = document.getElementById(`interface-${dataset}`);
         
         // Update UI: Deactivate all individual locations
-        document.querySelectorAll('.is-location').forEach(btn => btn.classList.remove('active'));
+        container.querySelectorAll('.is-location').forEach(btn => btn.classList.remove('active'));
         
         // Activate All Drones button
-        const allDronesBtn = document.querySelector('.is-all-drones');
+        const allDronesBtn = container.querySelector('.is-all-drones');
         if(allDronesBtn) allDronesBtn.classList.add('active');
         
-        clearResult();
+        clearResult(dataset);
     }
 
-    function selectDate(dateId) {
-        state.date = dateId;
-        state.time = null; // Reset time when date changes
+    function selectDate(dataset, dateId) {
+        states[dataset].date = dateId;
+        states[dataset].time = null; // Reset time
         
         // Update UI Dates
-        document.querySelectorAll('.is-date').forEach((btn, index) => {
-            const configId = CONFIG.dates[index].id;
-            if(configId === dateId) {
+        const container = document.getElementById(`interface-${dataset}`);
+        const dates = CONFIG[dataset].dates;
+        const dateBtns = container.querySelectorAll(`.${dataset}-date-btn`);
+        
+        dateBtns.forEach((btn, index) => {
+            if(dates[index].id === dateId) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
@@ -327,58 +469,78 @@
         });
 
         // Render Times
-        renderTimes(dateId);
-        clearResult();
+        renderTimes(dataset, dateId);
+        clearResult(dataset);
     }
 
-    function renderTimes(dateId) {
-        const container = document.getElementById('time-container');
+    function renderTimes(dataset, dateId) {
+        const container = document.getElementById(`${dataset}-time-container`);
+        if(!container) return;
         container.innerHTML = '';
         
-        const dateConfig = CONFIG.dates.find(d => d.id === dateId);
+        const dateConfig = CONFIG[dataset].dates.find(d => d.id === dateId);
         if(!dateConfig) return;
 
         dateConfig.times.forEach(time => {
             const btn = document.createElement('button');
             btn.className = 'selector-btn is-time';
             btn.textContent = time;
-            btn.onclick = () => selectTime(time, btn);
+            btn.onclick = () => selectTime(dataset, time, btn);
             container.appendChild(btn);
         });
     }
 
-    function selectTime(timeVal, btnElement) {
-        state.time = timeVal;
+    function selectTime(dataset, timeVal, btnElement) {
+        states[dataset].time = timeVal;
 
-        // Update UI
-        document.querySelectorAll('.is-time').forEach(b => b.classList.remove('active'));
+        // Update UI - Scope to dataset time container
+        // Note: btnElement is specific, but we need to remove active from siblings
+        const container = document.getElementById(`${dataset}-time-container`);
+        container.querySelectorAll('.is-time').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
         
-        clearResult();
+        clearResult(dataset);
     }
 
-    function showInfo() {
-        const resultBox = document.getElementById('result-display');
-        const fileText = document.getElementById('filename-text');
+    function showInfo(dataset) {
+        const resultBox = document.getElementById(`${dataset}-result-display`);
+        const fileText = document.getElementById(`${dataset}-filename-text`);
+        const currentState = states[dataset];
 
-        if (!state.location || !state.date || !state.time) {
-            alert('Please select a Location, Date, and Time.');
-            return;
+        // Validation
+        if (dataset === 'hurong') {
+             if (!currentState.location || !currentState.date || !currentState.time) {
+                alert('Please select a Location, Date, and Time.');
+                return;
+            }
+        } else {
+            // Yingtian (no location)
+             if (!currentState.date || !currentState.time) {
+                alert('Please select a Date and Time.');
+                return;
+            }
         }
 
         // Construct Filename
-        // Format: SWIFTraj_YYYYMMDD_HHMM_Loc.zip (Example format)
-        const dateStr = state.date;
-        const timeStr = state.time.replace(':', '');
-        const locStr = state.location;
-        const filename = `SWIFTraj_${dateStr}_${timeStr}_${locStr}.csv`;
+        const dateStr = currentState.date;
+        const timeStr = currentState.time.replace(':', '');
+        
+        let filename = '';
+        if (dataset === 'hurong') {
+            const locStr = currentState.location;
+            filename = `SWIFTraj_${dateStr}_${timeStr}_${locStr}.csv`;
+        } else {
+            // Yingtian format assumption
+            filename = `Yingtian_${dateStr}_${timeStr}.csv`;
+        }
 
         fileText.textContent = filename;
         resultBox.style.display = 'block';
     }
     
-    function clearResult() {
-        document.getElementById('result-display').style.display = 'none';
+    function clearResult(dataset) {
+        const box = document.getElementById(`${dataset}-result-display`);
+        if(box) box.style.display = 'none';
     }
   </script>
 
