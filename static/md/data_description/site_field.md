@@ -7,15 +7,18 @@ To ensure consistency, portability, and ease of use across databases and analyti
 - **Allowed characters:** use only letters, digits, and underscores; avoid spaces, hyphens, non-ASCII characters (e.g., Chinese), and other special symbols.
 - **Avoid reserved keywords:** do not use database-reserved words such as `user`, `order`, `group`, `select`, `timestamp`, etc. When necessary, rename to more specific alternatives like `order_id` or `user_id`.
 
+数据包含两部分，第一部分是metadata用于保存数据的。。。，另一部分是车辆轨迹
+
 ## Meta Information 
 
 | Field | Type (Example) | Description (EN / 中文) | Notes (EN / 中文) |
 |---|---|---|---|
 | `data_file_name` | string (e.g., `A1_F1`) | Name of the data file / 数据文件名称 | Human-readable identifier / 用于展示与引用的名称 |
-| `location_id` | string (e.g., `HurongFreeway`) | Name of the data collection site / 数据采集站点的名称 | Site-level identifier / 站点级标识 |
-| `location_name` | string (e.g., `沪蓉高速-南京-江苏-中国`) | Camera capture location description / 拍摄位置描述 | Use specific-to-country order (e.g., location-city-province-country) / 按“地点-城市-省-国家”顺序 |
+| `location_id` | string (e.g., `A1`) | Identifier of the data collection site / 数据采集站点的id | Site-level identifier / 站点级标识 |
+| `location_name` | string (e.g., `HurongFreeway-Nanjing-Jiangsu-China`) | Textual description of the camera capture location / 拍摄位置名称 | Use specific-to-country order (e.g., location-city-province-country) / 按“地点-城市-省-国家”顺序 |
 | `frame_interval` | float (e.g., `0.1`) | Time interval between consecutive frames  / 相邻帧的时间间隔（秒） |  |
-| `start_timestamp_ms` | int64 (e.g., `1625012345000`) | Unix timestamp at the start of data collection (milliseconds) / 数据采集开始时刻的 Unix 时间戳（毫秒） | Timestamp of `frame_index[0]` / 对应轨迹数据中 `frame_index=0` 的时刻 |
+| `start_timestamp_ms` | int64 (e.g., `1655420390457`) | Unix timestamp at the start of data collection (milliseconds) / 数据采集开始时刻的 Unix 时间戳（毫秒） | Timestamp of `frame_index[0]` / 对应轨迹数据中 `frame_index=0` 的时刻 |
+| `start_datetime` | string (e.g., `2022-06-17 06:59:50`) | Human-readable start time of data collection in local time, formatted as YYYY-MM-DD HH:MM:SS | Equivalent to start_timestamp_ms, representing the time of frame_index = 0 |
 | `total_duration` | float (e.g., `300.0`) | Total duration of the trajectory recording (seconds) / 轨迹数据时长（秒） | Can be computed from frame count and `frame_interval` / 可由帧数与 `frame_interval` 推导 |
 | `timestamp_timezone` | string (e.g., `Asia/Shanghai`) | Time zone for interpreting Unix timestamps (if applicable) / Unix 时间戳解释所用时区（如适用） | Unix timestamps are typically UTC; still document explicitly / Unix 时间戳通常按 UTC 解释，建议明确写出 |
 | `spatial_unit` | string (e.g., `m`) | Unit for metric spatial coordinates / 空间坐标单位 | Allowed: `m`, `ft` (default: `m`) / 可选：`m`、`ft`（默认 `m`） |

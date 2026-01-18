@@ -7,7 +7,7 @@ We provide python scripts to load and visualize the dataset.
 ## Demo
 
 ### Example data
-Download example parquet data from Zendo. [Download Demo data](https://zenodo.org/records/18196220)
+Download example parquet data from Zendo. [Download Demo data](https://zenodo.org/records/18206195)
 
 For more data downloads, please check [Download](download.html).
 
