@@ -15,145 +15,138 @@
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script defer src="static/js/common.js"></script>
 </head>
+
 <body>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h1 class="title is-2 has-text-centered">Publications</h1>
-      
-      <!-- Publication 1 -->
-      <div class="publication-item">
-        <div class="columns is-vcentered">
-            <!-- Image Left -->
-            <div class="column is-4">
-                <figure class="image shadow-md" style="border-radius: 8px; overflow: hidden;">
-                    <img src="static/images/publications/han2025capacity.jpg" alt="Paper Teaser" style="object-fit: contain; width: 100%; height: auto;">
-                </figure>
-            </div>
-            <!-- Info Right -->
-            <div class="column is-8">
-                <h2 class="title is-4">
-                    <a href="#" target="_blank" class="has-text-dark hover-primary">
-                        Capacity drop at active bottlenecks: An empirical study based on trajectory data
-                    </a>
-                </h2>
-                <p class="subtitle is-6 has-text-grey mb-1">
-                    Yu Han, Jiarui Wu, Fan Ding, Zhibin Li, Pan Liu, Ludovic Leclercq
-                </p>
-                <div class="tags">
-                    <span class="tag is-info is-light">Transportation Research Part B: Methodological</span>
-                    <span class="tag is-light">2025</span>
-                </div>
-                <div class="content is-small">
-                    <p>
-                        Capacity drop, a traffic phenomenon indicating that the discharge flow from a queue is lower than the pre-queue flow, is commonly observed at freeway bottlenecks. In the literature, the majority of empirical studies on capacity drop rely on aggregated traffic flow data. To fully understand the mechanism behind capacity drop, it is essential to analyze trajectory data, which captures the microscopic behavior of individual vehicles. However, the availability of high-quality trajectory data covering both sufficient spatial and temporal scope is limited. Consequently, existing theories and mechanisms to explain capacity drop from the perspective of vehicle behavior are predominantly analytical, lacking direct evidence to validate their impacts on contributing to capacity drop. This paper fills this gap by conducting a comprehensive empirical analysis of capacity drop using high-resolution trajectory data extracted from videos …
-                    </p>
-                </div>
-                
-                <div class="buttons">
-                    <a href="https://www.sciencedirect.com/science/article/pii/S0191261525000670" class="button is-small is-rounded is-dark">
-                        <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                        <span>Paper</span>
-                    </a>
-                    <!-- <a href="#" class="button is-small is-rounded is-dark">
-                        <span class="icon"><i class="fab fa-github"></i></span>
-                        <span>Code</span>
-                    </a> -->
-                    <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-1')">
-                        <span class="icon"><i class="fas fa-quote-right"></i></span>
-                        <span>BibTeX</span>
-                    </button>
-                </div>
+<section class="section">
+  <!-- wider container so 2 columns fit nicely -->
+  <div class="container is-widescreen">
 
-                <div id="bibtex-1" class="bibtex-section">
-                    <pre><code>@article{han2025capacity,
+    <h1 class="title is-2 has-text-centered">Publications</h1>
+
+    <!-- TWO ITEMS PER ROW -->
+    <div class="columns is-multiline">
+
+
+      <!-- ================= Publication 1 ================= -->
+      <div class="column is-6 publication-item">
+
+        <h2 class="title is-4">
+          <a href="#" target="_blank" class="has-text-dark hover-primary">
+            Capacity drop at active bottlenecks: An empirical study based on trajectory data
+          </a>
+        </h2>
+
+        <p class="subtitle is-6 has-text-grey mb-1">
+          Yu Han, Jiarui Wu, Fan Ding, Zhibin Li, Pan Liu, Ludovic Leclercq
+        </p>
+
+        <div class="tags">
+          <span class="tag is-info is-light">Transportation Research Part B: Methodological</span>
+          <span class="tag is-light">2025</span>
+        </div>
+
+        <div class="content is-small">
+          <p>
+            Capacity drop, a traffic phenomenon indicating that the discharge flow from a queue is lower than the pre-queue flow, is commonly observed at freeway bottlenecks. In the literature, the majority of empirical studies on capacity drop rely on aggregated traffic flow data. To fully understand the mechanism behind capacity drop, it is essential to analyze trajectory data, which captures the microscopic behavior of individual vehicles. However, the availability of high-quality trajectory data covering both sufficient spatial and temporal scope is limited. Consequently, existing theories and mechanisms to explain capacity drop from the perspective of vehicle behavior are predominantly analytical, lacking direct evidence to validate their impacts on contributing to capacity drop. This paper fills this gap by conducting a comprehensive empirical analysis of capacity drop using high-resolution trajectory data extracted from videos recorded by unmanned aerial vehicles. The empirical analysis examines the relative effects of various capacity drop mechanisms and reveals the following findings: (i) The late responses of hesitant vehicles during the acceleration process significantly contribute to capacity drop; (ii) the impact of response delay on queue discharge rate is more pronounced at lower congestion speeds; (iii) response delays primarily result from deceleration during car-following, followed by lane changes, with their combined effect having a more pronounced triggering impact. These findings are subsequently validated using data collected from another site. The findings presented in this paper are valuable for developing more accurate microscopic traffic simulation models and designing more effective traffic management and control strategies.
+          </p>
+        </div>
+
+        <div class="buttons">
+          <a href="https://www.sciencedirect.com/science/article/pii/S0191261525000670" class="button is-small is-rounded is-dark">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper</span>
+          </a>
+
+          <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-1')">
+            <span class="icon"><i class="fas fa-quote-right"></i></span>
+            <span>BibTeX</span>
+          </button>
+        </div>
+
+        <div id="bibtex-1" class="bibtex-section">
+<pre><code>@article{han2025capacity,
 title = {Capacity drop at active bottlenecks: An empirical study based on trajectory data},
 journal = {Transportation Research Part B: Methodological},
 volume = {196},
 pages = {103218},
 year = {2025},
-issn = {0191-2615},
-doi = {https://doi.org/10.1016/j.trb.2025.103218},
-url = {https://www.sciencedirect.com/science/article/pii/S0191261525000670},
 author = {Yu Han and Jiarui Wu and Fan Ding and Zhibin Li and Pan Liu and Ludovic Leclercq}
-}
-</code></pre>
-                </div>
-            </div>
+}</code></pre>
         </div>
+
       </div>
 
-      <!-- Publication 2 -->
-      <div class="publication-item">
-        <div class="columns is-vcentered">
-            <!-- Image Left -->
-            <div class="column is-4">
-                <figure class="image shadow-md" style="border-radius: 8px; overflow: hidden;">
-                    <img src="static/images/publications/ji2024openvter.jpg" alt="Paper Teaser" style="object-fit: contain; width: 100%; height: auto;">
-                </figure>
-            </div>
-            <!-- Info Right -->
-            <div class="column is-8">
-                <h2 class="title is-4">
-                    <a href="#" target="_blank" class="has-text-dark hover-primary">
-                        OpenVTER: An Open Vehicle Trajectory Extraction Framework Based on Rotated Bounding Boxes
-                    </a>
-                </h2>
-                <p class="subtitle is-6 has-text-grey mb-1">
-                    Xinkai Ji, Yu Han, Peipei Mao, Yan Huang, Hao Yu, Pan Liu
-                </p>
-                <div class="tags">
-                    <span class="tag is-info is-light">IEEE Transactions on Intelligent Transportation Systems</span>
-                    <span class="tag is-light">2024</span>
-                </div>
-                <div class="content is-small">
-                    <p>
-                        Vehicle trajectory data is essential for analyzing and modeling complex traffic behaviors. Although extraction of vehicle trajectory from aerial video data is not a new problem, obtaining trajectories with heading information across various road types, such as intersections or long road segments, requires further research. In this paper, we propose OpenVTER, a generalized Open-source Vehicle Trajectory Extraction framework based on Rotated bounding boxes (RBBs). This framework includes several key components: video stabilization, image division, vehicle detection, vehicle tracking, and data post-processing. Specifically, the rotated vehicle detection model, named YOLOX-R, is applied to detect the small and rotated vehicles using RBBs that provide vehicle heading information. A base-frame video stabilization method is proposed to reduce error accumulation in the transformation matrix and improve the …
-                    </p>
-                </div>
-                
-                <div class="buttons">
-                    <a href="https://ieeexplore.ieee.org/abstract/document/10736977" class="button is-small is-rounded is-dark">
-                        <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                        <span>Paper</span>
-                    </a>
-                    <a href="https://github.com/XinkaiJi/OpenVTER" class="button is-small is-rounded is-dark">
-                        <span class="icon"><i class="fab fa-github"></i></span>
-                        <span>Code</span>
-                    </a>
-                    <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-2')">
-                        <span class="icon"><i class="fas fa-quote-right"></i></span>
-                        <span>BibTeX</span>
-                    </button>
-                </div>
 
-                <div id="bibtex-2" class="bibtex-section">
-                    <pre><code>@article{ji2024openvter,
+      <!-- ================= Publication 2 ================= -->
+      <div class="column is-6 publication-item">
+
+        <h2 class="title is-4">
+          <a href="#" target="_blank" class="has-text-dark hover-primary">
+            OpenVTER: An Open Vehicle Trajectory Extraction Framework Based on Rotated Bounding Boxes
+          </a>
+        </h2>
+
+        <p class="subtitle is-6 has-text-grey mb-1">
+          Xinkai Ji, Yu Han*, Peipei Mao, Yan Huang, Hao Yu, Pan Liu*
+        </p>
+
+        <div class="tags">
+          <span class="tag is-info is-light">IEEE Transactions on Intelligent Transportation Systems</span>
+          <span class="tag is-light">2024</span>
+        </div>
+
+        <div class="content is-small">
+          <p>
+            Vehicle trajectory data is essential for analyzing and modeling complex traffic behaviors. Although extraction of vehicle trajectory from aerial video data is not a new problem, obtaining trajectories with heading information across various road types, such as intersections or long road segments, requires further research. In this paper, we propose OpenVTER, a generalized Open-source Vehicle Trajectory Extraction framework based on Rotated bounding boxes (RBBs). This framework includes several key components: video stabilization, image division, vehicle detection, vehicle tracking, and data post-processing. Specifically, the rotated vehicle detection model, named YOLOX-R, is applied to detect the small and rotated vehicles using RBBs that provide vehicle heading information. A base-frame video stabilization method is proposed to reduce error accumulation in the transformation matrix and improve the computational efficiency. The rotated vehicle tracking model, named SORT-R, is proposed to enable real-time tracking of RBBs. The performance of YOLOX-R is evaluated on two datasets, showing that vehicle detection challenges are well addressed. Ablation experiments were also conducted to analyze the effectiveness of different modules. Subsequently, we evaluate the completeness of the extracted trajectories under various road types and lighting conditions. The extracted trajectories are also compared with the NGSIM dataset, focusing on internal and platoon consistency. These evaluations demonstrate both the effectiveness and practicality of the proposed framework. Additionally, the visualization analyses of different road types demonstrate the advantages of the trajectories extracted by OpenVTER in various road scenarios for traffic research. The code and dataset are available online for non-commercial research purposes.
+          </p>
+        </div>
+
+        <div class="buttons">
+          <a href="https://ieeexplore.ieee.org/abstract/document/10736977" class="button is-small is-rounded is-dark">
+            <span class="icon"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper</span>
+          </a>
+
+          <a href="https://github.com/XinkaiJi/OpenVTER" class="button is-small is-rounded is-dark">
+            <span class="icon"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+
+          <button class="button is-small is-rounded is-light" onclick="toggleBibtex('bibtex-2')">
+            <span class="icon"><i class="fas fa-quote-right"></i></span>
+            <span>BibTeX</span>
+          </button>
+        </div>
+
+        <div id="bibtex-2" class="bibtex-section">
+<pre><code>@article{ji2024openvter,
 author={Ji, Xinkai and Han, Yu and Mao, Peipei and Huang, Yan and Yu, Hao and Liu, Pan},
-journal={IEEE Transactions on Intelligent Transportation Systems}, 
-title={OpenVTER: An Open Vehicle Trajectory Extraction Framework Based on Rotated Bounding Boxes}, 
+journal={IEEE Transactions on Intelligent Transportation Systems},
+title={OpenVTER: An Open Vehicle Trajectory Extraction Framework Based on Rotated Bounding Boxes},
 year={2025},
 volume={26},
 number={1},
-pages={59-76},
-doi={10.1109/TITS.2024.3481256}}
-</code></pre>
-                </div>
-            </div>
+pages={59-76}
+}</code></pre>
         </div>
+
       </div>
 
-    </div>
-  </section>
 
-  <script>
-    function toggleBibtex(id) {
-        const element = document.getElementById(id);
-        if (element) {
-            element.classList.toggle('is-active');
-        }
-    }
-  </script>
+    </div>
+  </div>
+</section>
+
+
+<script>
+function toggleBibtex(id) {
+  const element = document.getElementById(id);
+  if (element) {
+    element.classList.toggle('is-active');
+  }
+}
+</script>
 
 </body>
 </html>
