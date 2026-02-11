@@ -1,1 +1,2 @@
-The data collection experiment was conducted on a road network in Nanjing, China, during the morning peak hours on two sunny workdays, June 16 and 17, 2022, following a trial run on June 15. 
+The data collection experiment was conducted on a road network in Nanjing, China, during the morning peak hours on two sunny workdays, June 16 and 17, 2022, following a trial run on June 15. The satellite map and the topological maps of the site are shown below. 
+
