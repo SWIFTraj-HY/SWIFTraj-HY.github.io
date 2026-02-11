@@ -276,27 +276,44 @@
             </div>
           </div>
 
-          <!-- Experiment Details (1 Column, Markdown) -->
           <div id="experiment-details" class="content-block is-light">
             <h2 class="title is-3 has-text-centered">Experiment Details</h2>
-            <div class="columns is-vcentered feature-row">
+
+            <div class="columns is-multiline feature-row">
+
+              <!-- FULL WIDTH INTRO -->
+              <div class="column is-12">
+                <div id="experiment-intro" class="content markdown-body"></div>
+              </div>
+
+              <!-- LEFT COLUMN TEXT -->
               <div class="column is-7">
-                <!-- Markdown Content -->
-                <div id="experiment-content" class="content markdown-body">
-                  <p class="has-text-centered">Loading experiment details...</p>
-                </div>
+                <div id="experiment-content" class="content markdown-body"></div>
               </div>
+
+              <!-- RIGHT COLUMN IMAGES -->
               <div class="column is-5">
-                <!-- Image -->
-                <figure class="feature-image mb-4">
-                  <img src="static/images/experiment1.png" alt="Experiment Setup">
-                </figure>
-                <figcaption class="feature-caption">Drone deployment locations shown on the satellite map</figcaption>
-                <figure class="feature-image">
-                  <img src="static/images/experiment2.png" alt="Experiment Setup">
-                </figure>
-                <figcaption class="feature-caption">Drone deployment locations shown on the topological map</figcaption>
+
+                <div class="mb-5">
+                  <figure class="feature-image">
+                    <img src="static/images/experiment1.png">
+                  </figure>
+                  <figcaption class="feature-caption">
+                    Drone deployment locations shown on the satellite map
+                  </figcaption>
+                </div>
+
+                <div>
+                  <figure class="feature-image">
+                    <img src="static/images/experiment2.png">
+                  </figure>
+                  <figcaption class="feature-caption">
+                    Drone deployment locations shown on the topological map
+                  </figcaption>
+                </div>
+
               </div>
+
             </div>
           </div>
 

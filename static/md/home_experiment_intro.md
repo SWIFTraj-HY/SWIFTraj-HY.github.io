@@ -1,4 +1,3 @@
-The data collection experiment was conducted on a road network in Nanjing, China, during the morning peak hours on two sunny workdays, June 16 and 17, 2022, following a trial run on June 15. 
 
 **Location**  
 The site covers a 4.5 km stretch of the urban ring road (the Hurong Expressway) and part of its connected urban network.
