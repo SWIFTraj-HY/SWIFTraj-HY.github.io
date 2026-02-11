@@ -283,12 +283,12 @@
 
               <!-- FULL WIDTH INTRO -->
               <div class="column is-12">
-                <div id="experiment-intro" class="content markdown-body"></div>
+                <div id="experiment-detail" class="content markdown-body"></div>
               </div>
 
               <!-- LEFT COLUMN TEXT -->
               <div class="column is-7">
-                <div id="experiment-content" class="content markdown-body"></div>
+                <div id="experiment-intro" class="content markdown-body"></div>
               </div>
 
               <!-- RIGHT COLUMN IMAGES -->
@@ -443,7 +443,8 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
-        loadMarkdown('experiment-content', 'static/md/home_experiment.md');
+        loadMarkdown('experiment-detail', 'static/md/home_experiment_detail.md');
+        loadMarkdown('experiment-intro', 'static/md/home_experiment_intro.md');
         loadMarkdown('processing-content', 'static/md/home_processing.md');
 
         // --- Sidebar Toggle Logic ---
