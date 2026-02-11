@@ -1,13 +1,13 @@
-The experiment was conducted on an urban freeway network in Nanjing, China, using coordinated drone-based traffic data collection during morning peak hours.
+The data collection experiment was conducted on a road network in Nanjing, China, during the morning peak hours on two sunny workdays, June 16 and 17, 2022, following a trial run on June 15. 
 
 **Location**  
-4.5 km section of the Hurong Freeway in Nanjing, China, including major urban and freeway merge areas.
+The site covers a 4.5 km stretch of the urban ring road (the Hurong Expressway) and part of its connected urban network.
 
 **Traffic Conditions**  
-Recurrent morning peak bottlenecks in both directions, mainly at Shiyang Road and Gaoqiaomen Interchange.
+In the left-to-right direction, two active bottlenecks typically occur. One is located at a merge section where traffic enters from an urban arterial, Shiyang Road, and the other occurs at the merge with another freeway at the Gaoqiaomen Interchange. In the right-to-left direction, a single active bottleneck is usually observed, originating from the merge section at the Gaoqiaomen Interchange.
 
 **Time Period**  
-Morning peak hours on June 16–17, 2022 (weekday, sunny).
+Each day’s experiment began at 7:00 am and ended around 9:00 am.
 
 **Method**  
 16 drones with overlapping views to capture continuous vehicle trajectories. 16 experienced pilots were organized into five groups, coordinating battery replacements to maximize continuous recording time.

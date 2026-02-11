@@ -23,7 +23,7 @@ The dataset is distributed in three file formats: JSON, CSV, and Parquet. Specif
 | `timestamp_timezone` | string (e.g., `Asia/Shanghai`) | Time zone used to interpret the Unix timestamps / Unix 时间戳解释所用时区 | in IANA time zone format /  |
 | `spatial_unit` | string (e.g., `m`) | Unit for metric spatial coordinates / 空间坐标单位 | Allowed: `m`, `ft` (default: `m`) / 可选：`m`、`ft`（默认 `m`） |
 | `dataset_version` | string | Version of the dataset release / 数据集发布版本号 | Use semantic versioning (e.g., `1.0.0`) and increment for each public release / 建议采用语义化版本（如 `1.0.0`），每次公开发布递增 |
-| `lane_sequence_to_movement_map` | dict (e.g., `{"1-3-20": "Right-turn"}`) | Mapping of lane sequences to intersection movements, where each key represents an ordered sequence of lane IDs and each value denotes the corresponding movement category / 交叉口车道序列到通行方向的映射，其中键表示按顺序排列的lane id 序列，值表示对应的通行类型 | Intersection-only / 仅用于交叉口数据 |
+| `lane_sequence_to_movement_map` | dict (e.g., `{"1-3-20": "Right-turn"}`) | Mapping between each movement ID and its movement direction. A movement ID is defined in the form of “incoming road segment–intersection–outgoing road segment / 流向ID与通行方向间的映射。其中，流项ID用进口道编号-路口编号-出口道编号的形式来表示，值表示对应的通行方向 | Intersection-only / 仅用于交叉口数据 |
 | `total_vehicle_count` | int (e.g., `12345`) | Total number of vehicle trajectories contained in the data file / 车辆轨迹总数 | Count of unique `vehicle_id` / 统计唯一 `vehicle_id` 的数量 |
 | `unique_lane_ids` | list[int] (e.g., `[1,2,3,20]`) | List of all unique lane identifiers appearing in the data file / 该文件中所有的车道编号 | Sorted unique values extracted from `lane_id` / 从 `lane_id` 提取的唯一且排序的集合 |
 
@@ -45,7 +45,7 @@ The dataset is distributed in three file formats: JSON, CSV, and Parquet. Specif
 | `frenet_d_speed` | list[float] | Lateral speed in the Frenet coordinate system (applicable to expressway data)  / Frenet 横向速度（适用于快速路数据） | Default unit: m/s / 默认单位：m/s |
 | `frenet_s_accel` | list[float] | Longitudinal acceleration (applicable to expressway data) / 纵向加速度（默认 m/s²） |
 | `frenet_d_accel` | list[float] | Lateral acceleration (applicable to expressway data) / 横向加速度（默认 m/s²） |
-| `lane_id`‡ | list[int] | lane_id indicates the ID of the region, manually annotated, in which the vehicle’s center point is located for each frame. / lane_id 表示车辆在每一帧中，其中心点所在的人工标注区域的 ID。| `-1` indicates unlabelled area / `-1` 表示未标注区域 |
+| `lane_id`‡ | list[int] | Identifier for the lane (freeway) or the corresponding road segment or intersection (urban road) in which the vehicle center is located at each frame. / lane_id 表示车辆在每一帧中，其中心点所在的人工标注区域的 ID。其中，在高速公路上特指某一车道，而在城市道路中指某一路段或路口。| `-1` indicates unlabelled area / `-1` 表示未标注区域 |
 | `pixel_x` | list[float] | Per-frame horizontal coordinate of the vehicle center in pixel space / 逐帧画面中，车辆中心在像素空间内的水平坐标 | Per-frame values aligned with `frame_index` / 与 `frame_index` 逐帧对齐 |
 | `pixel_y` | list[float] | Per-frame vertical coordinate of the vehicle center in pixel space / 逐帧画面中，车辆中心在像素空间内的垂直坐标 | Per-frame values aligned with `frame_index` / 与 `frame_index` 逐帧对齐 |
 | `ground_x` | list[float] | Per-frame horizontal coordinate of the vehicle center in the local ground coordinate system  / 逐帧画面中，车辆中心在局部地面坐标系下的水平坐标 | Per-frame values aligned with `frame_index` / 与 `frame_index` 逐帧对齐 |
@@ -77,8 +77,9 @@ In expressway scenarios, a region represented by a single `lane_id` on the main 
 - Ramp regions usually have `lane_id` values such as **101**, **102**, etc.
 
 #### 2. Intersection Data
-In intersection datasets, `lane_id` is used to represent both **the entry/exit approaches of an intersection** and **the internal regions within the intersection**.  
-It should be noted that an intersection entry or exit represented by a `lane_id` usually **contains multiple lanes**.   
+In intersection datasets, `lane_id` does not refer to a physical freeway lane, but to an area corresponding to a specific road segment or an intersection.
+
+It should be noted that the incoming and outgoing road segments represented by a `lane_id` usually **contains multiple lanes**.   
 
 The correspondence between specific `lane_id` values and the actual road lanes can be found in the images provided in the data files.
 
