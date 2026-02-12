@@ -253,11 +253,11 @@
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'B2', this)">B2</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C1', this)">C1</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C2', this)">C2</button>
-                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1', this)">D1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1-EXP', this)">D1</button>
                         </div>
                         <button class="selector-btn is-all-drones hurong-loc" onclick="selectAllDrones('hurong')">ALL DRONES</button>
                     </div>
-                    
+
                     <!-- Intersection (New) -->
                     <div class="location-box">
                         <div class="location-box-title">Intersection</div>
@@ -265,7 +265,7 @@
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'B3', this)">B3</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C3', this)">C3</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'C4', this)">C4</button>
-                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1', this)">D1</button>
+                            <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D1-INT', this)">D1</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'D2', this)">D2</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'E1', this)">E1</button>
                             <button class="selector-btn is-location hurong-loc" onclick="selectLoc('hurong', 'E2', this)">E2</button>
@@ -300,8 +300,7 @@
         
         <!-- Result Display -->
         <div id="hurong-result-display" class="result-box">
-          <p>Download from Zenodo. The corresponding filenames are as follows:</p>
-           <strong>Filename:</strong> <span id="hurong-filename-text"></span>
+          <div id="hurong-result-content"></div>
         </div>
       </div>
 
@@ -340,8 +339,7 @@
         
         <!-- Result Display -->
         <div id="yingtian-result-display" class="result-box">
-          <p>Download from Zenodo. The corresponding filenames are as follows:</p>
-           <strong>Filename:</strong> <span id="yingtian-filename-text"></span>
+          <div id="yingtian-result-content"></div>
         </div>
       </div>
 
@@ -355,19 +353,446 @@
   </section>
 
   <script>
+    // ============================================
+    // CONFIGURATION: Edit filenames and download URLs here
+    // ============================================
+    // For files not ready yet, set downloadUrl to null or ''
+    // The system will display a coming soon message
     const CONFIG = {
         hurong: {
-             dates: [
-                { id: '20220616', label: 'June 16, 2022', times: ['07:00', '07:25', '07:50', '08:15', '08:45'] },
-                { id: '20220617', label: 'June 17, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
+            // Zenodo base URLs for reference (links shown to user)
+            zenodoUrls: {
+                expressway: 'https://zenodo.org/records/18616228',
+                expresswayAll: 'https://zenodo.org/records/18609836',
+                intersection: 'https://zenodo.org/records/18616239'
+            },
+
+            dates: [
+                {
+                    id: '20220616',
+                    label: 'June 16, 2022',
+                    locations: {
+                        'A1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_A1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_A1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_A1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_A1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_A1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'A2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_A2.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_A2.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_A2.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_A2.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_A2.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'A3': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_A3.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_A3.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_A3.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_A3.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_A3.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'A4': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_A4.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_A4.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_A4.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_A4.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_A4.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'B1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_B1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_B1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_B1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_B1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_B1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'B2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_B2.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_B2.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_B2.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_B2.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_B2.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'C1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_C1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_C1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_C1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_C1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_C1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'C2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_C2.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_C2.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_C2.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_C2.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_C2.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'D1-EXP': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_D1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_D1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_D1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_D1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_D1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        // ========== INTERSECTION LOCATIONS ==========
+                        'B3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_B3.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_B3.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_B3.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_B3.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_B3.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'C3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_C3.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_C3.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_C3.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_C3.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_C3.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'C4': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_C4.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_C4.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_C4.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_C4.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_C4.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'D1-INT': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_D1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_D1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_D1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_D1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_D1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'D2': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_D2.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_D2.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_D2.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_D2.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_D2.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'E1': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_E1.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_E1.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_E1.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_E1.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_E1.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'E2': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_E2.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_E2.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_E2.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_E2.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_E2.csv', downloadUrl: '' }
+                            ]
+                        },
+                        'E3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_E3.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_E3.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_E3.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_E3.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_E3.csv', downloadUrl: '' }
+                            ]
+                        },
+                        // ========== ALL DRONES ==========
+                        'ALL': {
+                            zenodoType: 'expresswayAll',
+                            times: [
+                                { time: '07:00', filename: 'SWIFTraj_20220616_0700_ALL.csv', downloadUrl: '' },
+                                { time: '07:25', filename: 'SWIFTraj_20220616_0725_ALL.csv', downloadUrl: '' },
+                                { time: '07:50', filename: 'SWIFTraj_20220616_0750_ALL.csv', downloadUrl: '' },
+                                { time: '08:15', filename: 'SWIFTraj_20220616_0815_ALL.csv', downloadUrl: '' },
+                                { time: '08:45', filename: 'SWIFTraj_20220616_0845_ALL.csv', downloadUrl: '' }
+                            ]
+                        }
+                    }
+                },
+                {
+                    id: '20220617',
+                    label: 'June 17, 2022',
+                    locations: {
+                        'A1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_A1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_A1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_A1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_A1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_A1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'A2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_A2_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A2_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_A2_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A2_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_A2_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_A2_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_A2_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'A3': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_A3_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A3_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_A3_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A3_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_A3_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_A3_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_A3_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'A4': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_A4_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A4_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_A4_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_A4_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_A4_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_A4_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_A4_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'B1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_B1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_B1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_B1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_B1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_B1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_B1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_B1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'B2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_B2_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_B2_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_B2_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_B2_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_B2_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_B2_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_B2_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'C1': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_C1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_C1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_C1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_C1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_C1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_C1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_C1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'C2': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_C2_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_C2_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_C2_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_C2_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_C2_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_C2_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_C2_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'D1-EXP': {
+                            zenodoType: 'expressway',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_D1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_D1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_D1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616228/files/Hurong_20220617_D1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_D1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_D1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_D1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        // ========== INTERSECTION LOCATIONS ==========
+                        'B3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_B3_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_B3_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_B3_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_B3_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_B3_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_B3_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_B3_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'C3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_C3_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_C3_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_C3_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_C3_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_C3_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_C3_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_C3_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'C4': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_C4_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_C4_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_C4_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_C4_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_C4_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_C4_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_C4_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'D1-INT': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_D1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_D1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_D1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_D1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_D1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_D1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_D1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'D2': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_D2_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_D2_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_D2_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_D2_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_D2_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_D2_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_D2_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'E1': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_E1_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_E1_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_E1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_E1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_E1_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'E2': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_E2_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E2_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_E2_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E2_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_E2_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_E2_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_E2_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        'E3': {
+                            zenodoType: 'intersection',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_E3_F1.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E3_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_E3_F2.zip', downloadUrl: 'https://zenodo.org/records/18616239/files/Hurong_20220617_E3_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_E3_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_E3_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_E3_F5.zip', downloadUrl: '' }
+                            ]
+                        },
+                        // ========== ALL DRONES ==========
+                        'ALL': {
+                            zenodoType: 'expresswayAll',
+                            times: [
+                                { time: '07:00', filename: 'Hurong_20220617_A1A2A3A4B1B2C1C2D1_F1.zip', downloadUrl: 'https://zenodo.org/records/18609836/files/Hurong_20220617_A1A2A3A4B1B2C1C2D1_F1.zip' },
+                                { time: '07:25', filename: 'Hurong_20220617_A1A2A3A4B1B2C1C2D1_F2.zip', downloadUrl: 'https://zenodo.org/records/18609836/files/Hurong_20220617_A1A2A3A4B1B2C1C2D1_F2.zip' },
+                                { time: '07:55', filename: 'Hurong_20220617_A1A2A3A4B1B2C1C2D1_F3.zip', downloadUrl: '' },
+                                { time: '08:25', filename: 'Hurong_20220617_A1A2A3A4B1B2C1C2D1_F4.zip', downloadUrl: '' },
+                                { time: '08:50', filename: 'Hurong_20220617_A1A2A3A4B1B2C1C2D1_F5.zip', downloadUrl: '' }
+                            ]
+                        }
+                    }
+                }
             ]
         },
         yingtian: {
+             // Zenodo base URL for all Yingtian files
+             zenodoUrl: 'https://zenodo.org/records/18616662',
+
              dates: [
-                { id: '20220707', label: 'July 7, 2022', times: ['07:00', '07:13', '07:29', '07:48'] },
-                { id: '20220708', label: 'July 8, 2022', times: ['07:02', '07:18', '07:32', '07:52'] },
-                { id: '20220709', label: 'July 9, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] },
-                { id: '20220710', label: 'July 10, 2022', times: ['07:00', '07:25', '07:55', '08:25', '08:50'] }
+                {
+                    id: '20220707',
+                    label: 'July 7, 2022',
+                    times: [
+                        { time: '07:00', filename: 'Yingtian_20220707_Y1Y2_F1_A.zip', downloadUrl: 'https://zenodo.org/records/18616662/files/Yingtian_20220707_Y1Y2_F1_A.zip' },
+                        { time: '07:13', filename: 'Yingtian_20220707_Y1Y2_F1_B.zip', downloadUrl: 'https://zenodo.org/records/18616662/files/Yingtian_20220707_Y1Y2_F1_B.zip' },
+                        { time: '07:29', filename: 'Yingtian_20220707_Y1Y2_F2_A.zip', downloadUrl: '' },
+                        { time: '07:48', filename: 'Yingtian_20220707_Y1Y2_F2_B.zip', downloadUrl: '' }
+                    ]
+                },
+                {
+                    id: '20220708',
+                    label: 'July 8, 2022',
+                    times: [
+                        { time: '07:02', filename: 'Yingtian_20220708_Y1Y2_F2_A.zip', downloadUrl: '' },
+                        { time: '07:18', filename: 'Yingtian_20220708_Y1Y2_F2_B.zip', downloadUrl: '' },
+                        { time: '07:32', filename: 'Yingtian_20220708_Y1Y2_F2_C.zip', downloadUrl: '' },
+                        { time: '07:52', filename: 'Yingtian_20220708_Y1Y2_F2_D.zip', downloadUrl: '' }
+                    ]
+                },
+                {
+                    id: '20220709',
+                    label: 'July 9, 2022',
+                    times: [
+                        { time: '07:00', filename: 'Yingtian_20220709_Y1Y2_F3_A.zip', downloadUrl: '' },
+                        { time: '07:25', filename: 'Yingtian_20220709_Y1Y2_F3_B.zip', downloadUrl: '' },
+                        { time: '07:55', filename: 'Yingtian_20220709_Y1Y2_F3_C.zip', downloadUrl: '' },
+                        { time: '08:25', filename: 'Yingtian_20220709_Y1Y2_F3_D.zip', downloadUrl: '' },
+                        { time: '08:50', filename: 'Yingtian_20220709_Y1Y2_F3_E.zip', downloadUrl: '' }
+                    ]
+                },
+                {
+                    id: '20220710',
+                    label: 'July 10, 2022',
+                    times: [
+                        { time: '07:00', filename: 'Yingtian_20220710_Y1Y2_F1_A.zip', downloadUrl: '' },
+                        { time: '07:25', filename: 'Yingtian_20220710_Y1Y2_F1_B.zip', downloadUrl: '' },
+                        { time: '07:55', filename: 'Yingtian_20220710_Y1Y2_F2_C.zip', downloadUrl: '' },
+                        { time: '08:25', filename: 'Yingtian_20220710_Y1Y2_F2_D.zip', downloadUrl: '' },
+                        { time: '08:50', filename: 'Yingtian_20220710_Y1Y2_F2_E.zip', downloadUrl: '' }
+                    ]
+                }
             ]
         }
     };
@@ -397,10 +822,10 @@
         // Render Date Buttons
         const dateContainer = document.querySelector(`.${dataset}-date-container`);
         if(!dateContainer) return;
-        
+
         dateContainer.innerHTML = '';
         const dates = CONFIG[dataset].dates;
-        
+
         dates.forEach(d => {
             const btn = document.createElement('button');
             btn.className = `selector-btn is-date ${dataset}-date-btn`;
@@ -417,9 +842,8 @@
 
     function selectLoc(dataset, locId, btnElement) {
         states[dataset].location = locId;
-        
-        // Update UI - Scope to specific dataset container if needed, but classes are specific enough?
-        // Actually classes are generic 'is-location'. We should scope by dataset container.
+
+        // Update UI - Scope to specific dataset container
         const container = document.getElementById(`interface-${dataset}`);
         container.querySelectorAll('.is-location').forEach(btn => {
             if(btn === btnElement) {
@@ -428,27 +852,37 @@
                 btn.classList.remove('active');
             }
         });
-        
+
         // Deactivate All Drones in this dataset
         const allDronesBtn = container.querySelector('.is-all-drones');
         if(allDronesBtn && allDronesBtn !== btnElement) allDronesBtn.classList.remove('active');
-        
+
         clearResult(dataset);
+
+        // For Hurong, re-render times when location changes
+        if(dataset === 'hurong' && states[dataset].date) {
+            renderTimes(dataset, states[dataset].date);
+        }
     }
 
     function selectAllDrones(dataset) {
         states[dataset].location = 'ALL';
-        
+
         const container = document.getElementById(`interface-${dataset}`);
-        
+
         // Update UI: Deactivate all individual locations
         container.querySelectorAll('.is-location').forEach(btn => btn.classList.remove('active'));
-        
+
         // Activate All Drones button
         const allDronesBtn = container.querySelector('.is-all-drones');
         if(allDronesBtn) allDronesBtn.classList.add('active');
-        
+
         clearResult(dataset);
+
+        // For Hurong, re-render times when location changes
+        if(dataset === 'hurong' && states[dataset].date) {
+            renderTimes(dataset, states[dataset].date);
+        }
     }
 
     function selectDate(dataset, dateId) {
@@ -477,34 +911,60 @@
         const container = document.getElementById(`${dataset}-time-container`);
         if(!container) return;
         container.innerHTML = '';
-        
+
         const dateConfig = CONFIG[dataset].dates.find(d => d.id === dateId);
         if(!dateConfig) return;
 
-        dateConfig.times.forEach(time => {
+        let timesList = [];
+
+        if(dataset === 'hurong') {
+            // For Hurong, need location to be selected first
+            const currentLocation = states[dataset].location;
+            if(!currentLocation) {
+                // No location selected yet, show placeholder
+                container.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">Select a location first</p>';
+                return;
+            }
+
+            const locationConfig = dateConfig.locations[currentLocation];
+            if(!locationConfig) {
+                container.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">No data for this location</p>';
+                return;
+            }
+
+            timesList = locationConfig.times;
+        } else {
+            // For Yingtian, times are directly under date
+            timesList = dateConfig.times;
+        }
+
+        timesList.forEach(timeItem => {
             const btn = document.createElement('button');
             btn.className = 'selector-btn is-time';
-            btn.textContent = time;
-            btn.onclick = () => selectTime(dataset, time, btn);
+
+            // Handle both string format and object format
+            const timeDisplay = typeof timeItem === 'string' ? timeItem : timeItem.time;
+            btn.textContent = timeDisplay;
+            btn.onclick = () => selectTime(dataset, timeItem, btn);
             container.appendChild(btn);
         });
     }
 
-    function selectTime(dataset, timeVal, btnElement) {
-        states[dataset].time = timeVal;
+    function selectTime(dataset, timeItem, btnElement) {
+        // Store the full time item (can be string or object with filename/url)
+        states[dataset].time = timeItem;
 
         // Update UI - Scope to dataset time container
-        // Note: btnElement is specific, but we need to remove active from siblings
         const container = document.getElementById(`${dataset}-time-container`);
         container.querySelectorAll('.is-time').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
-        
+
         clearResult(dataset);
     }
 
     function showInfo(dataset) {
         const resultBox = document.getElementById(`${dataset}-result-display`);
-        const fileText = document.getElementById(`${dataset}-filename-text`);
+        const resultContent = document.getElementById(`${dataset}-result-content`);
         const currentState = states[dataset];
 
         // Validation
@@ -521,21 +981,71 @@
             }
         }
 
-        // Construct Filename
-        const dateStr = currentState.date;
-        const timeStr = currentState.time.replace(':', '');
-        
-        let filename = '';
         if (dataset === 'hurong') {
-            const locStr = currentState.location;
-            filename = `SWIFTraj_${dateStr}_${timeStr}_${locStr}.csv`;
-        } else {
-            // Yingtian format assumption
-            filename = `Yingtian_${dateStr}_${timeStr}.csv`;
-        }
+            // Hurong: use configured filename and download URL from location config
+            const timeItem = currentState.time;
+            const dateConfig = CONFIG.hurong.dates.find(d => d.id === currentState.date);
+            const locationConfig = dateConfig?.locations[currentState.location];
 
-        fileText.textContent = filename;
-        resultBox.style.display = 'block';
+            if (!locationConfig) {
+                alert('Configuration error: Location data not found.');
+                return;
+            }
+
+            const downloadUrl = timeItem.downloadUrl;
+            const filename = timeItem.filename;
+            const zenodoType = locationConfig.zenodoType;
+            const zenodoRecordUrl = CONFIG.hurong.zenodoUrls[zenodoType];
+
+            // Check if file is ready
+            if (!downloadUrl || downloadUrl.trim() === '') {
+                // File not ready - show coming soon message
+                resultContent.innerHTML = `
+                    <p style="font-size: 1.05rem; color: #666; text-align: center; margin: 0;">
+                        <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                        Data for this selection will be released soon.
+                    </p>
+                `;
+            } else {
+                // File ready - show filename and Zenodo link
+                resultContent.innerHTML = `
+                    <p>Download from <a href="${zenodoRecordUrl}" target="_blank" rel="noopener noreferrer" style="color: #094aed; font-weight: 600; text-decoration: underline;">Zenodo</a>. The corresponding filenames are as follows:</p>
+                    <strong>Filename:</strong> <span>${filename}</span>
+                `;
+
+                // Open the download URL in new tab
+                window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+            }
+
+            resultBox.style.display = 'block';
+        } else if (dataset === 'yingtian') {
+            // Yingtian: use configured filename and download URL
+            const timeItem = currentState.time;
+            const downloadUrl = timeItem.downloadUrl;
+
+            // Check if file is ready
+            if (!downloadUrl || downloadUrl.trim() === '') {
+                // File not ready - show coming soon message
+                resultContent.innerHTML = `
+                    <p style="font-size: 1.05rem; color: #666; text-align: center; margin: 0;">
+                        <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                        Data for this time slot will be released soon.
+                    </p>
+                `;
+            } else {
+                // File ready - show filename and Zenodo link
+                const filename = timeItem.filename;
+                resultContent.innerHTML = `
+                    <p>Download from <a href="https://zenodo.org/records/18616662" target="_blank" rel="noopener noreferrer" style="color: #094aed; font-weight: 600; text-decoration: underline;">Zenodo</a>. The corresponding filenames are as follows:</p>
+                    <strong>Filename:</strong> <span>${filename}</span>
+                `;
+
+                // Open the download URL in new tab
+                window.open(downloadUrl, '_blank', 'noopener,noreferrer');
+            }
+
+            resultBox.style.display = 'block';
+        }
     }
     
     function clearResult(dataset) {
