@@ -834,9 +834,11 @@
             dateContainer.appendChild(btn);
         });
 
-        // Select first date by default
+        // Select default date
         if(dates.length > 0) {
-            selectDate(dataset, dates[0].id);
+            // For Hurong, default to June 17, 2022 (second date); for others, use first date
+            const defaultDateIndex = (dataset === 'hurong' && dates.length > 1) ? 1 : 0;
+            selectDate(dataset, dates[defaultDateIndex].id);
         }
     }
 
@@ -921,8 +923,8 @@
             // For Hurong, need location to be selected first
             const currentLocation = states[dataset].location;
             if(!currentLocation) {
-                // No location selected yet, show placeholder
-                container.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">Select a location first</p>';
+                // No location selected yet, show nothing
+                container.innerHTML = '';
                 return;
             }
 
