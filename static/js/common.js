@@ -63,8 +63,7 @@ function injectFooter() {
         <div class="content has-text-centered">
           <p class="title is-4">Contact</p>
           <p>
-            We would love to hear your feedback on the SWIFTraj dataset.<br>
-            Feel free to send us your questions and comments.
+            We sincerely welcome any feedback or suggestions regarding the SWIFTraj trajectory dataset.
           </p>
           <p>
             <strong>Email:</strong> <a href="mailto:yuhan@seu.edu.cn" target="_blank">Yu Han</a>, Associate Professor, Southeast University

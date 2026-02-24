@@ -215,6 +215,62 @@
         margin-right: 12px;
         border-radius: 4px;
     }
+
+    /* News Timeline */
+    .news-timeline {
+        display: flex;
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .news-item {
+        padding: 0.9rem 0 0.9rem 1rem;
+        border-bottom: 1px solid #f0f0f0;
+        border-left: 3px solid #d0dbff;
+    }
+
+    .news-item:last-child {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    .news-date {
+        font-size: 0.75rem;
+        color: #094aed;
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        letter-spacing: 0.2px;
+    }
+
+    .news-content {
+        font-size: 0.92rem;
+        color: #333;
+        line-height: 1.6;
+    }
+
+    .news-tag {
+        display: inline-block;
+        font-size: 0.72rem;
+        font-weight: 700;
+        padding: 0.15rem 0.55rem;
+        border-radius: 3px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        margin-right: 0.5rem;
+        vertical-align: middle;
+    }
+
+    .news-tag-available {
+        background-color: #d4f0c0;
+        color: #2d7a00;
+        border: 1px solid #a4d05d;
+    }
+
+    .news-tag-coming {
+        background-color: #fff3cd;
+        color: #856404;
+        border: 1px solid #ffc107;
+    }
   </style>
 </head>
 <body>
@@ -340,6 +396,24 @@
         <!-- Result Display -->
         <div id="yingtian-result-display" class="result-box">
           <div id="yingtian-result-content"></div>
+        </div>
+      </div>
+
+      <!-- News Section -->
+      <h3 class="dataset-title" style="margin-top: 3rem;">News</h3>
+      <div class="box">
+        <div class="news-timeline">
+          <div class="news-item">
+            <div class="news-date">February 24, 2026</div>
+            <div class="news-content">
+              <p style="margin: 0 0 0.4rem 0;">
+                The following data are now available for download: Hurong Dataset (June 17, 2022) — Expressway locations A1–A4, B1–B2, C1–C2, D1 and Intersection locations B3–E3 at time slots 07:00 and 07:25, including the synchronized ALL DRONES file at 07:00; Yingtian Dataset (July 7, 2022) — time slots 07:00 and 07:13.
+              </p>
+              <p style="margin: 0; color: #888;">
+                More data will be released progressively.
+              </p>
+            </div>
+          </div>
         </div>
       </div>
 

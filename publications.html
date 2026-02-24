@@ -61,6 +61,28 @@
     .bibtex-section.is-active {
       display: block;
     }
+
+    /* Abstract truncation */
+    .pub-abstract p.abstract-collapsed {
+      overflow: hidden;
+      display: -webkit-box;
+      -webkit-line-clamp: 4;
+      -webkit-box-orient: vertical;
+      line-clamp: 4;
+    }
+
+    .abstract-toggle {
+      display: inline-block;
+      font-size: 0.78rem;
+      margin-top: 0.25rem;
+      color: #3273dc;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    .abstract-toggle:hover {
+      text-decoration: underline;
+    }
   </style>
 </head>
 
@@ -74,9 +96,109 @@
 
 <div class="columns is-multiline">
 
-
 <!-- ====================================================== -->
 <!-- ================= Publication 1 ====================== -->
+<!-- ====================================================== -->
+<div class="column is-6 publication-item">
+<div class="publication-card">
+
+<div class="pub-header">
+<h2 class="title is-4">
+<a href="#" class="has-text-dark">
+The Swarm Intelligence Freeway–
+Urban Trajectories (SWIFTraj) Dataset – Part I: Dataset Description and Applications
+</a>
+</h2>
+
+<p class="subtitle is-6 has-text-grey mb-1">
+Yu Han, Xinkai Ji, Chen Qian, Pan Liu
+</p>
+
+<div class="tags">
+<!-- <span class="tag is-info is-light">Transportation Research Part B: Methodological</span> -->
+<span class="tag is-light">2026</span>
+</div>
+</div>
+
+<div class="pub-abstract content is-small">
+<p>
+This paper presents a detailed description and characterization of a new open-source vehicle trajectory dataset, namely SWIFTraj, constructed from videos recorded by a swarm of 16 drones equipped with 5.4K-resolution cameras. The dataset is distinguished from existing open-source trajectory datasets in several aspects. First, it provides long-distance continuous trajectories of up to 4.5 km on a freeway, enabling in-depth investigation of traffic phenomena and their spatial and temporal evolution. Second, the data collection site covers an integrated network consisting of a long freeway corridor and parts of its connected urban network, facilitating traffic analysis and modeling from a network perspective. The potential applications of the dataset for transportation research, including traffic flow analysis, modeling, and control at multiple scales, as well as topics related to autonomous driving, are thoroughly discussed. Finally, SWIFTraj is released as a freely accessible open-source dataset to support and accelerate future research in the transportation community. The dataset is publicly available at the SWIFTraj website (https://www.swiftraj.com).
+</p>
+</div>
+
+<div class="pub-footer">
+<div class="buttons">
+<!-- <a href="https://www.sciencedirect.com/science/article/pii/S0191261525000670" class="button is-small is-dark">Paper</a> -->
+<!-- <button class="button is-small is-light" onclick="toggleBibtex('bib1')">BibTeX</button> -->
+</div>
+
+<!-- <div id="bib1" class="bibtex-section">
+<pre><code>@article{han2025capacity,
+title = {Capacity drop at active bottlenecks: An empirical study based on trajectory data},
+journal = {Transportation Research Part B: Methodological},
+volume = {196},
+pages = {103218},
+year = {2025},
+author = {Yu Han and Jiarui Wu and Fan Ding and Zhibin Li and Pan Liu and Ludovic Leclercq}
+}</code></pre>
+</div> -->
+</div>
+
+</div>
+</div>
+
+<!-- ====================================================== -->
+<!-- ================= Publication 2 ====================== -->
+<!-- ====================================================== -->
+<div class="column is-6 publication-item">
+<div class="publication-card">
+
+<div class="pub-header">
+<h2 class="title is-4">
+<a href="#" class="has-text-dark">
+The Swarm Intelligence Freeway–Urban Trajectories (SWIFTraj) Dataset – Part II: A Graph-Based Approach for Trajectory Connection
+</a>
+</h2>
+
+<p class="subtitle is-6 has-text-grey mb-1">
+Xinkai Ji,  Pan Liu, Yu Han
+</p>
+
+<div class="tags">
+<!-- <span class="tag is-info is-light">Transportation Research Part B: Methodological</span> -->
+<span class="tag is-light">2026</span>
+</div>
+</div>
+
+<div class="pub-abstract content is-small">
+<p>
+In Part I of this companion paper series, we introduced SWIFTraj, a new open-source vehicle trajectory dataset collected using a unmanned aerial vehicle (UAV) swarm. The dataset has two distinctive features. First, by connecting trajectories across consecutive UAV videos, it provides long-distance continuous trajectories, with the longest exceeding 4.5 km. Second, it covers an integrated traffic network consisting of both freeways and their connected urban roads. Obtaining such long-distance continuous trajectories from a UAV swarm is challenging, due to the need for accurate time alignment across multiple videos and the irregular spatial distribution of UAVs. To address these challenges, this paper proposes a novel graph-based approach for connecting vehicle trajectories captured by a UAV swarm. An undirected graph is constructed to represent flexible UAV layouts, and an automatic time alignment method based on trajectory matching cost minimization is developed to estimate optimal time offsets across videos. To associate trajectories of the same vehicle observed in different videos, a vehicle matching table is established using the Hungarian algorithm. The proposed approach is evaluated using both simulated and real-world data. Results from real-world experiments show that the time alignment error is within three video frames, corresponding to approximately 0.1 s, and that the vehicle matching achieves an F1-score of about 0.99. These results demonstrate the effectiveness of the proposed method in addressing key challenges in UAV-based trajectory connection and highlight its potential for large-scale vehicle trajectory collection.
+</p>
+</div>
+
+<div class="pub-footer">
+<div class="buttons">
+<!-- <a href="https://www.sciencedirect.com/science/article/pii/S0191261525000670" class="button is-small is-dark">Paper</a> -->
+<!-- <button class="button is-small is-light" onclick="toggleBibtex('bib1')">BibTeX</button> -->
+</div>
+
+<!-- <div id="bib1" class="bibtex-section">
+<pre><code>@article{han2025capacity,
+title = {Capacity drop at active bottlenecks: An empirical study based on trajectory data},
+journal = {Transportation Research Part B: Methodological},
+volume = {196},
+pages = {103218},
+year = {2025},
+author = {Yu Han and Jiarui Wu and Fan Ding and Zhibin Li and Pan Liu and Ludovic Leclercq}
+}</code></pre>
+</div> -->
+</div>
+
+</div>
+</div>
+
+<!-- ====================================================== -->
+<!-- ================= Publication 3 ====================== -->
 <!-- ====================================================== -->
 <div class="column is-6 publication-item">
 <div class="publication-card">
@@ -127,7 +249,67 @@ author = {Yu Han and Jiarui Wu and Fan Ding and Zhibin Li and Pan Liu and Ludovi
 
 
 <!-- ====================================================== -->
-<!-- ================= Publication 2 ====================== -->
+<!-- ================= Publication 4 ====================== -->
+<!-- ====================================================== -->
+<div class="column is-6 publication-item">
+<div class="publication-card">
+
+<div class="pub-header">
+<h2 class="title is-4">
+<a href="#" class="has-text-dark">
+Capacity drop accounting for microscopic vehicle interaction effects: analytical model and validation with high-resolution trajectories
+</a>
+</h2>
+
+<p class="subtitle is-6 has-text-grey mb-1">
+Yu Han, Pan Liu, Zhiyuan Liu, Ludovic Leclercq
+</p>
+
+<div class="tags">
+<!-- <span class="tag is-info is-light">Transportation Research Part B: Methodological</span> -->
+<span class="tag is-light">2026</span>
+</div>
+</div>
+
+<div class="pub-abstract content is-small">
+<p>
+Capacity drop is a traffic phenomenon in which the discharge flow from a queue is lower than the theoretical
+infrastructure capacity. This paper proposes a generic analytical method to estimate the queue discharge flow of
+freeway traffic. Capacity drop is primarily attributed to hesitant vehicles, defined as vehicles that stochastically and
+temporarily enter an acceleration delay state and generate voids (i.e., extra gaps) in front of them. The proposed
+method estimates the expected total void length generated by all hesitant vehicles, based on the distributions of their
+spatial and temporal locations as well as the associated delays. It also accounts for interactions between the waves
+triggered by downstream hesitant vehicles and the voids generated by upstream ones. Our analysis reveals that this
+interaction is the key mechanism behind the differing extents of capacity drop observed between standing queues
+and jam waves in previous studies. The accuracy of the model is validated through both numerical simulations and
+real-world trajectories. Overall, the proposed method offers a deeper understanding of capacity drop, which can be
+leveraged in traffic flow modeling and control.
+</p>
+</div>
+
+<div class="pub-footer">
+<div class="buttons">
+<!-- <a href="https://www.sciencedirect.com/science/article/pii/S0191261525000670" class="button is-small is-dark">Paper</a> -->
+<!-- <button class="button is-small is-light" onclick="toggleBibtex('bib1')">BibTeX</button> -->
+</div>
+
+<!-- <div id="bib1" class="bibtex-section">
+<pre><code>@article{han2025capacity,
+title = {Capacity drop at active bottlenecks: An empirical study based on trajectory data},
+journal = {Transportation Research Part B: Methodological},
+volume = {196},
+pages = {103218},
+year = {2025},
+author = {Yu Han and Jiarui Wu and Fan Ding and Zhibin Li and Pan Liu and Ludovic Leclercq}
+}</code></pre>
+</div> -->
+</div>
+
+</div>
+</div>
+
+<!-- ====================================================== -->
+<!-- ================= Publication 4 ====================== -->
 <!-- ====================================================== -->
 <div class="column is-6 publication-item">
 <div class="publication-card">
@@ -178,7 +360,7 @@ year={2024}
 
 
 <!-- ====================================================== -->
-<!-- ================= Publication 3 ====================== -->
+<!-- ================= Publication 5 ====================== -->
 <!-- ====================================================== -->
 <div class="column is-6 publication-item">
 <div class="publication-card">
@@ -202,7 +384,8 @@ Xinkai Ji, Yu Han*, Peipei Mao, Yan Huang, Hao Yu, Pan Liu*
 
 <div class="pub-abstract content is-small">
 <p>
-Vehicle trajectory data is essential for analyzing and modeling complex traffic behaviors. Although extraction of vehicle trajectory from aerial video data is not a new problem, obtaining trajectories with heading information across various road types requires further research. In this paper, we propose OpenVTER, a generalized open-source framework based on rotated bounding boxes.
+Vehicle trajectory data is essential for analyzing and modeling complex traffic behaviors. Although extraction of vehicle trajectory from aerial video data is not a new problem, obtaining trajectories with heading information across various road types, such as intersections or long road segments, requires further research. In this paper, we propose OpenVTER, a generalized Open-source Vehicle Trajectory Extraction framework based on Rotated bounding boxes (RBBs). 
+This framework includes several key components: video stabilization, image division, vehicle detection, vehicle tracking, and data post-processing. Specifically, the rotated vehicle detection model, named YOLOX-R, is applied to detect the small and rotated vehicles using RBBs that provide vehicle heading information. A base-frame video stabilization method is proposed to reduce error accumulation in the transformation matrix and improve the computational efficiency. The rotated vehicle tracking model, named SORT-R, is proposed to enable real-time tracking of RBBs. The performance of YOLOX-R is evaluated on two datasets, showing that vehicle detection challenges are well addressed. Ablation experiments were also conducted to analyze the effectiveness of different modules. Subsequently, we evaluate the completeness of the extracted trajectories under various road types and lighting conditions. The extracted trajectories are also compared with the NGSIM dataset, focusing on internal and platoon consistency. These evaluations demonstrate both the effectiveness and practicality of the proposed framework. Additionally, the visualization analyses of different road types demonstrate the advantages of the trajectories extracted by OpenVTER in various road scenarios for traffic research. The code and dataset are available online for non-commercial research purposes.
 </p>
 </div>
 
@@ -235,6 +418,37 @@ year={2025}
 function toggleBibtex(id){
   document.getElementById(id).classList.toggle('is-active');
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+  document.querySelectorAll('.pub-abstract').forEach(function (el) {
+    var p = el.querySelector('p');
+    if (!p) return;
+
+    p.classList.add('abstract-collapsed');
+
+    // Only add the toggle if the content is actually truncated
+    if (p.scrollHeight <= p.clientHeight) return;
+
+    var toggle = document.createElement('a');
+    toggle.className = 'abstract-toggle';
+    toggle.textContent = 'Read more';
+    toggle.href = '#';
+
+    toggle.addEventListener('click', function (e) {
+      e.preventDefault();
+      var collapsed = p.classList.contains('abstract-collapsed');
+      if (collapsed) {
+        p.classList.remove('abstract-collapsed');
+        toggle.textContent = 'Show less';
+      } else {
+        p.classList.add('abstract-collapsed');
+        toggle.textContent = 'Read more';
+      }
+    });
+
+    el.appendChild(toggle);
+  });
+});
 </script>
 
 </body>
