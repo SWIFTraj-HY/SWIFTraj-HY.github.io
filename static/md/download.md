@@ -1,10 +1,10 @@
-## Dataset Download Links
+## Demo Dataset Download
 <!-- 下载地址 -->
 
 | Dataset | Description | Link |
 |---------|-------------|------|
-| Demo Data | A small-scale subset of the dataset intended for functionality testing. It contains data from the first 5 minutes of the F1 period, collected on June 17, 2022, in the A1 region of the Hurong Expressway. | [Download](https://zenodo.org/records/18206195) |
-
+| Demo: SWIFTraj-Hurong-Expressway | A small-scale subset of the dataset intended for functionality testing. It contains data from the first 5 minutes of the F1 period, collected on June 17, 2022, in the A1 region of the Hurong Expressway. | [Download](https://doi.org/10.5281/zenodo.18804176) |
+| Demo: SWIFTraj-Hurong-Intersection | It contains data from the first 5 minutes of the F1 period, collected on June 17, 2022, in the B3 region of the Hurong Intersection. | [Download](https://doi.org/10.5281/zenodo.18804203) |
 ---
 
 ## How to Request Access
@@ -13,10 +13,10 @@
 
 Visit the Zenodo repository  
 Zenodo repository List:  
-[SWIFTraj-Hurong-Expressway-Corridor](https://zenodo.org/records/18609836)  
-[SWIFTraj-Hurong-Expressway-Sections](https://zenodo.org/records/18616228)  
-[SWIFTraj-Hurong-Intersections](https://zenodo.org/records/18616239)  
-[SWIFTraj-Yingtian-Expressway-Corridor](https://zenodo.org/records/18616662)  
+[SWIFTraj-Hurong-Expressway-Corridor](https://doi.org/10.5281/zenodo.18609835)  
+[SWIFTraj-Hurong-Expressway-Sections](https://doi.org/10.5281/zenodo.18616227)  
+[SWIFTraj-Hurong-Intersections](https://doi.org/10.5281/zenodo.18616238)  
+[SWIFTraj-Yingtian-Expressway-Corridor](https://doi.org/10.5281/zenodo.18616661)  
 
 **2. Log in**
 
