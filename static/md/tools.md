@@ -7,9 +7,14 @@ We provide python scripts to load and visualize the dataset.
 ## Demo
 
 ### Example data
-Download example parquet data from Zendo. [Download Demo data](https://zenodo.org/records/18206195)
+Download sample Parquet files from Zenodo:
 
-For more data downloads, please check [Download](download.html).
+- 🚗 [**SWIFTraj–Hurong–Expressway (Demo)**](https://doi.org/10.5281/zenodo.18804176)
+
+- 🚦 [**SWIFTraj–Hurong–Intersection (Demo)**](https://doi.org/10.5281/zenodo.18804203)
+
+For the complete dataset and additional releases, please visit the  
+- 👉 [Download Page](download.html).
 
 ### Example code
 
@@ -45,11 +50,11 @@ for record in records:
         restored_tracks[vid] = record
 ```
 ## Tools
-For more trajectory visualization code, please refer to the data tools code we provided, the GitHub repository, and the Jupyter notebook on Google Colab.
+For trajectory visualization and analysis, please refer to the following resources:
 
-[Google Colab **（recommend）**](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing) 
+- 🚀 [**Google Colab (Recommended)**](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing) 
 
-[Link to GitHub Repository](https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools)
+- 💻 [**Trajectory Data Tools**](https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools)
 ### Installation
 Clone the repository and navigate to the project directory:
 ```bash
