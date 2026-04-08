@@ -66,7 +66,7 @@ function injectFooter() {
             We sincerely welcome any feedback or suggestions regarding the SWIFTraj trajectory dataset.
           </p>
           <p>
-            <strong>Email:</strong> <a href="mailto:yuhan@seu.edu.cn" target="_blank">Yu Han</a>, Associate Professor, Southeast University
+            <strong>Email:</strong> <a href="mailto:swiftraj@163.com" target="_blank">Yu Han</a>, Associate Professor, The Hong Kong University of Science and Technology (Guangzhou)
           </p>
           <p>
             &copy; ${new Date().getFullYear()} All rights reserved.
