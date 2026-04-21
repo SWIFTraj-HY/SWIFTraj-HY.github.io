@@ -27,12 +27,12 @@ We **strongly recommend** logging into your Zenodo account before applying.
 
 **3. Fill out the Request Message**
 
-In the **"Request message"** text box, you are **required** to provide the following information to justify your request. You may copy and paste the template below:
+In the **"Request message"** text box, please note that applications are currently accepted **only from edu email accounts**. You are required to provide the following information to justify your request. You may copy and paste the template below:
 
 ```text
 Full Name: [Your full name]
-Email: [Your email]
-Organization: [Your university, company, or institution (e.g., Southeast University)]
+Email: [Your edu email address.]
+Organization: [Your university, or institution (e.g., Southeast University)]
 Department/Laboratory: [Your Department]
 Research Overview: [Please describe your research background and how you intend to use this data. If available, please include a URL to your academic profile or lab website.]
 ```
