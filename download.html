@@ -399,10 +399,55 @@
         </div>
       </div>
 
+      <!-- Single-Lane Dataset Interface -->
+      <h3 class="dataset-title" style="margin-top: 3rem;">Single-Lane Dataset</h3>
+      <div class="box download-interface" id="interface-singlelane">
+        <div class="columns">
+            <!-- Map Section -->
+            <div class="column is-two-thirds">
+                <div class="panel-header">MAP</div>
+                <div class="map-container">
+                    <img src="static/images/SingleLane_F1_Lane_Numbering_Diagram.png" alt="Dataset Map">
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="column">
+                <!-- Date -->
+                <div class="panel-header">DATE</div>
+                <div class="date-grid-2col singlelane-date-container" style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                        <!-- Populated by JS -->
+                </div>
+
+                <!-- Time -->
+                <div class="panel-header">TIME</div>
+                <div id="singlelane-time-container" class="time-grid-container" style="margin-top: 0.5rem;">
+                    <!-- JS will populate -->
+                </div>
+
+                <!-- Info Button -->
+                <button class="info-btn" onclick="showInfo('singlelane')" style="margin-top: 2rem;">DOWNLOAD</button>
+            </div>
+        </div>
+
+        <!-- Result Display -->
+        <div id="singlelane-result-display" class="result-box">
+          <div id="singlelane-result-content"></div>
+        </div>
+      </div>
+
       <!-- News Section -->
       <h3 class="dataset-title" style="margin-top: 3rem;">News</h3>
       <div class="box">
         <div class="news-timeline">
+          <div class="news-item">
+            <div class="news-date">April 30, 2026</div>
+            <div class="news-content">
+              <p style="margin: 0 0 0.4rem 0;">
+                The Single-Lane Dataset is now available for download: Inner Ring West Line sessions on November 1, 2022 and November 14, 2022.
+              </p>
+            </div>
+          </div>
           <div class="news-item">
             <div class="news-date">February 24, 2026</div>
             <div class="news-content">
@@ -868,6 +913,34 @@
                     ]
                 }
             ]
+        },
+        singlelane: {
+             // Zenodo base URL for all Single-Lane files
+             zenodoUrl: 'https://doi.org/10.5281/zenodo.19854095',
+
+             dates: [
+                {
+                    id: '20221101',
+                    label: 'November 1, 2022',
+                    times: [
+                        { field: 'F1', time: '15:19', filename: 'SingleLane_20221101_InnerRingWestLine_F1.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'F2', time: '15:46', filename: 'SingleLane_20221101_InnerRingWestLine_F2.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'F3', time: '16:10', filename: 'SingleLane_20221101_InnerRingWestLine_F3.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'F4', time: '16:33', filename: 'SingleLane_20221101_InnerRingWestLine_F4.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'F5', time: '16:56', filename: 'SingleLane_20221101_InnerRingWestLine_F5.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'F6', time: '17:19', filename: 'SingleLane_20221101_InnerRingWestLine_F6.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' }
+                    ]
+                },
+                {
+                    id: '20221114',
+                    label: 'November 14, 2022',
+                    times: [
+                        { field: 'AD', time: '15:59', filename: 'SingleLane_20221114_InnerRingWestLine_AD.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'BE', time: '16:22', filename: 'SingleLane_20221114_InnerRingWestLine_BE.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' },
+                        { field: 'CF', time: '16:45', filename: 'SingleLane_20221114_InnerRingWestLine_CF.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.19854095' }
+                    ]
+                }
+            ]
         }
     };
 
@@ -882,6 +955,11 @@
             location: null, // Not used but kept for consistency if needed
             date: null,
             time: null
+        },
+        singlelane: {
+            location: null, // Not used but kept for consistency if needed
+            date: null,
+            time: null
         }
     };
 
@@ -890,6 +968,7 @@
         loadMarkdown('download-content', 'static/md/download.md');
         initInterface('hurong');
         initInterface('yingtian');
+        initInterface('singlelane');
     });
 
     function initInterface(dataset) {
@@ -1010,7 +1089,7 @@
 
             timesList = locationConfig.times;
         } else {
-            // For Yingtian, times are directly under date
+            // For datasets without locations, times are directly under date
             timesList = dateConfig.times;
         }
 
@@ -1050,7 +1129,7 @@
                 return;
             }
         } else {
-            // Yingtian (no location)
+            // Datasets without location selectors
              if (!currentState.date || !currentState.time) {
                 alert('Please select a Date and Time.');
                 return;
@@ -1083,7 +1162,7 @@
                     </p>
                 `;
             } else {
-                // File ready - show filename and Zenodo link
+                // File ready - show selection details and Zenodo link
                 resultContent.innerHTML = `
                     <p>Download from <a href="${zenodoRecordUrl}" target="_blank" rel="noopener noreferrer" style="color: #094aed; font-weight: 600; text-decoration: underline;">Zenodo</a>. The corresponding filenames are as follows:</p>
                     <strong>Filename:</strong> <span>${filename}</span>
@@ -1094,10 +1173,11 @@
             }
 
             resultBox.style.display = 'block';
-        } else if (dataset === 'yingtian') {
-            // Yingtian: use configured filename and download URL
+        } else if (dataset === 'yingtian' || dataset === 'singlelane') {
+            // Datasets without location selectors: use configured filename and download URL
             const timeItem = currentState.time;
             const downloadUrl = timeItem.downloadUrl;
+            const zenodoRecordUrl = CONFIG[dataset].zenodoUrl;
 
             // Check if file is ready
             if (!downloadUrl || downloadUrl.trim() === '') {
@@ -1112,7 +1192,7 @@
                 // File ready - show filename and Zenodo link
                 const filename = timeItem.filename;
                 resultContent.innerHTML = `
-                    <p>Download from <a href="https://doi.org/10.5281/zenodo.18616661" target="_blank" rel="noopener noreferrer" style="color: #094aed; font-weight: 600; text-decoration: underline;">Zenodo</a>. The corresponding filenames are as follows:</p>
+                    <p>Download from <a href="${zenodoRecordUrl}" target="_blank" rel="noopener noreferrer" style="color: #094aed; font-weight: 600; text-decoration: underline;">Zenodo</a>. The corresponding filenames are as follows:</p>
                     <strong>Filename:</strong> <span>${filename}</span>
                 `;
 
