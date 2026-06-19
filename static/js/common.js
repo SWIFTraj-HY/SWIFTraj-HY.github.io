@@ -33,7 +33,6 @@ function injectHeader() {
           <a class="navbar-item" href="tools.html">Tools</a>
           <a class="navbar-item" href="publications.html">Publications</a>
           <a class="navbar-item" href="download.html">Download</a>
-          <a class="navbar-item" href="contributors.html">Contributors</a>
         </div>
       </div>
     </nav>

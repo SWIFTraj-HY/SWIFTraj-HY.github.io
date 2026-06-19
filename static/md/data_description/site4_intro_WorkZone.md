@@ -1,0 +1,3 @@
+The site corresponding to the **Work-Zone Dataset** is located on the G36 Expressway in Nanjing. This dataset focuses on highway traffic operations under road construction conditions, where temporary work-zone layouts, lane restrictions, and localized disturbances can create complex vehicle-following, merging, and bottleneck dynamics.
+
+Traffic videos were collected by UAVs over multiple work-zone segments on May 15, May 18, May 27, and June 1, 2022. The observations cover several G36 locations, including A1-A4, B1-B4, and C1. Each recording session provides trajectory data for analyzing freeway work-zone traffic behavior, capacity reduction, congestion formation, and vehicle interactions around the construction area.

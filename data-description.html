@@ -14,7 +14,7 @@
   
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script defer src="static/js/common.js"></script>
+  <script defer src="static/js/common.js?v=20260615"></script>
 
   <style>
     /* Sticky sidebar navigation */
@@ -188,6 +188,26 @@
             </div>
             <hr>
           </div>
+
+          <!-- Site 4 -->
+          <div class="box" id="site4">
+            <h2 class="title is-4">Site 4: G36 Expressway Work-Zone</h2>
+
+            <div class="columns">
+                <div class="column is-6 has-text-centered">
+                  <figure class="image">
+                    <img src="static/images/workzone/first_frame_20220515_G36_A1_N_F3_1.jpg" alt="Site 4 Work-Zone Road Scene" style="max-width:100%; height:auto; object-fit:contain; display:inline-block;">
+                    <figcaption class="has-text-centered mt-2 is-italic">Figure: Work-zone traffic scene on the G36 Nanjing-Luoyang Expressway</figcaption>
+                  </figure>
+                </div>
+                <div class="column is-6">
+                    <div id="site4-desc-content" class="content markdown-body">
+                        <p>Loading site description...</p>
+                    </div>
+                </div>
+            </div>
+            <hr>
+          </div>
   
           <!-- Data Fields -->
           <div class="box" id="data-fields">
@@ -214,6 +234,7 @@
               <li><a href="#site1">Site 1: Hurong Expressway</a></li>
               <li><a href="#site2">Site 2: Yingtian Expressway</a></li>
               <li><a href="#site3">Site 3: Inner Ring West Line</a></li>
+              <li><a href="#site4">Site 4: G36 Expressway Work-Zone</a></li>
               <li><a href="#data-fields">Data Fields</a></li>
             </ul>
             
@@ -243,6 +264,7 @@
       loadMarkdown('site1-desc-content', '/static/md/data_description/site1_intro.md');
       loadMarkdown('site2-desc-content', '/static/md/data_description/site3_intro.md');
       loadMarkdown('site3-desc-content', '/static/md/data_description/site3_intro_SingleLane.md');
+      loadMarkdown('site4-desc-content', '/static/md/data_description/site4_intro_WorkZone.md');
       loadMarkdown('site-field-content', '/static/md/data_description/site_field.md');
 
       // --- Sidebar Toggle Logic ---

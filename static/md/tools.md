@@ -50,11 +50,14 @@ for record in records:
         restored_tracks[vid] = record
 ```
 ## Tools
+
 For trajectory visualization and analysis, please refer to the following resources:
 
 - 🚀 [**Google Colab (Recommended)**](https://colab.research.google.com/drive/1AaGVWD2c5y2hS0CuOEBeBJYj0kaJC20p?usp=sharing) 
 
 - 💻 [**Trajectory Data Tools**](https://github.com/YuHan-Research-Group-SEU/trajectory-data-tools)
+
+
 ### Installation
 Clone the repository and navigate to the project directory:
 ```bash
@@ -73,3 +76,10 @@ Run the script to read data and generate space-time diagrams from a Parquet file
 python data_tools.py data/example.parquet
 ```
 
+### Work-Zone Region Visualization
+
+For work-zone road configuration visualization, the work-zone dataset also includes `road_config_*.json` files, which are used to describe the geometric and semantic information of the road network, including lane geometry, lane markings, road mileage reference lines, coordinate axes, and work zones. These JSON files are typically generated using the annotation tool LabelMe, and the corresponding field for construction or work-zone regions is `workzone`.
+
+The files can be visualized online via the following tool:
+
+- 🛠️ [**Road Configuration Visualization Tool**](https://xinkaiji.github.io/road_config_website/)

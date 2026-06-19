@@ -14,12 +14,20 @@
   
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script defer src="static/js/common.js"></script>
+  <script defer src="static/js/common.js?v=20260615"></script>
 
   <style>
     /* Custom styles for the download interface */
     .download-interface {
       margin-bottom: 2rem;
+    }
+
+    .download-interface > .columns {
+      align-items: flex-start;
+    }
+
+    .download-interface > .columns > .column {
+      min-width: 0;
     }
     
     .panel-header {
@@ -41,6 +49,13 @@
     /* Location Grid: 3 columns */
     .location-grid {
       grid-template-columns: repeat(3, 1fr);
+    }
+
+    .location-grid .selector-btn,
+    .selector-btn.is-all-drones {
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: keep-all;
     }
 
     /* Date/Time Grid: 1 or 2 columns */
@@ -72,6 +87,10 @@
       font-weight: 500;
       transition: all 0.2s;
       width: 100%;
+      min-height: 2.4rem;
+      line-height: 1.2;
+      white-space: normal;
+      overflow-wrap: anywhere;
     }
 
     .selector-btn:hover {
@@ -87,6 +106,66 @@
     .selector-btn.is-date.active, .selector-btn.is-time.active {
       background-color: #7abaff; /* Blueish */
       color: #000;
+    }
+
+    .selector-btn.has-download:not(.active) {
+      background-color: #eef9e8;
+      border: 1px solid #a4d05d;
+      color: #1f5f00;
+      font-weight: 700;
+    }
+
+    .selector-btn.is-time.has-download.active {
+      background-color: #a4d05d;
+      color: #000;
+      font-weight: 700;
+    }
+
+    .selector-btn.is-hidden-by-filter {
+      display: none;
+    }
+
+    .availability-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 1.35rem;
+      height: 1.2rem;
+      margin-left: 0.35rem;
+      padding: 0 0.35rem;
+      border-radius: 999px;
+      background: #2d7a00;
+      color: #fff;
+      font-size: 0.72rem;
+      line-height: 1;
+    }
+
+    .workzone-filter-row {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      margin-top: 1rem;
+      padding: 0.65rem 0.75rem;
+      background: #f6f9ff;
+      border: 1px solid #d9e5ff;
+      border-radius: 6px;
+    }
+
+    .workzone-filter-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      color: #2c3e50;
+      font-size: 0.92rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .workzone-filter-label input {
+      width: 1rem;
+      height: 1rem;
+      cursor: pointer;
     }
     
     .selector-btn.is-all-drones {
@@ -143,8 +222,10 @@
     
     .map-container img {
         width: 100%;
+        max-width: 100%;
         height: auto;
         display: block;
+        object-fit: contain;
     }
 
     .result-box {
@@ -162,9 +243,11 @@
     }
     .control-column-left {
         flex: 1;
+        min-width: 0;
     }
     .control-column-right {
         flex: 1;
+        min-width: 0;
     }
     
     /* New Location Layout Styles */
@@ -266,30 +349,255 @@
         border: 1px solid #a4d05d;
     }
 
-    .news-tag-coming {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffc107;
-    }
-  </style>
-</head>
+	    .news-tag-coming {
+	        background-color: #fff3cd;
+	        color: #856404;
+	        border: 1px solid #ffc107;
+	    }
+
+	    .sticky-menu {
+	      position: -webkit-sticky;
+	      position: sticky;
+	      top: 2rem;
+	      max-height: calc(100vh - 4rem);
+	      overflow-y: auto;
+	    }
+
+	    html {
+	      scroll-behavior: smooth;
+	    }
+
+	    :target {
+	      scroll-margin-top: 2rem;
+	    }
+
+	    .menu-list a.is-active {
+	      background-color: var(--primary-color);
+	      color: #fff;
+	    }
+
+	    .sidebar-toggle {
+	      position: fixed;
+	      bottom: 2rem;
+	      right: 2rem;
+	      z-index: 1000;
+	      width: 50px;
+	      height: 50px;
+	      border-radius: 50%;
+	      background: var(--primary-color);
+	      color: white;
+	      border: none;
+	      box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+	      cursor: pointer;
+	      display: flex;
+	      align-items: center;
+	      justify-content: center;
+	      font-size: 1.2rem;
+	      transition: transform 0.3s ease, background 0.3s ease;
+	    }
+
+	    .sidebar-toggle:hover {
+	      transform: translateY(-2px);
+	      background: var(--primary-hover);
+	    }
+
+	    .sidebar-close {
+	      float: right;
+	      background: none;
+	      border: none;
+	      cursor: pointer;
+	      color: var(--text-light);
+	      padding: 0.2rem;
+	    }
+
+	    .sidebar-close:hover {
+	      color: var(--text-primary);
+	    }
+
+	    #sidebar-floating-toggle {
+	      display: none;
+	      position: fixed;
+	      right: 2rem;
+	      bottom: 2rem;
+	      z-index: 99;
+	    }
+
+	    #sidebar-floating-toggle.visible {
+	      display: flex;
+	    }
+
+	    #sidebar-col aside {
+	      transition: opacity 0.4s ease, transform 0.4s ease;
+	      opacity: 1;
+	      transform: translateY(0);
+	    }
+
+	    #sidebar-col.is-closed aside {
+	      opacity: 0;
+	      transform: translateY(50px);
+	      pointer-events: none;
+	    }
+
+	    #download-layout {
+	      align-items: stretch;
+	      justify-content: center;
+	    }
+
+	    #main-content {
+	      flex: 1 1 960px !important;
+	      max-width: 960px;
+	      min-width: 0;
+	    }
+
+	    #left-spacer,
+	    #sidebar-col {
+	      flex: 0 0 180px !important;
+	      width: 180px !important;
+	    }
+
+	    @media screen and (max-width: 1280px) {
+	      #left-spacer {
+	        display: none !important;
+	      }
+	    }
+
+	    @media screen and (max-width: 1024px) {
+	      .section {
+	        padding-left: 1rem;
+	        padding-right: 1rem;
+	      }
+
+	      .container.is-fluid {
+	        padding-left: 0 !important;
+	        padding-right: 0 !important;
+	      }
+
+	      #download-layout {
+	        display: block;
+	        margin-left: 0;
+	        margin-right: 0;
+	      }
+
+	      #main-content {
+	        width: 100%;
+	        max-width: 960px;
+	        margin-left: auto;
+	        margin-right: auto;
+	        flex: none !important;
+	      }
+
+	      #sidebar-col,
+	      #sidebar-floating-toggle {
+	        display: none !important;
+	      }
+
+	      .download-interface {
+	        padding: 1rem;
+	      }
+
+	      .download-interface > .columns {
+	        display: flex;
+	        flex-direction: column;
+	        gap: 1rem;
+	        margin-left: 0;
+	        margin-right: 0;
+	      }
+
+	      .download-interface > .columns > .column,
+	      .download-interface > .columns > .column.is-two-thirds {
+	        width: 100%;
+	        flex: none !important;
+	        padding: 0;
+	      }
+
+	      .map-container img {
+	        max-height: 60vh;
+	      }
+	    }
+
+	    @media screen and (max-width: 768px) {
+	      .control-panel-row,
+	      .location-split-container {
+	        flex-direction: column;
+	        gap: 0.75rem;
+	      }
+
+	      .location-box {
+	        width: 100%;
+	      }
+
+	      .location-grid,
+	      .time-grid-container,
+	      .date-grid-2col {
+	        grid-template-columns: repeat(2, minmax(0, 1fr));
+	      }
+
+	      .info-btn {
+	        font-size: 1.1rem;
+	        padding: 0.85rem;
+	      }
+	    }
+
+	    @media screen and (max-width: 480px) {
+	      .section {
+	        padding-left: 0.75rem;
+	        padding-right: 0.75rem;
+	      }
+
+	      .download-interface {
+	        padding: 0.75rem;
+	      }
+
+	      .dataset-title {
+	        font-size: 1.25rem;
+	      }
+
+	      .panel-header {
+	        padding: 0.45rem 0.65rem;
+	        font-size: 0.85rem;
+	      }
+
+	      .selector-btn {
+	        padding: 0.45rem 0.35rem;
+	        font-size: 0.92rem;
+	      }
+
+	      .date-grid-2col {
+	        grid-template-columns: 1fr;
+	      }
+
+	      .workzone-filter-row {
+	        padding: 0.55rem 0.6rem;
+	      }
+
+	      .workzone-filter-label {
+	        font-size: 0.86rem;
+	      }
+	    }
+	  </style>
+	</head>
 <body>
 
-  <section class="section">
-    <div class="container is-max-desktop">
-      <h1 class="title is-2 has-text-centered">Download Dataset</h1>
-      
-      <!-- Hurong Dataset Interface -->
-      <h3 class="dataset-title">Hurong Dataset</h3>
+	  <section class="section">
+	    <div class="container is-fluid" style="padding: 0 1.5rem;">
+	      <h1 class="title is-2 has-text-centered">Download Dataset</h1>
+
+	      <div id="download-layout" class="columns">
+	        <div id="left-spacer" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;"></div>
+
+	        <div id="main-content" class="column" style="flex: 1;">
+
+	      <!-- Hurong Dataset Interface -->
+	      <h3 class="dataset-title">Hurong Dataset</h3>
       <div class="box download-interface" id="interface-hurong">
         <div class="columns">
             <!-- Map Section -->
-            <div class="column is-two-thirds">
-                <div class="panel-header">MAP</div>
-                <div class="map-container">
-                    <img src="static/images/satellite.png" alt="Dataset Map">
-                </div>
-            </div>
+	            <div class="column is-two-thirds">
+	                <div class="panel-header">MAP</div>
+		                <div class="map-container">
+		                    <img src="static/images/satellite.png" alt="Dataset Map">
+		                </div>
+	            </div>
 
             <!-- Controls Section -->
             <div class="column">
@@ -436,10 +744,83 @@
         </div>
       </div>
 
-      <!-- News Section -->
-      <h3 class="dataset-title" style="margin-top: 3rem;">News</h3>
-      <div class="box">
+      <!-- Work-Zone Dataset Interface -->
+      <h3 class="dataset-title" style="margin-top: 3rem;">Work-Zone Dataset</h3>
+      <div class="box download-interface" id="interface-workzone">
+        <div class="columns">
+            <!-- Map Section -->
+            <div class="column is-two-thirds">
+                <div class="panel-header">MAP</div>
+                <div class="map-container">
+	                    <img id="workzone-map-image" src="static/images/workzone/first_frame_20220515_G36_A1_N_F3_1.jpg" alt="Work-Zone Dataset Map">
+                </div>
+            </div>
+
+            <!-- Controls Section -->
+            <div class="column">
+                <!-- Location Section -->
+                <div class="panel-header">LOCATION</div>
+                <div class="selection-grid location-grid" style="margin-top: 0.5rem; margin-bottom: 1rem;">
+                    <button class="selector-btn is-location workzone-loc" data-location-id="A1" onclick="selectLoc('workzone', 'A1', this)">A1</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="A2" onclick="selectLoc('workzone', 'A2', this)">A2</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="A3" onclick="selectLoc('workzone', 'A3', this)">A3</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="A4" onclick="selectLoc('workzone', 'A4', this)">A4</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="B1" onclick="selectLoc('workzone', 'B1', this)">B1</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="B2" onclick="selectLoc('workzone', 'B2', this)">B2</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="B3" onclick="selectLoc('workzone', 'B3', this)">B3</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="B4" onclick="selectLoc('workzone', 'B4', this)">B4</button>
+                    <button class="selector-btn is-location workzone-loc" data-location-id="C1" onclick="selectLoc('workzone', 'C1', this)">C1</button>
+                </div>
+
+                <!-- Date and Time Section (Side by Side) -->
+                <div class="control-panel-row">
+                    <!-- Date -->
+                    <div class="control-column-left">
+                        <div class="panel-header">DATE</div>
+                        <div class="date-grid workzone-date-container" style="margin-top: 0.5rem;">
+                             <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Time -->
+                    <div class="control-column-right">
+                        <div class="panel-header">TIME</div>
+                        <div id="workzone-time-container" class="time-grid-container" style="margin-top: 0.5rem;">
+                            <!-- JS will populate -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="workzone-filter-row">
+                    <label class="workzone-filter-label" for="workzone-available-only">
+                        <input id="workzone-available-only" type="checkbox" onchange="toggleWorkzoneAvailabilityFilter(this.checked)">
+                        <span>Show available only</span>
+                    </label>
+                </div>
+
+                <!-- Info Button -->
+                <button class="info-btn" onclick="showInfo('workzone')">DOWNLOAD</button>
+            </div>
+        </div>
+
+        <!-- Result Display -->
+        <div id="workzone-result-display" class="result-box">
+          <div id="workzone-result-content"></div>
+        </div>
+      </div>
+
+	      <!-- News Section -->
+	      <h3 class="dataset-title" style="margin-top: 3rem;">News</h3>
+	      <div class="box" id="news-section">
         <div class="news-timeline">
+          <div class="news-item">
+            <div class="news-date">June 18, 2026</div>
+            <div class="news-content">
+              <p style="margin: 0 0 0.4rem 0;">
+                The Work-Zone Dataset is now available for download: G36 Expressway work-zone sessions on June 1, 2022, including A3/N/F1 and B4/N/F1 files.
+              </p>
+            </div>
+          </div>
           <div class="news-item">
             <div class="news-date">April 30, 2026</div>
             <div class="news-content">
@@ -462,14 +843,46 @@
         </div>
       </div>
 
-      <div class="box">
-        <div id="download-content" class="content markdown-body">
-            <p class="has-text-centered">Loading download instructions...</p>
+	      <div class="box" id="request-access">
+	        <div id="download-content" class="content markdown-body">
+	            <p class="has-text-centered">Loading download instructions...</p>
+	        </div>
+	      </div>
         </div>
-      </div>
-      
-    </div>
-  </section>
+
+	        <div id="sidebar-col" class="column is-hidden-mobile" style="flex: 0 0 10%; width: 10%;">
+	          <aside class="menu sticky-menu pl-2">
+	            <div class="is-flex is-justify-content-space-between is-align-items-center mb-2">
+	                <p class="menu-label mb-0">Contents</p>
+	                <button id="btn-close-sidebar" class="sidebar-close" title="Hide Sidebar">
+	                    <i class="fas fa-times"></i>
+	                </button>
+	            </div>
+
+	            <ul class="menu-list">
+	              <li><a href="#interface-hurong">Hurong Dataset</a></li>
+	              <li><a href="#interface-yingtian">Yingtian Dataset</a></li>
+	              <li><a href="#interface-singlelane">Single-Lane Dataset</a></li>
+	              <li><a href="#interface-workzone">Work-Zone Dataset</a></li>
+	              <li><a href="#news-section">News</a></li>
+	              <li><a href="#request-access">Request Access</a></li>
+	            </ul>
+
+	            <p class="menu-label mt-5">Links</p>
+	            <ul class="menu-list">
+	              <li><a href="index.html">← Back to Home</a></li>
+	              <li><a href="data-description.html">Data Description</a></li>
+	            </ul>
+	          </aside>
+	        </div>
+	      </div>
+
+	    </div>
+	  </section>
+
+	  <button id="sidebar-floating-toggle" class="sidebar-toggle" title="Show Sidebar">
+	    <i class="fas fa-list-ul"></i>
+	  </button>
 
   <script>
     // ============================================
@@ -941,6 +1354,115 @@
                     ]
                 }
             ]
+        },
+        workzone: {
+             // Work-Zone files are listed here; individual records expose downloads as they are published.
+             zenodoUrl: 'https://doi.org/10.5281/zenodo.20748446',
+
+             dates: [
+                {
+                    id: '20220515',
+                    label: 'May 15, 2022',
+                    locations: {
+                        'A1': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F3', time: '12:17', startDatetime: '2022-05-15 12:17:11', duration: 606.5, vehicles: 416, downloadUrl: '' }
+                            ]
+                        },
+                        'B1': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '14:03', startDatetime: '2022-05-15 14:03:15', duration: 624.5, vehicles: 565, downloadUrl: '' },
+                                { field: 'F3', time: '14:31', startDatetime: '2022-05-15 14:31:22', duration: 605.3, vehicles: 529, downloadUrl: '' },
+                                { field: 'F4', time: '14:51', startDatetime: '2022-05-15 14:51:08', duration: 706.0, vehicles: 556, downloadUrl: '' }
+                            ]
+                        }
+                    }
+                },
+                {
+                    id: '20220518',
+                    label: 'May 18, 2022',
+                    locations: {
+                        'A1': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '09:36', startDatetime: '2022-05-18 09:36:14', duration: 760.6, vehicles: 745, downloadUrl: '' },
+                                { field: 'F2', time: '09:55', startDatetime: '2022-05-18 09:55:21', duration: 857.1, vehicles: 805, downloadUrl: '' }
+                            ]
+                        },
+                        'B2': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '10:44', startDatetime: '2022-05-18 10:44:46', duration: 688.6, vehicles: 717, downloadUrl: '' },
+                                { field: 'F3', time: '11:02', startDatetime: '2022-05-18 11:02:11', duration: 821.2, vehicles: 858, downloadUrl: '' }
+                            ]
+                        },
+                        'B3': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '12:02', startDatetime: '2022-05-18 12:02:56', duration: 260.7, vehicles: 244, downloadUrl: '' },
+                                { field: 'F2', time: '12:13', startDatetime: '2022-05-18 12:13:15', duration: 845.3, vehicles: 674, downloadUrl: '' }
+                            ]
+                        },
+                        'C1': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '15:41', startDatetime: '2022-05-18 15:41:18', duration: 891.1, vehicles: 2717, downloadUrl: '' }
+                            ]
+                        }
+                    }
+                },
+                {
+                    id: '20220527',
+                    label: 'May 27, 2022',
+                    locations: {
+                        'A4': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '13:32', startDatetime: '2022-05-27 13:32:03', duration: 443.6, vehicles: 458, downloadUrl: '' },
+                                { field: 'F2', time: '13:45', startDatetime: '2022-05-27 13:45:20', duration: 891.6, vehicles: 1048, downloadUrl: '' }
+                            ]
+                        },
+                        'B4': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '15:28', startDatetime: '2022-05-27 15:28:48', duration: 840.0, vehicles: 980, downloadUrl: '' }
+                            ]
+                        }
+                    }
+                },
+                {
+                    id: '20220601',
+                    label: 'June 1, 2022',
+                    locations: {
+                        'A2': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '10:48', startDatetime: '2022-06-01 10:48:57', duration: 476.4, vehicles: 594, downloadUrl: '' }
+                            ]
+                        },
+                        'A3': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '14:45', startDatetime: '2022-06-01 14:45:31', duration: 605.7, vehicles: 857, filename: 'WorkZone_20220601_G36_A3_N_F1.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.20748446' },
+                                { field: 'F2', time: '15:01', startDatetime: '2022-06-01 15:01:27', duration: 789.9, vehicles: 1080, downloadUrl: '' },
+                                { field: 'F3', time: '15:22', startDatetime: '2022-06-01 15:22:06', duration: 864.2, vehicles: 1109, downloadUrl: '' },
+                                { field: 'F4', time: '15:42', startDatetime: '2022-06-01 15:42:59', duration: 860.2, vehicles: 1119, downloadUrl: '' },
+                                { field: 'F5', time: '16:03', startDatetime: '2022-06-01 16:03:55', duration: 818.2, vehicles: 1019, downloadUrl: '' }
+                            ]
+                        },
+                        'B4': {
+                            direction: 'N',
+                            times: [
+                                { field: 'F1', time: '11:33', startDatetime: '2022-06-01 11:33:10', duration: 586.1, vehicles: 597, filename: 'WorkZone_20220601_G36_B4_N_F1.zip', downloadUrl: 'https://doi.org/10.5281/zenodo.20748446' },
+                                { field: 'F2', time: '11:53', startDatetime: '2022-06-01 11:53:50', duration: 804.4, vehicles: 921, downloadUrl: '' },
+                                { field: 'F3', time: '12:15', startDatetime: '2022-06-01 12:15:30', duration: 754.8, vehicles: 806, downloadUrl: '' }
+                            ]
+                        }
+                    }
+                }
+            ]
         }
     };
 
@@ -960,6 +1482,12 @@
             location: null, // Not used but kept for consistency if needed
             date: null,
             time: null
+        },
+        workzone: {
+            location: null,
+            date: null,
+            time: null,
+            availableOnly: false
         }
     };
 
@@ -969,23 +1497,230 @@
         initInterface('hurong');
         initInterface('yingtian');
         initInterface('singlelane');
+        initInterface('workzone');
+
+        const sidebarCol = document.getElementById('sidebar-col');
+        const closeBtn = document.getElementById('btn-close-sidebar');
+        const floatToggleBtn = document.getElementById('sidebar-floating-toggle');
+
+        if (sidebarCol && closeBtn && floatToggleBtn) {
+            closeBtn.addEventListener('click', () => {
+                sidebarCol.classList.add('is-closed');
+                floatToggleBtn.classList.add('visible');
+            });
+
+            floatToggleBtn.addEventListener('click', () => {
+                sidebarCol.classList.remove('is-closed');
+                floatToggleBtn.classList.remove('visible');
+            });
+        }
+
+        const sections = document.querySelectorAll('.download-interface[id], #news-section, #request-access');
+        const navLinks = document.querySelectorAll('#sidebar-col .menu-list a[href^="#"]');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('is-active');
+                if (current && link.getAttribute('href') === `#${current}`) {
+                    link.classList.add('is-active');
+                }
+            });
+        });
     });
+
+    function datasetHasLocations(dataset) {
+        return CONFIG[dataset]?.dates?.some(dateItem => !!dateItem.locations);
+    }
+
+    function hasDownloadUrl(timeItem) {
+        return typeof timeItem === 'object' && !!timeItem.downloadUrl && timeItem.downloadUrl.trim() !== '';
+    }
+
+    function getWorkzoneAvailableRecords() {
+        const records = [];
+
+        CONFIG.workzone.dates.forEach(dateItem => {
+            Object.entries(dateItem.locations || {}).forEach(([locationId, locationConfig]) => {
+                locationConfig.times.forEach(timeItem => {
+                    if (hasDownloadUrl(timeItem)) {
+                        records.push({ dateItem, locationId, locationConfig, timeItem });
+                    }
+                });
+            });
+        });
+
+        return records;
+    }
+
+    function getWorkzoneAvailableCountForLocation(locationId) {
+        return getWorkzoneAvailableRecords().filter(record => record.locationId === locationId).length;
+    }
+
+    function getWorkzoneAvailableCountForDate(dateItem, locationId) {
+        const locationConfig = dateItem.locations?.[locationId];
+        if (!locationConfig) return 0;
+        return locationConfig.times.filter(hasDownloadUrl).length;
+    }
+
+    function getWorkzoneLocationButtons() {
+        return Array.from(document.querySelectorAll('#interface-workzone .workzone-loc'));
+    }
+
+    function getWorkzoneLocationButton(locationId) {
+        return getWorkzoneLocationButtons().find(btn => btn.dataset.locationId === locationId) || null;
+    }
+
+    function getVisibleWorkzoneLocationIds() {
+        return getWorkzoneLocationButtons()
+            .filter(btn => !states.workzone.availableOnly || getWorkzoneAvailableCountForLocation(btn.dataset.locationId) > 0)
+            .map(btn => btn.dataset.locationId);
+    }
+
+    function renderWorkzoneLocationButtons() {
+        getWorkzoneLocationButtons().forEach(btn => {
+            const locationId = btn.dataset.locationId;
+            const availableCount = getWorkzoneAvailableCountForLocation(locationId);
+
+            btn.classList.toggle('has-download', availableCount > 0);
+            btn.classList.toggle('is-hidden-by-filter', states.workzone.availableOnly && availableCount === 0);
+            btn.innerHTML = availableCount > 0
+                ? `${locationId}<span class="availability-count">${availableCount}</span>`
+                : locationId;
+            btn.title = availableCount > 0 ? `${availableCount} downloadable file${availableCount === 1 ? '' : 's'}` : '';
+        });
+    }
+
+    function resetWorkzoneSelection() {
+        states.workzone.location = null;
+        states.workzone.date = null;
+        states.workzone.time = null;
+        renderDateButtons('workzone');
+
+        const timeContainer = document.getElementById('workzone-time-container');
+        if (timeContainer) timeContainer.innerHTML = '';
+
+        const image = document.getElementById('workzone-map-image');
+        if (image) image.src = WORKZONE_DEFAULT_IMAGE;
+    }
+
+    function toggleWorkzoneAvailabilityFilter(isChecked) {
+        states.workzone.availableOnly = isChecked;
+        renderWorkzoneLocationButtons();
+
+        const visibleLocations = getVisibleWorkzoneLocationIds();
+        if (visibleLocations.length === 0) {
+            resetWorkzoneSelection();
+            clearResult('workzone');
+            return;
+        }
+
+        const nextLocation = visibleLocations.includes(states.workzone.location)
+            ? states.workzone.location
+            : visibleLocations[0];
+
+        selectLoc('workzone', nextLocation, getWorkzoneLocationButton(nextLocation));
+    }
+
+    const WORKZONE_DEFAULT_IMAGE = 'static/images/workzone/first_frame_20220515_G36_A1_N_F3_1.jpg';
+
+    function updateWorkzoneMap(timeItem) {
+        const image = document.getElementById('workzone-map-image');
+        if (!image || !timeItem || !states.workzone.date || !states.workzone.location) return;
+
+        const dateConfig = CONFIG.workzone.dates.find(d => d.id === states.workzone.date);
+        const locationConfig = dateConfig?.locations?.[states.workzone.location];
+        if (!locationConfig) return;
+
+        const imagePath = `static/images/workzone/first_frame_${states.workzone.date}_G36_${states.workzone.location}_${locationConfig.direction}_${timeItem.field}_1.jpg`;
+        image.onerror = () => {
+            image.onerror = null;
+            image.src = WORKZONE_DEFAULT_IMAGE;
+        };
+        image.src = imagePath;
+        image.alt = `Work-Zone ${states.workzone.location} ${locationConfig.direction} ${timeItem.field}`;
+    }
+
+    function previewFirstWorkzoneMapForSelection() {
+        const dateConfig = CONFIG.workzone.dates.find(d => d.id === states.workzone.date);
+        const times = dateConfig?.locations?.[states.workzone.location]?.times || [];
+        const firstTime = states.workzone.availableOnly ? times.find(hasDownloadUrl) : times[0];
+        if (firstTime) updateWorkzoneMap(firstTime);
+    }
+
+    function getVisibleDates(dataset) {
+        const dates = CONFIG[dataset].dates;
+        if (dataset === 'workzone') {
+            const currentLocation = states[dataset].location;
+            if (!currentLocation) return [];
+            return dates.filter(d => {
+                if (!d.locations || !d.locations[currentLocation]) return false;
+                return !states.workzone.availableOnly || getWorkzoneAvailableCountForDate(d, currentLocation) > 0;
+            });
+        }
+        return dates;
+    }
+
+    function renderDateButtons(dataset) {
+        const dateContainer = document.querySelector(`.${dataset}-date-container`);
+        if(!dateContainer) return [];
+
+        dateContainer.innerHTML = '';
+        const dates = getVisibleDates(dataset);
+
+        if (dataset === 'workzone' && !states[dataset].location) {
+            dateContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 0.5rem;">Select a location first</p>';
+            return dates;
+        }
+
+        if (dataset === 'workzone' && dates.length === 0) {
+            dateContainer.innerHTML = '<p style="color: #999; text-align: center; padding: 0.5rem;">No downloadable files for this location</p>';
+            return dates;
+        }
+
+        dates.forEach(d => {
+            const btn = document.createElement('button');
+            btn.className = `selector-btn is-date ${dataset}-date-btn`;
+            btn.dataset.dateId = d.id;
+            btn.textContent = d.label;
+            if (dataset === 'workzone' && getWorkzoneAvailableCountForDate(d, states.workzone.location) > 0) {
+                btn.classList.add('has-download');
+                btn.title = 'Downloadable file available';
+            }
+            btn.onclick = () => selectDate(dataset, d.id);
+            dateContainer.appendChild(btn);
+        });
+
+        return dates;
+    }
 
     function initInterface(dataset) {
         // Render Date Buttons
         const dateContainer = document.querySelector(`.${dataset}-date-container`);
         if(!dateContainer) return;
 
-        dateContainer.innerHTML = '';
-        const dates = CONFIG[dataset].dates;
+        if(dataset === 'workzone') {
+            const checkbox = document.getElementById('workzone-available-only');
+            if (checkbox) checkbox.checked = states.workzone.availableOnly;
 
-        dates.forEach(d => {
-            const btn = document.createElement('button');
-            btn.className = `selector-btn is-date ${dataset}-date-btn`;
-            btn.textContent = d.label;
-            btn.onclick = () => selectDate(dataset, d.id);
-            dateContainer.appendChild(btn);
-        });
+            renderWorkzoneLocationButtons();
+            const visibleLocations = getVisibleWorkzoneLocationIds();
+            if (visibleLocations.length > 0) {
+                selectLoc('workzone', visibleLocations[0], getWorkzoneLocationButton(visibleLocations[0]));
+            } else {
+                resetWorkzoneSelection();
+            }
+            return;
+        }
+
+        const dates = renderDateButtons(dataset);
 
         // Select default date
         if(dates.length > 0) {
@@ -1000,8 +1735,9 @@
 
         // Update UI - Scope to specific dataset container
         const container = document.getElementById(`interface-${dataset}`);
+        const selectedLocationId = btnElement?.dataset?.locationId || locId;
         container.querySelectorAll('.is-location').forEach(btn => {
-            if(btn === btnElement) {
+            if(btn === btnElement || btn.dataset.locationId === selectedLocationId) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
@@ -1014,8 +1750,22 @@
 
         clearResult(dataset);
 
-        // For Hurong, re-render times when location changes
-        if(dataset === 'hurong' && states[dataset].date) {
+        if(dataset === 'workzone') {
+            const dates = renderDateButtons(dataset);
+            if(dates.length > 0) {
+                const currentDateIsVisible = dates.some(d => d.id === states[dataset].date);
+                selectDate(dataset, currentDateIsVisible ? states[dataset].date : dates[0].id);
+            } else {
+                states[dataset].date = null;
+                states[dataset].time = null;
+                const timeContainer = document.getElementById(`${dataset}-time-container`);
+                if(timeContainer) timeContainer.innerHTML = '';
+            }
+            return;
+        }
+
+        // Re-render times for datasets where time availability depends on location
+        if(datasetHasLocations(dataset) && states[dataset].date) {
             renderTimes(dataset, states[dataset].date);
         }
     }
@@ -1034,8 +1784,8 @@
 
         clearResult(dataset);
 
-        // For Hurong, re-render times when location changes
-        if(dataset === 'hurong' && states[dataset].date) {
+        // Re-render times for datasets where time availability depends on location
+        if(datasetHasLocations(dataset) && states[dataset].date) {
             renderTimes(dataset, states[dataset].date);
         }
     }
@@ -1046,11 +1796,10 @@
         
         // Update UI Dates
         const container = document.getElementById(`interface-${dataset}`);
-        const dates = CONFIG[dataset].dates;
         const dateBtns = container.querySelectorAll(`.${dataset}-date-btn`);
         
-        dateBtns.forEach((btn, index) => {
-            if(dates[index].id === dateId) {
+        dateBtns.forEach(btn => {
+            if(btn.dataset.dateId === dateId) {
                 btn.classList.add('active');
             } else {
                 btn.classList.remove('active');
@@ -1059,6 +1808,9 @@
 
         // Render Times
         renderTimes(dataset, dateId);
+        if (dataset === 'workzone') {
+            previewFirstWorkzoneMapForSelection();
+        }
         clearResult(dataset);
     }
 
@@ -1072,8 +1824,8 @@
 
         let timesList = [];
 
-        if(dataset === 'hurong') {
-            // For Hurong, need location to be selected first
+        if(datasetHasLocations(dataset)) {
+            // For datasets with locations, need location to be selected first
             const currentLocation = states[dataset].location;
             if(!currentLocation) {
                 // No location selected yet, show nothing
@@ -1093,6 +1845,15 @@
             timesList = dateConfig.times;
         }
 
+        if (dataset === 'workzone' && states.workzone.availableOnly) {
+            timesList = timesList.filter(hasDownloadUrl);
+        }
+
+        if (dataset === 'workzone' && timesList.length === 0) {
+            container.innerHTML = '<p style="color: #999; text-align: center; padding: 1rem;">No downloadable times for this selection</p>';
+            return;
+        }
+
         timesList.forEach(timeItem => {
             const btn = document.createElement('button');
             btn.className = 'selector-btn is-time';
@@ -1100,6 +1861,10 @@
             // Handle both string format and object format
             const timeDisplay = typeof timeItem === 'string' ? timeItem : timeItem.time;
             btn.textContent = timeDisplay;
+            if (dataset === 'workzone' && hasDownloadUrl(timeItem)) {
+                btn.classList.add('has-download');
+                btn.title = 'Downloadable file available';
+            }
             btn.onclick = () => selectTime(dataset, timeItem, btn);
             container.appendChild(btn);
         });
@@ -1114,6 +1879,10 @@
         container.querySelectorAll('.is-time').forEach(b => b.classList.remove('active'));
         btnElement.classList.add('active');
 
+        if (dataset === 'workzone') {
+            updateWorkzoneMap(timeItem);
+        }
+
         clearResult(dataset);
     }
 
@@ -1123,7 +1892,7 @@
         const currentState = states[dataset];
 
         // Validation
-        if (dataset === 'hurong') {
+        if (datasetHasLocations(dataset)) {
              if (!currentState.location || !currentState.date || !currentState.time) {
                 alert('Please select a Location, Date, and Time.');
                 return;
@@ -1136,10 +1905,10 @@
             }
         }
 
-        if (dataset === 'hurong') {
-            // Hurong: use configured filename and download URL from location config
+        if (datasetHasLocations(dataset)) {
+            // Datasets with locations: use configured time and location data
             const timeItem = currentState.time;
-            const dateConfig = CONFIG.hurong.dates.find(d => d.id === currentState.date);
+            const dateConfig = CONFIG[dataset].dates.find(d => d.id === currentState.date);
             const locationConfig = dateConfig?.locations[currentState.location];
 
             if (!locationConfig) {
@@ -1150,17 +1919,32 @@
             const downloadUrl = timeItem.downloadUrl;
             const filename = timeItem.filename;
             const zenodoType = locationConfig.zenodoType;
-            const zenodoRecordUrl = CONFIG.hurong.zenodoUrls[zenodoType];
+            const zenodoRecordUrl = zenodoType ? CONFIG[dataset].zenodoUrls[zenodoType] : CONFIG[dataset].zenodoUrl;
 
             // Check if file is ready
             if (!downloadUrl || downloadUrl.trim() === '') {
                 // File not ready - show coming soon message
-                resultContent.innerHTML = `
-                    <p style="font-size: 1.05rem; color: #666; text-align: center; margin: 0;">
-                        <i class="fas fa-clock" style="margin-right: 8px;"></i>
-                        Data for this selection will be released soon.
-                    </p>
-                `;
+                if (dataset === 'workzone') {
+                    resultContent.innerHTML = `
+                        <p style="font-size: 1.05rem; color: #666; text-align: center; margin: 0 0 0.75rem 0;">
+                            <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                            Download link for this selection will be released soon.
+                        </p>
+                        <strong>Location:</strong> <span>${currentState.location}</span><br>
+                        <strong>Direction:</strong> <span>${locationConfig.direction}</span><br>
+                        <strong>Field:</strong> <span>${timeItem.field}</span><br>
+                        <strong>Start datetime:</strong> <span>${timeItem.startDatetime}</span><br>
+                        <strong>Duration:</strong> <span>${timeItem.duration}s</span><br>
+                        <strong>Vehicles:</strong> <span>${timeItem.vehicles}</span>
+                    `;
+                } else {
+                    resultContent.innerHTML = `
+                        <p style="font-size: 1.05rem; color: #666; text-align: center; margin: 0;">
+                            <i class="fas fa-clock" style="margin-right: 8px;"></i>
+                            Data for this selection will be released soon.
+                        </p>
+                    `;
+                }
             } else {
                 // File ready - show selection details and Zenodo link
                 resultContent.innerHTML = `

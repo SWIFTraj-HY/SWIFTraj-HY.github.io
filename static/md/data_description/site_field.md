@@ -8,7 +8,8 @@ The dataset is organized into two main components: metadata and trajectory data.
 
 The dataset is distributed in three file formats: JSON, CSV, and Parquet. Specifically, JSON files store the metadata, CSV files contain the trajectory data, and Parquet files provide an integrated representation that includes both metadata and trajectory data in a unified, columnar format. The Parquet files offer a compact, columnar representation that improves storage efficiency and I/O performance, particularly for large-scale data processing and machine learning applications.
 
- 
+For the work-zone dataset, additional `road_config_*.json` files are provided to describe the geometric and semantic information of the road network. These files include lane geometry, lane markings, road mileage reference lines, coordinate axes, and construction or work-zone regions. The files are typically generated using the annotation tool LabelMe, and the corresponding field for construction or work-zone regions is `workzone`. These files can be visualized online using the [Road Configuration Visualization Tool](https://xinkaiji.github.io/road_config_website/).
+
 ## Metadata 
 
 | Field | Type (Example) | Description (EN / 中文) | Notes (EN / 中文) |
@@ -82,6 +83,3 @@ In intersection datasets, `lane_id` does not refer to a physical freeway lane, b
 It should be noted that the incoming and outgoing road segments represented by a `lane_id` usually **contains multiple lanes**.   
 
 The correspondence between specific `lane_id` values and the actual road lanes can be found in the images provided in the data files.
-
-
-
