@@ -170,6 +170,125 @@
       text-align: center;
     }
 
+    /* Homepage news ticker (TV-style, right to left) */
+    .home-news-ticker {
+      display: flex;
+      align-items: stretch;
+      height: 2.65rem;
+      background: #0b1220;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      border-bottom: 3px solid var(--primary-color);
+      color: #f8fafc;
+      overflow: hidden;
+    }
+
+    .home-news-ticker-label {
+      flex: 0 0 auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.45rem;
+      padding: 0 1.1rem;
+      background: var(--primary-color);
+      color: #fff;
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-decoration: none;
+      text-transform: uppercase;
+      clip-path: polygon(0 0, 100% 0, calc(100% - 12px) 100%, 0 100%);
+      padding-right: 1.5rem;
+      z-index: 1;
+    }
+
+    .home-news-ticker-label:hover {
+      background: var(--primary-hover);
+      color: #fff;
+    }
+
+    .home-news-ticker-viewport {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+    }
+
+    .home-news-ticker-track {
+      display: inline-flex;
+      align-items: center;
+      gap: 3.5rem;
+      width: max-content;
+      white-space: nowrap;
+      will-change: transform;
+      animation: home-news-ticker-scroll var(--ticker-duration, 32s) linear infinite;
+    }
+
+    .home-news-ticker:hover .home-news-ticker-track {
+      animation-play-state: paused;
+    }
+
+    .home-news-ticker-item {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.85rem;
+      color: #f8fafc;
+      text-decoration: none;
+      font-size: 0.92rem;
+      font-weight: 500;
+    }
+
+    .home-news-ticker-item:hover {
+      color: #fff;
+    }
+
+    .home-news-ticker-date {
+      color: #7dd3fc;
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+
+    .home-news-ticker-date::after {
+      content: '/';
+      margin-left: 0.85rem;
+      color: rgba(255, 255, 255, 0.35);
+      font-weight: 500;
+    }
+
+    .home-news-ticker-sep {
+      color: #38bdf8;
+      font-size: 0.7rem;
+    }
+
+    @keyframes home-news-ticker-scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(calc(-1 * var(--ticker-distance, 50%))); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .home-news-ticker-track {
+        animation: none;
+        transform: none;
+        gap: 0;
+        max-width: 100%;
+        padding: 0 1rem;
+      }
+
+      .home-news-ticker-item {
+        max-width: 100%;
+        overflow: hidden;
+      }
+
+      .home-news-ticker-text {
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .home-news-ticker-item[aria-hidden="true"],
+      .home-news-ticker-sep {
+        display: none;
+      }
+    }
+
     /* Responsive adjustments */
     @media screen and (max-width: 768px) {
       .feature-row {
@@ -177,6 +296,19 @@
       }
       .feature-row .columns {
         flex-direction: column-reverse;
+      }
+
+      .home-news-ticker {
+        height: 2.4rem;
+      }
+
+      .home-news-ticker-label {
+        padding: 0 0.85rem 0 0.75rem;
+        font-size: 0.7rem;
+      }
+
+      .home-news-ticker-item {
+        font-size: 0.82rem;
       }
     }
   </style>
@@ -217,6 +349,21 @@
       </div>
     </div>
   </section>
+
+  <div class="home-news-ticker" role="region" aria-label="Latest news">
+    <a class="home-news-ticker-label" href="download.html#news-section">
+      <i class="fas fa-bullhorn" aria-hidden="true"></i>
+      News
+    </a>
+    <div class="home-news-ticker-viewport">
+      <div class="home-news-ticker-track">
+        <a class="home-news-ticker-item" href="download.html#news-section">
+          <span class="home-news-ticker-date">Sep 19, 2026</span>
+          <span class="home-news-ticker-text">The complete Work-Zone Dataset is now available for download</span>
+        </a>
+      </div>
+    </div>
+  </div>
 
   <section class="section">
     <!-- Reduced padding from 5% to 1.5rem for more width -->
@@ -448,6 +595,37 @@
         loadMarkdown('experiment-detail', 'static/md/home_experiment_detail.md');
         loadMarkdown('experiment-intro', 'static/md/home_experiment_intro.md');
         loadMarkdown('processing-content', 'static/md/home_processing.md');
+
+        function initHomeNewsTicker() {
+            const newsTrack = document.querySelector('.home-news-ticker-track');
+            const newsViewport = document.querySelector('.home-news-ticker-viewport');
+            const originalItem = newsTrack?.querySelector('.home-news-ticker-item');
+            if (!newsTrack || !newsViewport || !originalItem) return;
+            if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+            newsTrack.querySelectorAll('[data-ticker-clone]').forEach(node => node.remove());
+
+            const separator = document.createElement('span');
+            separator.className = 'home-news-ticker-sep';
+            separator.setAttribute('aria-hidden', 'true');
+            separator.setAttribute('data-ticker-clone', 'true');
+            separator.textContent = '◆';
+
+            const clone = originalItem.cloneNode(true);
+            clone.setAttribute('aria-hidden', 'true');
+            clone.setAttribute('data-ticker-clone', 'true');
+            clone.tabIndex = -1;
+
+            newsTrack.append(separator, clone);
+            newsTrack.style.paddingLeft = `${newsViewport.clientWidth}px`;
+
+            const loopDistance = clone.offsetLeft - originalItem.offsetLeft;
+            newsTrack.style.setProperty('--ticker-distance', `${loopDistance}px`);
+            newsTrack.style.setProperty('--ticker-duration', `${Math.max(18, loopDistance / 70)}s`);
+        }
+
+        initHomeNewsTicker();
+        window.addEventListener('resize', initHomeNewsTicker);
 
         // --- Sidebar Toggle Logic ---
         const sidebarCol = document.getElementById('sidebar-col');
