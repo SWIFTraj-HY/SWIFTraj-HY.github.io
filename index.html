@@ -265,15 +265,19 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
+      .home-news-ticker-viewport {
+        overflow-x: auto;
+      }
+
       .home-news-ticker-track {
         animation: none;
         transform: none;
-        gap: 0;
-        max-width: 100%;
+        gap: 2rem;
         padding: 0 1rem;
       }
 
       .home-news-ticker-item {
+        flex-shrink: 0;
         max-width: 100%;
         overflow: hidden;
       }
@@ -357,6 +361,10 @@
     </a>
     <div class="home-news-ticker-viewport">
       <div class="home-news-ticker-track">
+        <a class="home-news-ticker-item" href="download.html#news-section">
+          <span class="home-news-ticker-date">Nov 2, 2026</span>
+          <span class="home-news-ticker-text">The complete Yingtian Dataset is now available for download</span>
+        </a>
         <a class="home-news-ticker-item" href="download.html#news-section">
           <span class="home-news-ticker-date">Sep 19, 2026</span>
           <span class="home-news-ticker-text">The complete Work-Zone Dataset is now available for download</span>
@@ -604,6 +612,7 @@
             if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
             newsTrack.querySelectorAll('[data-ticker-clone]').forEach(node => node.remove());
+            const originalItems = [...newsTrack.querySelectorAll('.home-news-ticker-item')];
 
             const separator = document.createElement('span');
             separator.className = 'home-news-ticker-sep';
@@ -611,15 +620,18 @@
             separator.setAttribute('data-ticker-clone', 'true');
             separator.textContent = '◆';
 
-            const clone = originalItem.cloneNode(true);
-            clone.setAttribute('aria-hidden', 'true');
-            clone.setAttribute('data-ticker-clone', 'true');
-            clone.tabIndex = -1;
+            const clones = originalItems.map(item => {
+                const clone = item.cloneNode(true);
+                clone.setAttribute('aria-hidden', 'true');
+                clone.setAttribute('data-ticker-clone', 'true');
+                clone.tabIndex = -1;
+                return clone;
+            });
 
-            newsTrack.append(separator, clone);
+            newsTrack.append(separator, ...clones);
             newsTrack.style.paddingLeft = `${newsViewport.clientWidth}px`;
 
-            const loopDistance = clone.offsetLeft - originalItem.offsetLeft;
+            const loopDistance = clones[0].offsetLeft - originalItem.offsetLeft;
             newsTrack.style.setProperty('--ticker-distance', `${loopDistance}px`);
             newsTrack.style.setProperty('--ticker-duration', `${Math.max(18, loopDistance / 70)}s`);
         }
